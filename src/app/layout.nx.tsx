@@ -33,6 +33,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${bodyFont.variable} ${headingFont.variable} ${monoFont.variable}`}>
+      <head>
+        {/* Pyodide の主要アセットをHTML解析時点でブラウザのプリロードスキャナに
+            拾わせるため、RSC側で直接 <head> に出力する(useEffectでの後付けだと
+            ハイドレーション後になり、プリロードスキャナの恩恵を受けられない)。 */}
+        <link
+          rel="preload"
+          href="/pyodide/pyodide.asm.wasm"
+          as="fetch"
+          type="application/wasm"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/pyodide/python_stdlib.zip"
+          as="fetch"
+          type="application/zip"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
