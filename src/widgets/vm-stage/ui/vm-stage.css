@@ -26,6 +26,36 @@
   border-radius: 5px;
 }
 
+.vm-stage__code-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.vm-stage__code-tab {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.82rem;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.vm-stage__code-tab--active {
+  background: #efe9fb;
+  border-color: #b79cf0;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.vm-stage__code-tab:focus-visible {
+  outline: 3px solid #b79cf0;
+  outline-offset: 2px;
+}
+
 .player-controls {
   display: flex;
   align-items: center;

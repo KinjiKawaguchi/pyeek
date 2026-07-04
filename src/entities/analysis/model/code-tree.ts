@@ -6,7 +6,8 @@ export interface CodePathEntry {
 }
 
 // 関数・ラムダ・内包表記などがあるとネストした code オブジェクトが生まれる。
-// 切り替え UI（タブ）のために「<module> › f」のようなパス付きで平坦化する。
+// bytecode-stage/vm-stage 共通の切り替え UI（タブ）のために
+// 「<module> › f」のようなパス付きで平坦化する。
 export function flattenCodeObjs(root: CodeObj): CodePathEntry[] {
   const result: CodePathEntry[] = [];
 

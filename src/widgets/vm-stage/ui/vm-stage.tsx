@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { instrRange, useAnalysis } from "@/entities/analysis";
+import { codePathKey, flattenCodeObjs, instrRange, useAnalysis } from "@/entities/analysis";
 import { simulateStack } from "../model/stack-sim";
 import "./vm-stage.css";
 import { PlayerControls } from "./player-controls";
@@ -12,17 +12,27 @@ const PLAY_INTERVAL_MS = 900;
 export function VmStage() {
   const { state, setSelectedRange } = useAnalysis();
   const root = state.result?.bytecode ?? null;
-  const simResult = useMemo(() => (root ? simulateStack(root.instructions) : null), [root]);
+  const codeEntries = useMemo(() => (root ? flattenCodeObjs(root) : []), [root]);
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+
+  const activeEntry =
+    codeEntries.find((entry) => codePathKey(entry.path) === selectedKey) ?? codeEntries[0] ?? null;
+  const activeKey = activeEntry ? codePathKey(activeEntry.path) : null;
+
+  const simResult = useMemo(
+    () => (activeEntry ? simulateStack(activeEntry.code.instructions) : null),
+    [activeEntry],
+  );
   const steps = simResult?.ok ? simResult.steps : [];
 
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ソース(root)が変わった時だけ再生位置をリセットしたい意図的な依存
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 選択中のcode object(activeKey)が切り替わった時だけ再生位置をリセットしたい意図的な依存
   useEffect(() => {
     setCurrentIndex(-1);
     setIsPlaying(false);
-  }, [root]);
+  }, [activeKey]);
 
   useEffect(() => {
     if (!isPlaying) {
@@ -49,7 +59,7 @@ export function VmStage() {
     }
   }, [currentStep]);
 
-  if (!root) {
+  if (!root || !activeEntry) {
     return (
       <section className="card" aria-label="スタックマシン">
         <p className="card__title">
@@ -60,12 +70,34 @@ export function VmStage() {
     );
   }
 
+  const codeTabs =
+    codeEntries.length > 1 ? (
+      <div className="vm-stage__code-tabs" role="tablist" aria-label="コードオブジェクト">
+        {codeEntries.map((entry) => {
+          const key = codePathKey(entry.path);
+          return (
+            <button
+              type="button"
+              key={key}
+              role="tab"
+              aria-selected={key === activeKey}
+              className={`vm-stage__code-tab${key === activeKey ? " vm-stage__code-tab--active" : ""}`}
+              onClick={() => setSelectedKey(key)}
+            >
+              {entry.path.join(" › ")}
+            </button>
+          );
+        })}
+      </div>
+    ) : null;
+
   if (!simResult?.ok) {
     return (
       <section className="card" aria-label="スタックマシン">
         <p className="card__title">
           <span className="card__emoji">🧮</span> スタックマシン
         </p>
+        {codeTabs}
         <p className="vm-stage__guard">
           ループ・分岐は次のバージョンで対応予定です。まずは <code>n = 4</code> や{" "}
           <code>total = 2 + 3 * n</code> のような、くり返しの無いコードで試してみてください。
@@ -106,6 +138,7 @@ export function VmStage() {
           {state.mode === "easy" ? "命令どおりに皿を積んだり片付けたりする" : "評価スタックの再生"}
         </span>
       </p>
+      {codeTabs}
       <PlayerControls
         currentIndex={currentIndex}
         stepCount={steps.length}
