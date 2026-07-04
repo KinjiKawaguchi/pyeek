@@ -14,6 +14,11 @@ export function BytecodeStage() {
   const root = state.result?.bytecode ?? null;
   const codeEntries = useMemo(() => (root ? flattenCodeObjs(root) : []), [root]);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  // selectedRange（クロスステージ連動用）とは別に、クリックされた命令自身の
+  // offset を直接持つ。範囲からの逆引きだと、RESUME のようにソース範囲を
+  // 持たない命令や、同じ行内で複数命令が同一範囲を共有する場合（例:
+  // CALL/POP_TOP/RETURN_CONST が同じ式全体の範囲を指す）に選択がずれるため。
+  const [selectedOffset, setSelectedOffset] = useState<number | null>(null);
 
   if (!root || codeEntries.length === 0) {
     return (
@@ -36,11 +41,12 @@ export function BytecodeStage() {
   const activeKey = codePathKey(activeEntry.path);
   const groups = groupInstructionsByLine(activeEntry.code.instructions);
   const selectedInstr =
-    activeEntry.code.instructions.find(
-      (instr) => classifyRange(instrRange(instr), state.selectedRange) === "active",
-    ) ?? null;
+    selectedOffset === null
+      ? null
+      : (activeEntry.code.instructions.find((instr) => instr.offset === selectedOffset) ?? null);
 
   const handleSelect = (instr: Instr) => {
+    setSelectedOffset(instr.offset);
     const range = instrRange(instr);
     if (range) {
       setSelectedRange(range);
@@ -92,6 +98,7 @@ export function BytecodeStage() {
                       instr={instr}
                       mode={state.mode}
                       linkTier={linkTier}
+                      isSelected={instr.offset === selectedOffset}
                       onSelect={() => handleSelect(instr)}
                     />
                   );

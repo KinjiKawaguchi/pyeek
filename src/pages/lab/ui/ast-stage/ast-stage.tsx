@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { astNodeRange, classifyRange } from "@/entities/source-link";
 import type { AstNode } from "@/shared/api";
 import { useAnalysis } from "../../model/analysis-store";
@@ -19,15 +19,15 @@ export function AstStage() {
   const { state, setSelectedRange } = useAnalysis();
   const root = state.result?.ast ?? null;
   const layout = useMemo(() => (root ? layoutAst(root) : null), [root]);
+  // selectedRange（クロスステージ連動用）とは別に、クリックされたノード自身の
+  // id を直接持つ。範囲からの逆引きだと、Module のように範囲を持たないノードや、
+  // Expr が中身の Call と同一範囲になるような親子ノードで選択がずれてしまうため。
+  const [selectedNodeId, setSelectedNodeId] = useState<number | null>(null);
 
   const selectedNode = useMemo(() => {
-    if (!layout) return null;
-    const active = layout.nodes.find(
-      (layoutNode) =>
-        classifyRange(astNodeRange(layoutNode.node), state.selectedRange) === "active",
-    );
-    return active?.node ?? null;
-  }, [layout, state.selectedRange]);
+    if (!layout || selectedNodeId === null) return null;
+    return layout.nodes.find((layoutNode) => layoutNode.node.id === selectedNodeId)?.node ?? null;
+  }, [layout, selectedNodeId]);
 
   if (!root || !layout) {
     return (
@@ -47,6 +47,7 @@ export function AstStage() {
   const posById = new Map(layout.nodes.map((n) => [n.node.id, n]));
 
   const handleSelect = (node: AstNode) => {
+    setSelectedNodeId(node.id);
     const range = astNodeRange(node);
     if (range) {
       setSelectedRange(range);
@@ -104,6 +105,7 @@ export function AstStage() {
                   node={layoutNode.node}
                   mode={state.mode}
                   linkTier={linkTier}
+                  isSelected={layoutNode.node.id === selectedNodeId}
                   order={order}
                   onSelect={() => handleSelect(layoutNode.node)}
                 />

@@ -7,19 +7,30 @@ export interface AstNodeCardProps {
   node: AstNode;
   mode: DisplayMode;
   linkTier: LinkTier | null;
+  // クリックされたノード自身であることを示す（Module 等、ソース範囲を
+  // 持たずクロスステージ連動の linkTier が付かないノードでも選択を示すため）。
+  isSelected: boolean;
   // layoutAst() は葉→根の順でノードを返すため、そのまま出現アニメーションの
   // 遅延段数として使える。
   order: number;
   onSelect: () => void;
 }
 
-export function AstNodeCard({ node, mode, linkTier, order, onSelect }: AstNodeCardProps) {
+export function AstNodeCard({
+  node,
+  mode,
+  linkTier,
+  isSelected,
+  order,
+  onSelect,
+}: AstNodeCardProps) {
   const label = mode === "easy" ? astEasyLabel(node) : node.type;
   const fieldEntries = Object.entries(node.fields);
   const classNames = [
     "ast-node",
     linkTier === "active" ? "ast-node--active" : "",
     linkTier === "related" ? "ast-node--related" : "",
+    isSelected && linkTier !== "active" ? "ast-node--selected" : "",
   ]
     .filter(Boolean)
     .join(" ");

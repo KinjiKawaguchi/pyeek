@@ -7,14 +7,18 @@ export interface InstrRowProps {
   instr: Instr;
   mode: DisplayMode;
   linkTier: LinkTier | null;
+  // クリックされた命令自身であることを示す（RESUME 等ソース範囲を持たない
+  // 命令や、同じ行内で複数命令が同一範囲を共有する場合でも選択を示すため）。
+  isSelected: boolean;
   onSelect: () => void;
 }
 
-export function InstrRow({ instr, mode, linkTier, onSelect }: InstrRowProps) {
+export function InstrRow({ instr, mode, linkTier, isSelected, onSelect }: InstrRowProps) {
   const classNames = [
     "instr",
     linkTier === "active" ? "instr--active" : "",
     linkTier === "related" ? "instr--related" : "",
+    isSelected && linkTier !== "active" ? "instr--selected" : "",
     instr.isJumpTarget ? "instr--jump-target" : "",
   ]
     .filter(Boolean)

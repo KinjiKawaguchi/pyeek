@@ -128,6 +128,14 @@
     0 0 0 3px #d7c8fb;
 }
 
+/* ソース範囲を持たない Module 等、linkTier が付かないノードでも選択したことを示す */
+.ast-node--selected {
+  border-color: #8b5cf6;
+  box-shadow:
+    0 3px 0 rgba(120, 90, 190, 0.18),
+    0 0 0 3px #ffe07a;
+}
+
 @keyframes ast-pop {
   from {
     opacity: 0;

@@ -192,6 +192,14 @@
     0 0 0 3px #d7c8fb;
 }
 
+/* ソース範囲を持たない RESUME 等の命令や、同一範囲を共有する命令でも選択を示す */
+.instr--selected {
+  border-color: #8b5cf6;
+  box-shadow:
+    0 3px 0 rgba(120, 110, 190, 0.14),
+    0 0 0 3px #ffe07a;
+}
+
 .instr--jump-target {
   border-style: dashed;
 }
