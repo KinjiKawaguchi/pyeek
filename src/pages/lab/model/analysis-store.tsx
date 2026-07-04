@@ -10,6 +10,7 @@ import {
   useReducer,
   useRef,
 } from "react";
+import type { SrcRange } from "@/entities/source-link";
 import {
   type BridgeLoadingState,
   type PyeekBridge,
@@ -17,7 +18,6 @@ import {
   pyodideBridge,
 } from "@/shared/api";
 import { debounce } from "@/shared/lib/debounce";
-import type { SrcRange } from "./source-range";
 
 const ANALYZE_DEBOUNCE_MS = 300;
 

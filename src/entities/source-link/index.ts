@@ -1,5 +1,3 @@
-export type { AnalysisState, DisplayMode } from "./model/analysis-store";
-export { AnalysisProvider, useAnalysis } from "./model/analysis-store";
 export type { CodePathEntry } from "./model/code-tree";
 export { codePathKey, flattenCodeObjs } from "./model/code-tree";
 export type { LinkTier } from "./model/link";

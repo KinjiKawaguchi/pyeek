@@ -1,6 +1,6 @@
 "use client";
 
-import { useAnalysis } from "@/entities/analysis";
+import { useAnalysis } from "../model/analysis-store";
 
 // Pyodide の読み込み中だけ表示するオーバーレイ。ロード中もエディタ自体は
 // 操作できる（AnalysisProvider が source-changed をそのまま受け付ける）ため、

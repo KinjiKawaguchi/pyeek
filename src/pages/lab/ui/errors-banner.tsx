@@ -1,6 +1,6 @@
 "use client";
 
-import { useAnalysis } from "@/entities/analysis";
+import { useAnalysis } from "../model/analysis-store";
 
 // pyeek_core 側（tokenize/ast/dis）の構文エラー等。Bridge 自体の失敗
 // （runtimeError）とは別に、正常に返ってきた解析結果内のエラー配列を表示する。

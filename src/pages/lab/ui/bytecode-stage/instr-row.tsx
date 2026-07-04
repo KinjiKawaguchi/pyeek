@@ -1,6 +1,7 @@
-import type { DisplayMode, LinkTier } from "@/entities/analysis";
+import type { LinkTier } from "@/entities/source-link";
 import type { Instr } from "@/shared/api";
 import { easyOpLabel } from "../../config/bytecode-stage/labels";
+import type { DisplayMode } from "../../model/analysis-store";
 
 export interface InstrRowProps {
   instr: Instr;

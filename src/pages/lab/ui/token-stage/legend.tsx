@@ -1,7 +1,7 @@
 "use client";
 
-import { useAnalysis } from "@/entities/analysis";
 import { LEGEND_EASY, LEGEND_STRICT } from "../../config/token-stage/explain";
+import { useAnalysis } from "../../model/analysis-store";
 
 export function TokenLegend() {
   const { state } = useAnalysis();

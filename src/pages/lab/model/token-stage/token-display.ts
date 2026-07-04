@@ -1,5 +1,5 @@
-import type { DisplayMode } from "@/entities/analysis";
 import type { Token } from "@/shared/api";
+import type { DisplayMode } from "../analysis-store";
 
 const STRUCT_TYPES = new Set(["NEWLINE", "NL", "INDENT", "DEDENT", "ENDMARKER"]);
 

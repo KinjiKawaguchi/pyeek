@@ -29,11 +29,22 @@ Python の字句解析・構文解析・コンパイル・実行を、本物の 
   `ui/<stage>/index.ts` は内部向けの薄いバレル（`LabWorkbench` からの
   import を短くするだけで、FSD の public API 境界としての意味は無い）。
 - 4段が単一ページ内に同居する理由は steiger の `insignificant-slice` 警告を
-  無効化している `entities/analysis` 側のコメント、および実装計画ファイルを
-  参照。widgets 層として独立させていた時期もあったが、「複数ページで使う」
+  無効化している `entities/source-link` 側のコメント、および実装計画ファイル
+  を参照。widgets 層として独立させていた時期もあったが、「複数ページで使う」
   という widgets の前提が単一ページアプリでは成立しないため、pages/lab に
   統合した（1ページしか無いのに widgets があるのは実態に合わない、という
   指摘を受けての変更）。
+- **`entities/source-link`**（旧 `entities/analysis`）が Pyeek の実際のドメイン
+  モデル: 「同じソースコード上の同じ範囲が、トークン列・AST・バイトコードと
+  いう複数の内部表現の間でどう対応するか」（`SrcRange` の比較・
+  `Token`/`AstNode`/`Instr` からの範囲抽出・ネストした code オブジェクトの
+  平坦化）。状態を持たない純粋関数のみで、token/ast/bytecode/vm-stage の
+  4つ全てから横断的に参照される。
+  一方、解析セッションの状態（source/result/mode/loading/selectedRange を
+  持つ `AnalysisProvider`/`useAnalysis`）はドメインモデルではなく単なる
+  ページのUI状態なので、entities ではなく `pages/lab/model/analysis-store.tsx`
+  に置いている。認証トークンやセッション管理を entity にしない FSD の原則
+  （`shared/auth` 相当）と同じ整理。
 - **Next.js の App Router ルートファイル（`page.nx.tsx`/`layout.nx.tsx`）は
   `src/app/` に置き、`.nx.tsx`/`.nx.ts` という非標準の拡張子で命名する**
   （`next.config.ts` の `pageExtensions`）。理由:

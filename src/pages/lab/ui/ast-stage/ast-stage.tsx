@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import { astNodeRange, classifyRange, useAnalysis } from "@/entities/analysis";
+import { astNodeRange, classifyRange } from "@/entities/source-link";
 import type { AstNode } from "@/shared/api";
+import { useAnalysis } from "../../model/analysis-store";
 import { layoutAst } from "../../model/ast-stage/ast-layout";
 import "./ast-stage.css";
 import { AstNodeCard } from "./ast-node-card";

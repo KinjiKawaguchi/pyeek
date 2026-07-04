@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { classifyRange, tokenRange, useAnalysis } from "@/entities/analysis";
+import { classifyRange, tokenRange } from "@/entities/source-link";
+import { useAnalysis } from "../../model/analysis-store";
 import { buildTokenStageView } from "../../model/token-stage/token-view";
 import "./token-stage.css";
 import { TokenReadout } from "./token-readout";

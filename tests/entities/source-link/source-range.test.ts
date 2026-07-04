@@ -4,7 +4,7 @@ import {
   rangesEqual,
   rangesOverlap,
   type SrcRange,
-} from "@/entities/analysis/model/source-range";
+} from "@/entities/source-link/model/source-range";
 
 const RANGE_4 = (): SrcRange => ({ start: [1, 4], end: [1, 8] });
 const RANGE_8_12 = (): SrcRange => ({ start: [1, 8], end: [1, 12] });

@@ -1,4 +1,5 @@
-import type { DisplayMode, LinkTier } from "@/entities/analysis";
+import type { LinkTier } from "@/entities/source-link";
+import type { DisplayMode } from "../../model/analysis-store";
 import type { TokenStageView } from "../../model/token-stage/token-view";
 import { TokenChip } from "./token-chip";
 

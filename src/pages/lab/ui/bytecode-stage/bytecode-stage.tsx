@@ -1,14 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  classifyRange,
-  codePathKey,
-  flattenCodeObjs,
-  instrRange,
-  useAnalysis,
-} from "@/entities/analysis";
+import { classifyRange, codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
 import type { Instr } from "@/shared/api";
+import { useAnalysis } from "../../model/analysis-store";
 import { groupInstructionsByLine } from "../../model/bytecode-stage/instr-view";
 import "./bytecode-stage.css";
 import { InstrRow } from "./instr-row";

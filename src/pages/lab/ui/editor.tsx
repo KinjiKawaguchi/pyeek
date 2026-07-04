@@ -1,6 +1,6 @@
 "use client";
 
-import { useAnalysis } from "@/entities/analysis";
+import { useAnalysis } from "../model/analysis-store";
 
 // 4 ステージ共有の唯一のソースエディタ。前身 token-lab.html の
 // textarea#code に相当する（M1 で CSS を移植する）。

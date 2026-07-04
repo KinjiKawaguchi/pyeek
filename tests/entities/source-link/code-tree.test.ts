@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { codePathKey, flattenCodeObjs } from "@/entities/analysis/model/code-tree";
+import { codePathKey, flattenCodeObjs } from "@/entities/source-link/model/code-tree";
 import type { CodeObj } from "@/shared/api";
 
 const SNAPSHOT_DIR = path.resolve(__dirname, "../../python/snapshots");

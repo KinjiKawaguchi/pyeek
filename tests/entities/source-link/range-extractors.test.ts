@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { astNodeRange, instrRange, tokenRange } from "@/entities/analysis/model/range-extractors";
+import {
+  astNodeRange,
+  instrRange,
+  tokenRange,
+} from "@/entities/source-link/model/range-extractors";
 import type { AstNode, Instr, Token } from "@/shared/api";
 
 const TOKEN: Token = {

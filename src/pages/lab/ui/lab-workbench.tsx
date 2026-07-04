@@ -1,6 +1,6 @@
 "use client";
 
-import { AnalysisProvider } from "@/entities/analysis";
+import { AnalysisProvider } from "../model/analysis-store";
 import { AstStage } from "./ast-stage";
 import { BytecodeStage } from "./bytecode-stage";
 import { Editor } from "./editor";

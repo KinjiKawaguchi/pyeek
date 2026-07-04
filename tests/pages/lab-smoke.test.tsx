@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { AnalysisProvider } from "@/entities/analysis";
+import { AnalysisProvider } from "@/pages/lab/model/analysis-store";
 import { Editor } from "@/pages/lab/ui/editor";
 import { PythonVersionBadge } from "@/pages/lab/ui/python-version-badge";
 import { TokenStage } from "@/pages/lab/ui/token-stage";

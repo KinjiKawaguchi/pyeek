@@ -1,5 +1,6 @@
-import type { DisplayMode, LinkTier } from "@/entities/analysis";
+import type { LinkTier } from "@/entities/source-link";
 import type { Token } from "@/shared/api";
+import type { DisplayMode } from "../../model/analysis-store";
 import {
   chipTypeLabel,
   formatPos,

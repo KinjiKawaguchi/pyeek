@@ -1,5 +1,5 @@
-import type { DisplayMode } from "@/entities/analysis";
 import type { Token } from "@/shared/api";
+import type { DisplayMode } from "../analysis-store";
 import { findCallInfo } from "./call-info";
 import { foldFStrings } from "./fstring-fold";
 import { isStructToken } from "./token-display";

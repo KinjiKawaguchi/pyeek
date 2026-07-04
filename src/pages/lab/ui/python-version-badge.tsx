@@ -1,6 +1,6 @@
 "use client";
 
-import { useAnalysis } from "@/entities/analysis";
+import { useAnalysis } from "../model/analysis-store";
 
 export function PythonVersionBadge() {
   const { state } = useAnalysis();

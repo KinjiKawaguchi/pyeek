@@ -1,6 +1,7 @@
-import type { DisplayMode, LinkTier } from "@/entities/analysis";
+import type { LinkTier } from "@/entities/source-link";
 import type { AstNode } from "@/shared/api";
 import { astEasyLabel } from "../../config/ast-stage/labels";
+import type { DisplayMode } from "../../model/analysis-store";
 
 export interface AstNodeCardProps {
   node: AstNode;

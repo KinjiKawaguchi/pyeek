@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { codePathKey, flattenCodeObjs, instrRange, useAnalysis } from "@/entities/analysis";
+import { codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
+import { useAnalysis } from "../../model/analysis-store";
 import { simulateStack } from "../../model/vm-stage/stack-sim";
 import "./vm-stage.css";
 import { PlayerControls } from "./player-controls";

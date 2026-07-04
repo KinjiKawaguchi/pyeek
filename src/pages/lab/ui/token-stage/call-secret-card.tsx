@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useAnalysis } from "@/entities/analysis";
+import { useAnalysis } from "../../model/analysis-store";
 import { findCallInfo } from "../../model/token-stage/call-info";
 import { CallSecretStatus } from "./call-secret-status";
 

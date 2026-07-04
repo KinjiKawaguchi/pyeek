@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { classifyRange, isLinked } from "@/entities/analysis/model/link";
-import type { SrcRange } from "@/entities/analysis/model/source-range";
+import { classifyRange, isLinked } from "@/entities/source-link/model/link";
+import type { SrcRange } from "@/entities/source-link/model/source-range";
 
 const TOKEN_RANGE: SrcRange = { start: [1, 8], end: [1, 9] };
 const ANCESTOR_RANGE: SrcRange = { start: [1, 0], end: [1, 9] };

@@ -1,7 +1,7 @@
 "use client";
 
-import { useAnalysis } from "@/entities/analysis";
 import { PRESETS } from "../config/presets";
+import { useAnalysis } from "../model/analysis-store";
 
 export function PresetPicker() {
   const { setSource } = useAnalysis();
