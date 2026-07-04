@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
   // （上流 issue: https://github.com/vercel/next.js/issues/51478）。
   pageExtensions: ["nx.tsx", "nx.ts"],
 
+  // Traefik 経由（`pyeek.localhost`）でこのマシン上から動作確認する際、
+  // dev サーバーが別オリジンからのリクエストとして拒否しないようにする。
+  allowedDevOrigins: ["pyeek.localhost"],
+
   headers: async () => [
     {
       // Pyodide ランタイムファイルのキャッシュ設定。

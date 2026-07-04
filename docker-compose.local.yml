@@ -1,0 +1,29 @@
+# このマシンで稼働中の Traefik（kochi プロジェクトの共有インフラ、
+# `kochi_default` ネットワークで Docker provider による自動検出）経由で
+# Pyeek をブラウザから試せるようにするための開発用 compose。
+# kochi 側のファイルは一切変更せず、既存の外部ネットワークに参加するだけ。
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    command: pnpm dev --hostname 0.0.0.0 --port 3000
+    volumes:
+      - ./src:/app/src
+      - ./py:/app/py
+      - ./public:/app/public
+      - ./scripts:/app/scripts:ro
+      - ./next.config.ts:/app/next.config.ts:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./biome.json:/app/biome.json:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pyeek.rule=Host(`pyeek.localhost`)"
+      - "traefik.http.routers.pyeek.entrypoints=web"
+      - "traefik.http.services.pyeek.loadbalancer.server.port=3000"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: kochi_default
+    external: true
