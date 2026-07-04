@@ -156,3 +156,187 @@
 .instr--jump-target {
   border-style: dashed;
 }
+
+/* OpcodeReference: 全オペコード種別リファレンス */
+
+.bytecode-stage__reference {
+  margin-top: 14px;
+}
+
+.bytecode-stage__reference summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.bytecode-stage__reference-content {
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--paper-2);
+}
+
+.bytecode-stage__accuracy-notice {
+  background: #fef3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+  color: #664d03;
+  line-height: 1.4;
+}
+
+.bytecode-stage__accuracy-notice a {
+  color: #0c5460;
+  text-decoration: underline;
+}
+
+.bytecode-stage__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bytecode-stage__category {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bytecode-stage__category-header {
+  width: 100%;
+  text-align: left;
+  background: var(--paper);
+  border: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background-color 0.2s;
+}
+
+.bytecode-stage__category-header:hover {
+  background: rgba(120, 110, 190, 0.08);
+}
+
+.bytecode-stage__category-toggle {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  flex: none;
+}
+
+.bytecode-stage__category-desc {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-left: auto;
+}
+
+.bytecode-stage__opcodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.bytecode-stage__opcode-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.bytecode-stage__opcode-item:last-child {
+  border-bottom: none;
+}
+
+.bytecode-stage__opcode-header {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 8px 12px 8px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  transition: background-color 0.2s;
+}
+
+.bytecode-stage__opcode-header:hover {
+  background: var(--paper);
+}
+
+.bytecode-stage__opcode-header code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 700;
+  color: #2f8fe6;
+  padding: 2px 6px;
+  background: rgba(47, 143, 230, 0.1);
+  border-radius: 4px;
+}
+
+.bytecode-stage__opcode-toggle {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  flex: none;
+  margin-left: -8px;
+}
+
+.bytecode-stage__opcode-content {
+  padding: 12px 24px 12px 32px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bytecode-stage__opcode-detail,
+.bytecode-stage__opcode-easy {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.bytecode-stage__opcode-detail h5,
+.bytecode-stage__opcode-easy h5 {
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  font-size: 0.8rem;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bytecode-stage__opcode-detail p,
+.bytecode-stage__opcode-easy p {
+  margin: 0;
+  color: var(--ink);
+}
+
+.bytecode-stage__opcode-reference {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bytecode-stage__doc-link {
+  font-size: 0.8rem;
+  color: #2f8fe6;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.bytecode-stage__doc-link:hover {
+  background: rgba(47, 143, 230, 0.1);
+  text-decoration: underline;
+}
