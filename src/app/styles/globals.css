@@ -106,6 +106,51 @@ h3 {
   font-size: 0.85em;
 }
 
+.github-link {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  background: #24292f;
+  border: 2px solid #24292f;
+  border-radius: 999px;
+  padding: 7px 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+.github-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.github-link:focus-visible {
+  outline: 3px solid #b79cf0;
+  outline-offset: 2px;
+}
+
+.github-link__icon {
+  fill: currentColor;
+  flex: none;
+}
+
+@media (max-width: 560px) {
+  .github-link {
+    position: static;
+    width: fit-content;
+    margin: 0 auto 14px;
+  }
+}
+
 .card {
   background: var(--paper-2);
   border: 2px solid var(--line);

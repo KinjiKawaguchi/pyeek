@@ -1,4 +1,5 @@
 import { DEFAULT_SOURCE } from "../config/presets";
+import { GithubLink } from "./github-link";
 import { LabWorkbench } from "./lab-workbench";
 
 // Server Component。静的な教育テキスト・フッタはここに残し、解析結果に依存
@@ -6,6 +7,7 @@ import { LabWorkbench } from "./lab-workbench";
 export function LabPage() {
   return (
     <main className="lab-page">
+      <GithubLink />
       <header className="lab-page__header">
         <span className="lab-page__kicker">PYTHON 字句解析 LABORATORY</span>
         <h1 className="lab-page__title">
