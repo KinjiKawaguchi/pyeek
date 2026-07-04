@@ -203,8 +203,20 @@
   border: 2px dashed var(--line);
   border-radius: 12px;
   padding: 11px 14px;
-  min-height: 52px;
+  /* トークン未選択時と選択時（説明文の長さはトークン種別ごとに異なる）の
+     どちらでもほぼ同じ高さになるよう、実測した最大ケース（約172px）より
+     余裕を持たせて確保する。これが小さいと、④スタックマシンの再生で
+     ステップごとにハイライトされるトークンが変わるたびにこのカードの
+     高さが変わり、下にある③④のボタン位置がずれてしまう。 */
+  min-height: 200px;
   font-size: 0.92rem;
+}
+
+.token-stage__readout-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .token-stage__readout-head {

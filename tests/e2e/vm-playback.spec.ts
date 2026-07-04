@@ -153,6 +153,56 @@ test.describe("スタックマシンVMの再生 E2E", () => {
     expect(errors).toHaveLength(0);
   });
 
+  test("再生ボタンの位置が固定されている回帰テスト: ステップが進んでも①トークン列カードの高さが変わらない", async ({
+    page,
+  }) => {
+    const errors = collectPageErrors(page);
+    await gotoAndWaitForPyodide(page);
+
+    await page
+      .locator("button.preset", { hasText: /^for i in range/ })
+      .first()
+      .click();
+    await expect(page.locator(".vm-stage__current")).toBeVisible({ timeout: 5_000 });
+    // プリセット切り替え後、①トークン列は新しいソース（2行分）の再解析
+    // （デバウンス）が終わるまで行数が少ないまま。この一過性の変化を
+    // 「レイアウトのずれ」と誤検知しないよう、新ソースのトークンが
+    // 実際に描画されるまで待ってから計測を始める。
+    await expect(page.locator(".tok__val", { hasText: "range" })).toBeVisible();
+
+    // ④VMのステップ送りは selectedRange 経由で①トークン列のハイライトも
+    // 動かす。①のカードがトークンの説明文の長さに応じて高さを変えると、
+    // 下にある④の再生ボタンがステップごとに画面上で上下してしまう
+    // （実際に報告されたUX不具合の回帰テスト）。
+    const tokenSection = page.locator('section[aria-label="トークン列"]');
+    const playBtn = page.locator("button.player-controls__btn--main");
+    const stepForwardBtn = page.locator("button:has-text('1つ進む ▶')");
+    const progress = page.locator(".player-controls__progress");
+
+    // 1回目の click() は Playwright がボタンを画面内に自動スクロールする
+    // ため、その分の座標変化を「レイアウトのずれ」と誤検知しないよう、
+    // スクロールが落ち着いた後の状態をベースラインにする。
+    // また、ステップ送り直後の描画完了を待つため、progress 表示
+    // （毎ステップ必ず更新される）が期待値になるまで待ってから計測する
+    // （最初の命令 RESUME はソース範囲を持たずトークンが選択されない
+    // ステップなので、それを目印にはできない）。
+    await stepForwardBtn.click();
+    await expect(progress).toContainText(/^1 \//);
+    const baselineHeight = (await tokenSection.boundingBox())?.height;
+    const baselineBtnY = (await playBtn.boundingBox())?.y;
+
+    for (let i = 0; i < 8; i++) {
+      await stepForwardBtn.click();
+      await expect(progress).toContainText(new RegExp(`^${i + 2} \\/`));
+      const height = (await tokenSection.boundingBox())?.height;
+      const btnY = (await playBtn.boundingBox())?.y;
+      expect(height).toBe(baselineHeight);
+      expect(btnY).toBe(baselineBtnY);
+    }
+
+    expect(errors).toHaveLength(0);
+  });
+
   test("無限ループの打ち切りバナー: while True:で256ステップ打ち切り", async ({ page }) => {
     const errors = collectPageErrors(page);
     await gotoAndWaitForPyodide(page);
