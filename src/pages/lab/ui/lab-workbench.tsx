@@ -1,8 +1,8 @@
 "use client";
 
 import { AnalysisProvider } from "../model/analysis-store";
-import { AstStage } from "./ast-stage";
-import { BytecodeStage } from "./bytecode-stage";
+import { AstReference, AstStage } from "./ast-stage";
+import { BytecodeStage, OpcodeReference } from "./bytecode-stage";
 import { Editor } from "./editor";
 import { ErrorsBanner } from "./errors-banner";
 import { LoadingOverlay } from "./loading-overlay";
@@ -36,7 +36,9 @@ export function LabWorkbench({ initialSource }: LabWorkbenchProps) {
       <TokenReference />
       <TokenLegend />
       <AstStage />
+      <AstReference />
       <BytecodeStage />
+      <OpcodeReference />
       <VmStage />
     </AnalysisProvider>
   );
