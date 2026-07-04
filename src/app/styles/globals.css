@@ -106,11 +106,17 @@ h3 {
   font-size: 0.85em;
 }
 
-.github-link {
+.github-actions {
   position: fixed;
   top: 16px;
   right: 16px;
   z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.github-link {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -143,8 +149,36 @@ h3 {
   flex: none;
 }
 
+.github-star {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 6px;
+  background: #fff;
+  border: 2px solid #24292f;
+  line-height: 0;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+.github-star:hover {
+  transform: translateY(-2px);
+}
+
+.github-star:focus-visible {
+  outline: 3px solid #b79cf0;
+  outline-offset: 2px;
+}
+
+.github-star img {
+  display: block;
+  height: 20px;
+  width: auto;
+}
+
 @media (max-width: 560px) {
-  .github-link {
+  .github-actions {
     position: static;
     width: fit-content;
     margin: 0 auto 14px;
