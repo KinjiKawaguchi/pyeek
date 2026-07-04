@@ -36,8 +36,9 @@ const EASY_TYPE_LABEL: Record<string, string> = {
 export function chipTypeLabel(token: Token, mode: DisplayMode): string {
   if (mode === "easy") {
     if (token.type === "OP") return isBracket(token.string) ? "かっこ" : "きごう";
+    if (token.isKeyword) return "キーワード";
     if (EASY_TYPE_LABEL[token.type]) return EASY_TYPE_LABEL[token.type] as string;
-    return token.isKeyword ? "キーワード" : token.type;
+    return token.type;
   }
   return token.type === "OP" ? token.exactType : token.type;
 }
