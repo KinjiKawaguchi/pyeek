@@ -236,6 +236,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 0,
         "opname": "RESUME",
         "positions": {
@@ -251,6 +252,7 @@
         "argrepr": "'outer '",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 2,
         "opname": "LOAD_CONST",
         "positions": {
@@ -266,6 +268,7 @@
         "argrepr": "'inner '",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 4,
         "opname": "LOAD_CONST",
         "positions": {
@@ -281,6 +284,7 @@
         "argrepr": "2",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 6,
         "opname": "LOAD_CONST",
         "positions": {
@@ -296,6 +300,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 8,
         "opname": "FORMAT_VALUE",
         "positions": {
@@ -311,6 +316,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 10,
         "opname": "BUILD_STRING",
         "positions": {
@@ -326,6 +332,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 12,
         "opname": "FORMAT_VALUE",
         "positions": {
@@ -341,6 +348,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 14,
         "opname": "BUILD_STRING",
         "positions": {
@@ -356,6 +364,7 @@
         "argrepr": "msg",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 16,
         "opname": "STORE_NAME",
         "positions": {
@@ -371,6 +380,7 @@
         "argrepr": "None",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 18,
         "opname": "RETURN_CONST",
         "positions": {

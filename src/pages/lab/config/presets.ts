@@ -14,4 +14,6 @@ export const PRESETS: string[] = [
   // スタックマシン(Stage④a)のデモ用。CPython は定数のみの式を畳み込むため
   // (2 + 3 * 4 は BINARY_OP が残らない)、変数を挟んで畳み込みを避けている。
   "n = 4\ntotal = 2 + 3 * n",
+  // while ループのスタックマシン再生デモ用。
+  "i = 0\nwhile i < 3:\n    i = i + 1",
 ];

@@ -188,6 +188,7 @@ def _argrepr(instr: dis.Instruction) -> str:
 
 
 def _instr_to_dict(instr: dis.Instruction) -> dict:
+    is_jump = instr.opcode in _JUMP_OPCODES
     return {
         "offset": instr.offset,
         "opname": instr.opname,
@@ -195,7 +196,10 @@ def _instr_to_dict(instr: dis.Instruction) -> dict:
         "argrepr": _argrepr(instr),
         "positions": _positions_to_dict(instr.positions),
         "isJumpTarget": instr.is_jump_target,
-        "isJump": instr.opcode in _JUMP_OPCODES,
+        "isJump": is_jump,
+        # ジャンプ命令の argval は絶対ターゲットバイトオフセット。
+        # argrepr の "to 42" のような文字列をパースするより確実。
+        "jumpTarget": instr.argval if is_jump else None,
         "stackEffect": _stack_effect_safe(instr.opcode, instr.arg),
     }
 

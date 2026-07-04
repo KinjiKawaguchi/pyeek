@@ -39,6 +39,7 @@ function buildInstr(overrides: Partial<Instr>): Instr {
     positions: { lineno: 1, endLineno: 1, colOffset: 8, endColOffset: 9 },
     isJumpTarget: false,
     isJump: false,
+    jumpTarget: null,
     stackEffect: 1,
     ...overrides,
   };

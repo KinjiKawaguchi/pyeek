@@ -41,6 +41,8 @@ export interface Instr {
   positions: InstrPositions | null;
   isJumpTarget: boolean;
   isJump: boolean;
+  // ジャンプ命令のみ非null。絶対ターゲットバイトオフセット(dis の argval)。
+  jumpTarget: number | null;
   stackEffect: number | null;
 }
 

@@ -11,6 +11,7 @@ function buildInstr(overrides: Partial<Instr>): Instr {
     positions: null,
     isJumpTarget: false,
     isJump: false,
+    jumpTarget: null,
     stackEffect: 0,
     ...overrides,
   };
@@ -67,5 +68,40 @@ describe("decomposeInstr", () => {
     const op = decomposeInstr(buildInstr({ opname: "SOME_FUTURE_OP", stackEffect: 1 }), identity);
     expect(op.pop).toBe(0);
     expect(op.push([])).toEqual(["？"]);
+  });
+
+  it("COMPARE_OP は両辺が数値なら True/False に畳み込む", () => {
+    const op = decomposeInstr(buildInstr({ opname: "COMPARE_OP", argrepr: "<" }), identity);
+    expect(op.pop).toBe(2);
+    expect(op.push(["1", "3"])).toEqual(["True"]);
+    expect(op.push(["3", "1"])).toEqual(["False"]);
+  });
+
+  it("COMPARE_OP は片方が変数名なら不透明なラベルのまま", () => {
+    const op = decomposeInstr(buildInstr({ opname: "COMPARE_OP", argrepr: "<" }), identity);
+    expect(op.push(["x", "3"])).toEqual(["<比較: x < 3>"]);
+  });
+
+  it("COPY はスタック上の値を複製して積む", () => {
+    const op = decomposeInstr(buildInstr({ opname: "COPY", arg: 1 }), identity);
+    expect(op.pop).toBe(1);
+    expect(op.push(["a"])).toEqual(["a", "a"]);
+  });
+
+  it("複合代入の BINARY_OP(+=) も数値同士なら畳み込む", () => {
+    const op = decomposeInstr(buildInstr({ opname: "BINARY_OP", argrepr: "+=" }), identity);
+    expect(op.push(["1", "1"])).toEqual(["2"]);
+  });
+
+  it("GET_ITER は1つpopし1つ積む(ラベルはそのまま)", () => {
+    const op = decomposeInstr(buildInstr({ opname: "GET_ITER" }), identity);
+    expect(op.pop).toBe(1);
+    expect(op.push(["range(0, 3)"])).toEqual(["range(0, 3)"]);
+  });
+
+  it("END_FOR はイテレータとプレースホルダの2つをpopし何も積まない", () => {
+    const op = decomposeInstr(buildInstr({ opname: "END_FOR" }), identity);
+    expect(op.pop).toBe(2);
+    expect(op.push(["range(0, 3)", "（くり返し終了）"])).toEqual([]);
   });
 });

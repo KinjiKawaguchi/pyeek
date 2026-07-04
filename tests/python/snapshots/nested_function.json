@@ -178,6 +178,7 @@
             "argrepr": "",
             "isJump": false,
             "isJumpTarget": false,
+            "jumpTarget": null,
             "offset": 0,
             "opname": "RESUME",
             "positions": {
@@ -193,6 +194,7 @@
             "argrepr": "x",
             "isJump": false,
             "isJumpTarget": false,
+            "jumpTarget": null,
             "offset": 2,
             "opname": "LOAD_FAST",
             "positions": {
@@ -208,6 +210,7 @@
             "argrepr": "1",
             "isJump": false,
             "isJumpTarget": false,
+            "jumpTarget": null,
             "offset": 4,
             "opname": "LOAD_CONST",
             "positions": {
@@ -223,6 +226,7 @@
             "argrepr": "+",
             "isJump": false,
             "isJumpTarget": false,
+            "jumpTarget": null,
             "offset": 6,
             "opname": "BINARY_OP",
             "positions": {
@@ -238,6 +242,7 @@
             "argrepr": "",
             "isJump": false,
             "isJumpTarget": false,
+            "jumpTarget": null,
             "offset": 10,
             "opname": "RETURN_VALUE",
             "positions": {
@@ -265,6 +270,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 0,
         "opname": "RESUME",
         "positions": {
@@ -280,6 +286,7 @@
         "argrepr": "<code f>",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 2,
         "opname": "LOAD_CONST",
         "positions": {
@@ -295,6 +302,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 4,
         "opname": "MAKE_FUNCTION",
         "positions": {
@@ -310,6 +318,7 @@
         "argrepr": "f",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 6,
         "opname": "STORE_NAME",
         "positions": {
@@ -325,6 +334,7 @@
         "argrepr": "None",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 8,
         "opname": "RETURN_CONST",
         "positions": {

@@ -34,13 +34,46 @@ function applyBinaryOp(op: string, a: number, b: number): number | null {
 }
 
 function foldBinaryOp(op: string, left: string, right: string): string {
+  // 複合代入(+= 等)は末尾の "=" を取り除けば通常の二項演算と同じ表記になる。
+  const bareOp = op.endsWith("=") && op.length > 1 ? op.slice(0, -1) : op;
   if (isNumericLiteral(left) && isNumericLiteral(right)) {
-    const result = applyBinaryOp(op, Number(left), Number(right));
+    const result = applyBinaryOp(bareOp, Number(left), Number(right));
     if (result !== null) {
       return String(result);
     }
   }
-  return `${left} ${op} ${right}`;
+  return `${left} ${bareOp} ${right}`;
+}
+
+function applyCompareOp(op: string, a: number, b: number): boolean | null {
+  switch (op) {
+    case "<":
+      return a < b;
+    case "<=":
+      return a <= b;
+    case ">":
+      return a > b;
+    case ">=":
+      return a >= b;
+    case "==":
+      return a === b;
+    case "!=":
+      return a !== b;
+    default:
+      return null;
+  }
+}
+
+function foldCompareOp(op: string, left: string, right: string): string {
+  if (isNumericLiteral(left) && isNumericLiteral(right)) {
+    const result = applyCompareOp(op, Number(left), Number(right));
+    if (result !== null) {
+      // Python の bool の repr(True/False)に合わせる。stack-sim の分岐判定は
+      // このラベルをそのまま真偽判定に使う。
+      return result ? "True" : "False";
+    }
+  }
+  return `<比較: ${left} ${op} ${right}>`;
 }
 
 // dis の opname → スタックへの push/pop の分解表。④a は「浅い」VM なので
@@ -84,7 +117,23 @@ export function decomposeInstr(
         note: `${instr.argrepr} を計算する`,
       };
     case "COMPARE_OP":
-      return { pop: 2, push: () => [`<比較: ${instr.argrepr}>`], note: "比較する" };
+      return {
+        pop: 2,
+        push: ([left, right]) => [foldCompareOp(instr.argrepr, left ?? "?", right ?? "?")],
+        note: "比較する",
+      };
+    case "COPY": {
+      const n = instr.arg ?? 1;
+      return {
+        pop: n,
+        push: (popped) => [...popped, popped[0] ?? "?"],
+        note: `スタックの上から${n}番目を複製する`,
+      };
+    }
+    case "GET_ITER":
+      return { pop: 1, push: ([value]) => [value ?? "?"], note: "イテレータに変換する" };
+    case "END_FOR":
+      return { pop: 2, push: () => [], note: "くり返しの後片付け" };
     case "CALL": {
       const argCount = instr.arg ?? 0;
       return {

@@ -28,10 +28,10 @@
                 "endColOffset": 1,
                 "endLineno": 1,
                 "fields": {
-                  "id": "'n'"
+                  "id": "'x'"
                 },
                 "id": 2,
-                "label": "Name(id='n')",
+                "label": "Name(id='x')",
                 "lineno": 1,
                 "type": "Name"
               }
@@ -45,10 +45,10 @@
                 "endLineno": 1,
                 "fields": {
                   "kind": "None",
-                  "value": "4"
+                  "value": "5"
                 },
                 "id": 4,
-                "label": "Constant(value=4, kind=None)",
+                "label": "Constant(value=5, kind=None)",
                 "lineno": 1,
                 "type": "Constant"
               }
@@ -69,94 +69,92 @@
         "node": {
           "children": [
             {
-              "field": "targets",
-              "node": {
-                "children": [
-                  {
-                    "field": "ctx",
-                    "node": {
-                      "children": [],
-                      "colOffset": null,
-                      "endColOffset": null,
-                      "endLineno": null,
-                      "fields": {},
-                      "id": 7,
-                      "label": "Store",
-                      "lineno": null,
-                      "type": "Store"
-                    }
-                  }
-                ],
-                "colOffset": 0,
-                "endColOffset": 5,
-                "endLineno": 2,
-                "fields": {
-                  "id": "'total'"
-                },
-                "id": 6,
-                "label": "Name(id='total')",
-                "lineno": 2,
-                "type": "Name"
-              }
-            },
-            {
-              "field": "value",
+              "field": "test",
               "node": {
                 "children": [
                   {
                     "field": "left",
                     "node": {
-                      "children": [],
-                      "colOffset": 8,
-                      "endColOffset": 9,
+                      "children": [
+                        {
+                          "field": "ctx",
+                          "node": {
+                            "children": [],
+                            "colOffset": null,
+                            "endColOffset": null,
+                            "endLineno": null,
+                            "fields": {},
+                            "id": 8,
+                            "label": "Load",
+                            "lineno": null,
+                            "type": "Load"
+                          }
+                        }
+                      ],
+                      "colOffset": 3,
+                      "endColOffset": 4,
                       "endLineno": 2,
                       "fields": {
-                        "kind": "None",
-                        "value": "2"
+                        "id": "'x'"
                       },
-                      "id": 9,
-                      "label": "Constant(value=2, kind=None)",
+                      "id": 7,
+                      "label": "Name(id='x')",
                       "lineno": 2,
-                      "type": "Constant"
+                      "type": "Name"
                     }
                   },
                   {
-                    "field": "op",
+                    "field": "ops",
                     "node": {
                       "children": [],
                       "colOffset": null,
                       "endColOffset": null,
                       "endLineno": null,
                       "fields": {},
-                      "id": 10,
-                      "label": "Add",
+                      "id": 9,
+                      "label": "Gt",
                       "lineno": null,
-                      "type": "Add"
+                      "type": "Gt"
                     }
                   },
                   {
-                    "field": "right",
+                    "field": "comparators",
+                    "node": {
+                      "children": [],
+                      "colOffset": 7,
+                      "endColOffset": 8,
+                      "endLineno": 2,
+                      "fields": {
+                        "kind": "None",
+                        "value": "3"
+                      },
+                      "id": 10,
+                      "label": "Constant(value=3, kind=None)",
+                      "lineno": 2,
+                      "type": "Constant"
+                    }
+                  }
+                ],
+                "colOffset": 3,
+                "endColOffset": 8,
+                "endLineno": 2,
+                "fields": {},
+                "id": 6,
+                "label": "Compare",
+                "lineno": 2,
+                "type": "Compare"
+              }
+            },
+            {
+              "field": "body",
+              "node": {
+                "children": [
+                  {
+                    "field": "targets",
                     "node": {
                       "children": [
                         {
-                          "field": "left",
-                          "node": {
-                            "children": [],
-                            "colOffset": 12,
-                            "endColOffset": 13,
-                            "endLineno": 2,
-                            "fields": {
-                              "kind": "None",
-                              "value": "3"
-                            },
-                            "id": 12,
-                            "label": "Constant(value=3, kind=None)",
-                            "lineno": 2,
-                            "type": "Constant"
-                          }
-                        },
-                        {
-                          "field": "op",
+                          "field": "ctx",
                           "node": {
                             "children": [],
                             "colOffset": null,
@@ -164,73 +162,63 @@
                             "endLineno": null,
                             "fields": {},
                             "id": 13,
-                            "label": "Mult",
+                            "label": "Store",
                             "lineno": null,
-                            "type": "Mult"
-                          }
-                        },
-                        {
-                          "field": "right",
-                          "node": {
-                            "children": [
-                              {
-                                "field": "ctx",
-                                "node": {
-                                  "children": [],
-                                  "colOffset": null,
-                                  "endColOffset": null,
-                                  "endLineno": null,
-                                  "fields": {},
-                                  "id": 15,
-                                  "label": "Load",
-                                  "lineno": null,
-                                  "type": "Load"
-                                }
-                              }
-                            ],
-                            "colOffset": 16,
-                            "endColOffset": 17,
-                            "endLineno": 2,
-                            "fields": {
-                              "id": "'n'"
-                            },
-                            "id": 14,
-                            "label": "Name(id='n')",
-                            "lineno": 2,
-                            "type": "Name"
+                            "type": "Store"
                           }
                         }
                       ],
-                      "colOffset": 12,
-                      "endColOffset": 17,
-                      "endLineno": 2,
-                      "fields": {},
-                      "id": 11,
-                      "label": "BinOp",
-                      "lineno": 2,
-                      "type": "BinOp"
+                      "colOffset": 4,
+                      "endColOffset": 5,
+                      "endLineno": 3,
+                      "fields": {
+                        "id": "'y'"
+                      },
+                      "id": 12,
+                      "label": "Name(id='y')",
+                      "lineno": 3,
+                      "type": "Name"
+                    }
+                  },
+                  {
+                    "field": "value",
+                    "node": {
+                      "children": [],
+                      "colOffset": 8,
+                      "endColOffset": 9,
+                      "endLineno": 3,
+                      "fields": {
+                        "kind": "None",
+                        "value": "1"
+                      },
+                      "id": 14,
+                      "label": "Constant(value=1, kind=None)",
+                      "lineno": 3,
+                      "type": "Constant"
                     }
                   }
                 ],
-                "colOffset": 8,
-                "endColOffset": 17,
-                "endLineno": 2,
+                "colOffset": 4,
+                "endColOffset": 9,
+                "endLineno": 3,
                 "fields": {},
-                "id": 8,
-                "label": "BinOp",
-                "lineno": 2,
-                "type": "BinOp"
+                "id": 11,
+                "label": "Assign",
+                "lineno": 3,
+                "type": "Assign"
               }
             }
           ],
           "colOffset": 0,
-          "endColOffset": 17,
-          "endLineno": 2,
-          "fields": {},
+          "endColOffset": 9,
+          "endLineno": 3,
+          "fields": {
+            "orelse": "[]"
+          },
           "id": 5,
-          "label": "Assign",
+          "label": "If(orelse=[])",
           "lineno": 2,
-          "type": "Assign"
+          "type": "If"
         }
       }
     ],
@@ -248,9 +236,9 @@
   "bytecode": {
     "children": [],
     "consts": [
-      "4",
-      "2",
+      "5",
       "3",
+      "1",
       "None"
     ],
     "instructions": [
@@ -272,7 +260,7 @@
       },
       {
         "arg": 0,
-        "argrepr": "4",
+        "argrepr": "5",
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
@@ -288,7 +276,7 @@
       },
       {
         "arg": 0,
-        "argrepr": "n",
+        "argrepr": "x",
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
@@ -303,23 +291,23 @@
         "stackEffect": -1
       },
       {
-        "arg": 1,
-        "argrepr": "2",
+        "arg": 0,
+        "argrepr": "x",
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
         "offset": 6,
-        "opname": "LOAD_CONST",
+        "opname": "LOAD_NAME",
         "positions": {
-          "colOffset": 8,
-          "endColOffset": 9,
+          "colOffset": 3,
+          "endColOffset": 4,
           "endLineno": 2,
           "lineno": 2
         },
         "stackEffect": 1
       },
       {
-        "arg": 2,
+        "arg": 1,
         "argrepr": "3",
         "isJump": false,
         "isJumpTarget": false,
@@ -327,74 +315,74 @@
         "offset": 8,
         "opname": "LOAD_CONST",
         "positions": {
-          "colOffset": 12,
-          "endColOffset": 13,
+          "colOffset": 7,
+          "endColOffset": 8,
           "endLineno": 2,
           "lineno": 2
         },
         "stackEffect": 1
       },
       {
-        "arg": 0,
-        "argrepr": "n",
+        "arg": 68,
+        "argrepr": ">",
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
         "offset": 10,
-        "opname": "LOAD_NAME",
+        "opname": "COMPARE_OP",
         "positions": {
-          "colOffset": 16,
-          "endColOffset": 17,
-          "endLineno": 2,
-          "lineno": 2
-        },
-        "stackEffect": 1
-      },
-      {
-        "arg": 5,
-        "argrepr": "*",
-        "isJump": false,
-        "isJumpTarget": false,
-        "jumpTarget": null,
-        "offset": 12,
-        "opname": "BINARY_OP",
-        "positions": {
-          "colOffset": 12,
-          "endColOffset": 17,
+          "colOffset": 3,
+          "endColOffset": 8,
           "endLineno": 2,
           "lineno": 2
         },
         "stackEffect": -1
       },
       {
-        "arg": 0,
-        "argrepr": "+",
+        "arg": 3,
+        "argrepr": "to 22",
+        "isJump": true,
+        "isJumpTarget": false,
+        "jumpTarget": 22,
+        "offset": 14,
+        "opname": "POP_JUMP_IF_FALSE",
+        "positions": {
+          "colOffset": 3,
+          "endColOffset": 8,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 2,
+        "argrepr": "1",
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
         "offset": 16,
-        "opname": "BINARY_OP",
+        "opname": "LOAD_CONST",
         "positions": {
           "colOffset": 8,
-          "endColOffset": 17,
-          "endLineno": 2,
-          "lineno": 2
+          "endColOffset": 9,
+          "endLineno": 3,
+          "lineno": 3
         },
-        "stackEffect": -1
+        "stackEffect": 1
       },
       {
         "arg": 1,
-        "argrepr": "total",
+        "argrepr": "y",
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
-        "offset": 20,
+        "offset": 18,
         "opname": "STORE_NAME",
         "positions": {
-          "colOffset": 0,
+          "colOffset": 4,
           "endColOffset": 5,
-          "endLineno": 2,
-          "lineno": 2
+          "endLineno": 3,
+          "lineno": 3
         },
         "stackEffect": -1
       },
@@ -404,11 +392,27 @@
         "isJump": false,
         "isJumpTarget": false,
         "jumpTarget": null,
+        "offset": 20,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 5,
+          "endLineno": 3,
+          "lineno": 3
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 3,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": true,
+        "jumpTarget": null,
         "offset": 22,
         "opname": "RETURN_CONST",
         "positions": {
-          "colOffset": 0,
-          "endColOffset": 5,
+          "colOffset": 3,
+          "endColOffset": 8,
           "endLineno": 2,
           "lineno": 2
         },
@@ -417,14 +421,14 @@
     ],
     "name": "<module>",
     "names": [
-      "n",
-      "total"
+      "x",
+      "y"
     ],
     "varnames": []
   },
   "errors": [],
   "pythonVersion": "3.12.11",
-  "source": "n = 4\ntotal = 2 + 3 * n",
+  "source": "x = 5\nif x > 3:\n    y = 1",
   "tokens": [
     {
       "end": [
@@ -438,7 +442,7 @@
         1,
         0
       ],
-      "string": "n",
+      "string": "x",
       "type": "NAME"
     },
     {
@@ -468,7 +472,7 @@
         1,
         4
       ],
-      "string": "4",
+      "string": "5",
       "type": "NUMBER"
     },
     {
@@ -489,74 +493,59 @@
     {
       "end": [
         2,
-        5
+        2
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "if",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        4
       ],
       "exactType": "NAME",
       "isKeyword": false,
       "isSoftKeyword": false,
       "start": [
         2,
-        0
+        3
       ],
-      "string": "total",
+      "string": "x",
       "type": "NAME"
     },
     {
       "end": [
         2,
-        7
+        6
       ],
-      "exactType": "EQUAL",
+      "exactType": "GREATER",
       "isKeyword": false,
       "isSoftKeyword": false,
       "start": [
         2,
-        6
+        5
       ],
-      "string": "=",
+      "string": ">",
       "type": "OP"
     },
     {
       "end": [
-        2,
-        9
-      ],
-      "exactType": "NUMBER",
-      "isKeyword": false,
-      "isSoftKeyword": false,
-      "start": [
         2,
         8
       ],
-      "string": "2",
-      "type": "NUMBER"
-    },
-    {
-      "end": [
-        2,
-        11
-      ],
-      "exactType": "PLUS",
-      "isKeyword": false,
-      "isSoftKeyword": false,
-      "start": [
-        2,
-        10
-      ],
-      "string": "+",
-      "type": "OP"
-    },
-    {
-      "end": [
-        2,
-        13
-      ],
       "exactType": "NUMBER",
       "isKeyword": false,
       "isSoftKeyword": false,
       "start": [
         2,
-        12
+        7
       ],
       "string": "3",
       "type": "NUMBER"
@@ -564,58 +553,133 @@
     {
       "end": [
         2,
-        15
+        9
       ],
-      "exactType": "STAR",
+      "exactType": "COLON",
       "isKeyword": false,
       "isSoftKeyword": false,
       "start": [
         2,
-        14
+        8
       ],
-      "string": "*",
+      "string": ":",
       "type": "OP"
     },
     {
       "end": [
         2,
-        17
-      ],
-      "exactType": "NAME",
-      "isKeyword": false,
-      "isSoftKeyword": false,
-      "start": [
-        2,
-        16
-      ],
-      "string": "n",
-      "type": "NAME"
-    },
-    {
-      "end": [
-        2,
-        18
+        10
       ],
       "exactType": "NEWLINE",
       "isKeyword": false,
       "isSoftKeyword": false,
       "start": [
         2,
-        17
+        9
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        3,
+        4
+      ],
+      "exactType": "INDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        0
+      ],
+      "string": "    ",
+      "type": "INDENT"
+    },
+    {
+      "end": [
+        3,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        4
+      ],
+      "string": "y",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        3,
+        7
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        6
+      ],
+      "string": "=",
+      "type": "OP"
+    },
+    {
+      "end": [
+        3,
+        9
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        8
+      ],
+      "string": "1",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        3,
+        10
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        9
       ],
       "string": "",
       "type": "NEWLINE"
     },
     {
       "end": [
-        3,
+        4,
+        0
+      ],
+      "exactType": "DEDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        4,
+        0
+      ],
+      "string": "",
+      "type": "DEDENT"
+    },
+    {
+      "end": [
+        4,
         0
       ],
       "exactType": "ENDMARKER",
       "isKeyword": false,
       "isSoftKeyword": false,
       "start": [
-        3,
+        4,
         0
       ],
       "string": "",

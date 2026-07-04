@@ -45,6 +45,7 @@ describe("groupInstructionsByLine", () => {
         positions: null,
         isJumpTarget: false,
         isJump: false,
+        jumpTarget: null,
         stackEffect: 0,
       },
     ]);

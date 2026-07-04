@@ -24,6 +24,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 0,
         "opname": "RESUME",
         "positions": {
@@ -39,6 +40,7 @@
         "argrepr": "None",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 2,
         "opname": "RETURN_CONST",
         "positions": {

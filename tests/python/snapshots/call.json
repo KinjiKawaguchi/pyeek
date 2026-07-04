@@ -105,6 +105,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 0,
         "opname": "RESUME",
         "positions": {
@@ -120,6 +121,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 2,
         "opname": "PUSH_NULL",
         "positions": {
@@ -135,6 +137,7 @@
         "argrepr": "print",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 4,
         "opname": "LOAD_NAME",
         "positions": {
@@ -150,6 +153,7 @@
         "argrepr": "'hi'",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 6,
         "opname": "LOAD_CONST",
         "positions": {
@@ -165,6 +169,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 8,
         "opname": "CALL",
         "positions": {
@@ -180,6 +185,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 16,
         "opname": "POP_TOP",
         "positions": {
@@ -195,6 +201,7 @@
         "argrepr": "None",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 18,
         "opname": "RETURN_CONST",
         "positions": {

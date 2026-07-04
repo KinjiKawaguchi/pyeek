@@ -57,3 +57,6 @@ infra/terraform.tfstate.backup
 infra/terraform.tfvars
 infra/tfplan
 infra/crash.log
+
+# claude code (worktree作業ディレクトリ等のローカル作業領域)
+.claude/

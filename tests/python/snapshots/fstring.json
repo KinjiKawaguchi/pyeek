@@ -170,6 +170,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 0,
         "opname": "RESUME",
         "positions": {
@@ -185,6 +186,7 @@
         "argrepr": "'合計は '",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 2,
         "opname": "LOAD_CONST",
         "positions": {
@@ -200,6 +202,7 @@
         "argrepr": "total",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 4,
         "opname": "LOAD_NAME",
         "positions": {
@@ -215,6 +218,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 6,
         "opname": "FORMAT_VALUE",
         "positions": {
@@ -230,6 +234,7 @@
         "argrepr": "' です'",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 8,
         "opname": "LOAD_CONST",
         "positions": {
@@ -245,6 +250,7 @@
         "argrepr": "",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 10,
         "opname": "BUILD_STRING",
         "positions": {
@@ -260,6 +266,7 @@
         "argrepr": "msg",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 12,
         "opname": "STORE_NAME",
         "positions": {
@@ -275,6 +282,7 @@
         "argrepr": "None",
         "isJump": false,
         "isJumpTarget": false,
+        "jumpTarget": null,
         "offset": 14,
         "opname": "RETURN_CONST",
         "positions": {

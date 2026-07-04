@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
 import { useAnalysis } from "../../model/analysis-store";
 import { simulateStack } from "../../model/vm-stage/stack-sim";
@@ -9,6 +9,50 @@ import { PlayerControls } from "./player-controls";
 import { StackView } from "./stack-view";
 
 const PLAY_INTERVAL_MS = 900;
+
+const GUARD_MESSAGES: Record<string, ReactNode> = {
+  "unsupported-jump": (
+    <>
+      このジャンプ命令はこのバージョンではまだ再生できません。まずは <code>n = 4</code> や{" "}
+      <code>total = 2 + 3 * n</code> のような、くり返しの無いコードで試してみてください。
+    </>
+  ),
+  "opaque-branch": (
+    <>
+      分岐条件の値がこの場では具体的に決まらないため再生できません（例:
+      <code>len(data)</code> の <code>data</code> の中身は分かりません）。
+      <code>x = 5; if x &gt; 3: ...</code> のように具体的な値を使ったコードで試してみてください。
+    </>
+  ),
+  "opaque-iterable": (
+    <>
+      くり返す対象(イテラブル)の中身がこの場では具体的に決まらないため再生できません。
+      <code>range(3)</code> のような具体的なコードで試してみてください。
+    </>
+  ),
+};
+
+function jumpBadge(step: { instr: { opname: string }; jump?: { taken: boolean } }) {
+  if (!step.jump) return null;
+  const { opname } = step.instr;
+  const label =
+    opname === "FOR_ITER"
+      ? step.jump.taken
+        ? "↷ くり返し終了"
+        : "↻ 次の値へ"
+      : step.jump.taken
+        ? "↷ ジャンプした"
+        : "→ そのまま次へ";
+  return (
+    <span
+      className={`vm-stage__jump-badge${
+        step.jump.taken ? " vm-stage__jump-badge--taken" : " vm-stage__jump-badge--not-taken"
+      }`}
+    >
+      {label}
+    </span>
+  );
+}
 
 export function VmStage() {
   const { state, setSelectedRange } = useAnalysis();
@@ -93,16 +137,14 @@ export function VmStage() {
     ) : null;
 
   if (!simResult?.ok) {
+    const message = simResult ? GUARD_MESSAGES[simResult.reason] : null;
     return (
       <section className="card" aria-label="スタックマシン">
         <p className="card__title">
           <span className="card__emoji">🧮</span> スタックマシン
         </p>
         {codeTabs}
-        <p className="vm-stage__guard">
-          ループ・分岐は次のバージョンで対応予定です。まずは <code>n = 4</code> や{" "}
-          <code>total = 2 + 3 * n</code> のような、くり返しの無いコードで試してみてください。
-        </p>
+        <p className="vm-stage__guard">{message ?? GUARD_MESSAGES["unsupported-jump"]}</p>
       </section>
     );
   }
@@ -140,6 +182,12 @@ export function VmStage() {
         </span>
       </p>
       {codeTabs}
+      {simResult.truncated ? (
+        <p className="vm-stage__truncated-banner" role="status">
+          ⚠️ くり返しの回数が多すぎるため、{steps.length}ステップで打ち切りました
+          （無限ループになっているかもしれません）。
+        </p>
+      ) : null}
       <PlayerControls
         currentIndex={currentIndex}
         stepCount={steps.length}
@@ -155,6 +203,10 @@ export function VmStage() {
             <>
               <span className="vm-stage__current-op">{currentStep.instr.opname}</span>
               <span className="vm-stage__current-note">{currentStep.note}</span>
+              {jumpBadge(currentStep)}
+              {currentStep.iteration != null ? (
+                <span className="vm-stage__iteration-badge">{currentStep.iteration}周目</span>
+              ) : null}
             </>
           ) : (
             <span className="vm-stage__current-note">▶ を押すと実行が始まります</span>

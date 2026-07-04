@@ -140,6 +140,50 @@
   font-size: 0.9rem;
 }
 
+.vm-stage__truncated-banner {
+  background: #fff4e8;
+  border: 2px solid #ffd3a8;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #a9540b;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 10px;
+}
+
+.vm-stage__jump-badge {
+  align-self: flex-start;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 3px 10px;
+  border: 2px solid;
+}
+
+.vm-stage__jump-badge--taken {
+  background: #eef7ff;
+  border-color: #9cc9ff;
+  color: #1c5a97;
+}
+
+.vm-stage__jump-badge--not-taken {
+  background: #f3f0ff;
+  border-color: #cdbdf2;
+  color: #5a3fa0;
+}
+
+.vm-stage__iteration-badge {
+  align-self: flex-start;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: #fff3cc;
+  border: 2px solid #f2b705;
+  color: #7a5a00;
+}
+
 .stack-view {
   flex: none;
   width: 160px;
