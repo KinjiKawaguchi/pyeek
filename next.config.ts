@@ -10,6 +10,40 @@ const nextConfig: NextConfig = {
   // 同じ workaround を lol-draft-ai/apps/web でも採用している
   // （上流 issue: https://github.com/vercel/next.js/issues/51478）。
   pageExtensions: ["nx.tsx", "nx.ts"],
+
+  headers: async () => [
+    {
+      // Pyodide ランタイムファイルのキャッシュ設定。
+      // immutable キャッシュを採用しない理由：
+      // - ファイル名にハッシュが付いていない（pyodide.mjs, pyodide.asm.wasm など）
+      // - pyodide パッケージバージョンが package.json で ^0.27.0 と指定されており、
+      //   npm/pnpm update で 0.27.1 以上にアップデートされる可能性がある
+      // - この場合、ファイル内容は変わるが URL は変わらないため、
+      //   immutable キャッシュではクライアント側が古いバージョンをキャッシュしたままになる恐れがある
+      //
+      // 戦略：
+      // - max-age=604800（7日間）の短期キャッシュを設定
+      // - 7日は実運用的には十分な長さで、ほとんどのクライアントがそれまでにアップデートを取得できる
+      // - サーバー再起動時に自動で検証される（ETag/Last-Modified）
+      // - アップデート時は明示的なデプロイで全クライアントに波及させる
+      source: "/pyodide/:path*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=604800",
+        },
+      ],
+    },
+    {
+      source: "/py/:path*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=604800",
+        },
+      ],
+    },
+  ],
 };
 
 export default nextConfig;
