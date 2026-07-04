@@ -7,6 +7,7 @@ import { useAnalysis } from "../../model/analysis-store";
 import { layoutAst } from "../../model/ast-stage/ast-layout";
 import "./ast-stage.css";
 import { AstNodeCard } from "./ast-node-card";
+import { AstNodeReadout } from "./ast-node-readout";
 
 const COL_WIDTH = 132;
 const ROW_HEIGHT = 90;
@@ -18,6 +19,15 @@ export function AstStage() {
   const { state, setSelectedRange } = useAnalysis();
   const root = state.result?.ast ?? null;
   const layout = useMemo(() => (root ? layoutAst(root) : null), [root]);
+
+  const selectedNode = useMemo(() => {
+    if (!layout) return null;
+    const active = layout.nodes.find(
+      (layoutNode) =>
+        classifyRange(astNodeRange(layoutNode.node), state.selectedRange) === "active",
+    );
+    return active?.node ?? null;
+  }, [layout, state.selectedRange]);
 
   if (!root || !layout) {
     return (
@@ -102,6 +112,7 @@ export function AstStage() {
           })}
         </svg>
       </div>
+      <AstNodeReadout node={selectedNode} mode={state.mode} />
     </section>
   );
 }

@@ -10,6 +10,45 @@
   font-weight: 600;
 }
 
+.bytecode-stage__readout {
+  margin-top: 8px;
+  background: #f5f9ff;
+  border: 2px dashed var(--line);
+  border-radius: 12px;
+  padding: 11px 14px;
+  min-height: 52px;
+  font-size: 0.92rem;
+}
+
+.bytecode-stage__readout-head {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+
+.bytecode-stage__chip {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 7px;
+  color: #fff;
+  background: #2f8fe6;
+  font-size: 0.82rem;
+}
+
+.bytecode-stage__pos {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.bytecode-stage__readout-hint {
+  color: var(--ink-soft);
+  margin: 0;
+}
+
 .bytecode-stage__code-tabs {
   display: flex;
   gap: 8px;

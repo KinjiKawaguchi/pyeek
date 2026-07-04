@@ -1,18 +1,4 @@
-// 前身 token-lab.html の EXPLAIN / CHIP_COLOR / LEGEND_* をそのまま移植。
-export const EXPLAIN: Record<string, string> = {
-  NAME: "なまえ（変数・関数・キーワードなど）。字句解析の時点では if や for も含めて全部 NAME です。",
-  NUMBER:
-    "数値リテラル。整数・小数・16進(0x)・2進(0b)・虚数(j)・桁区切り(_) を1つのトークンにまとめます。",
-  STRING: "文字列リテラル。前置子(f, r, b, u)や三重引用符も含めて1つのトークン。",
-  OP: "演算子・区切り記号。exact 型（LPAR, EQUAL, PLUS…）で細かく分類されます。",
-  COMMENT: "コメント。# から行末まで。プログラムの動作には影響しません。",
-  NEWLINE: "論理行の終わり。1つの文が完結したことを示す“意味のある”改行です。",
-  NL: "意味を持たない改行。空行・コメントだけの行・カッコ()[]{}の途中の改行で出ます。",
-  INDENT: "字下げの始まり。ブロックが1段深くなったことを表す構造トークン（中身は空白文字）。",
-  DEDENT: "字下げの終わり。ブロックが1段浅くなったことを表す構造トークン（中身は空）。",
-  ENDMARKER: "入力の終端を示す最後のトークン。",
-};
-
+// 前身 token-lab.html の CHIP_COLOR / LEGEND_* をそのまま移植。
 export const CHIP_COLOR: Record<string, string> = {
   NAME: "#2f8fe6",
   NUMBER: "#e88a2c",

@@ -7,6 +7,7 @@ import { useAnalysis } from "../../model/analysis-store";
 import { groupInstructionsByLine } from "../../model/bytecode-stage/instr-view";
 import "./bytecode-stage.css";
 import { InstrRow } from "./instr-row";
+import { OpcodeReadout } from "./opcode-readout";
 
 export function BytecodeStage() {
   const { state, setSelectedRange } = useAnalysis();
@@ -34,6 +35,10 @@ export function BytecodeStage() {
 
   const activeKey = codePathKey(activeEntry.path);
   const groups = groupInstructionsByLine(activeEntry.code.instructions);
+  const selectedInstr =
+    activeEntry.code.instructions.find(
+      (instr) => classifyRange(instrRange(instr), state.selectedRange) === "active",
+    ) ?? null;
 
   const handleSelect = (instr: Instr) => {
     const range = instrRange(instr);
@@ -96,6 +101,7 @@ export function BytecodeStage() {
           );
         })}
       </div>
+      <OpcodeReadout instr={selectedInstr} mode={state.mode} />
     </section>
   );
 }

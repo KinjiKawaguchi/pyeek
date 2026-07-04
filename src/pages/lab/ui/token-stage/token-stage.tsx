@@ -70,7 +70,7 @@ export function TokenStage() {
         linkTiers={linkTiers}
         onSelect={handleSelect}
       />
-      <TokenReadout token={selectedToken} />
+      <TokenReadout token={selectedToken} mode={state.mode} />
     </section>
   );
 }

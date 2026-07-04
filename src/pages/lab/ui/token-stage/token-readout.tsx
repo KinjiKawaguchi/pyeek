@@ -1,9 +1,12 @@
 import type { Token } from "@/shared/api";
-import { CHIP_COLOR, EXPLAIN } from "../../config/token-stage/explain";
+import { CHIP_COLOR } from "../../config/token-stage/explain";
+import { findTokenReference } from "../../config/token-stage/token-reference-index";
+import type { DisplayMode } from "../../model/analysis-store";
 import { formatPos, isBracket } from "../../model/token-stage/token-display";
 
 export interface TokenReadoutProps {
   token: Token | null;
+  mode: DisplayMode;
 }
 
 function keywordNote(token: Token): string {
@@ -15,7 +18,7 @@ function keywordNote(token: Token): string {
   return "";
 }
 
-export function TokenReadout({ token }: TokenReadoutProps) {
+export function TokenReadout({ token, mode }: TokenReadoutProps) {
   if (!token) {
     return (
       <div className="token-stage__readout">
@@ -30,6 +33,8 @@ export function TokenReadout({ token }: TokenReadoutProps) {
   const colorKey = token.type === "OP" ? (isBracket(token.string) ? "BRACKET" : "OP") : token.type;
   const color = CHIP_COLOR[colorKey] ?? "#888";
   const repr = token.string === "" ? "（空）" : JSON.stringify(token.string);
+  const reference = findTokenReference(token.type === "OP" ? token.exactType : token.type);
+  const explanation = reference ? (mode === "easy" ? reference.easy : reference.detail) : "";
 
   return (
     <div className="token-stage__readout">
@@ -42,9 +47,19 @@ export function TokenReadout({ token }: TokenReadoutProps) {
         </span>
       </div>
       <div className="token-stage__readout-body">
-        {EXPLAIN[token.type] ?? ""}
+        {explanation}
         {keywordNote(token)}
       </div>
+      {reference ? (
+        <a
+          href={reference.docUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="token-stage__doc-link"
+        >
+          公式ドキュメント →
+        </a>
+      ) : null}
     </div>
   );
 }
