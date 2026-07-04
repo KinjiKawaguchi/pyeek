@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Pyeek</title>
+  <rect width="64" height="64" rx="16" fill="#7c3aed" />
+  <text
+    x="32"
+    y="39"
+    text-anchor="middle"
+    font-family="'JetBrains Mono', ui-monospace, monospace"
+    font-size="26"
+    font-weight="700"
+    fill="#ffffff"
+  >&gt;&gt;&gt;</text>
+</svg>
