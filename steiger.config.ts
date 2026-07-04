@@ -10,28 +10,14 @@ export default defineConfig([
     ignores: ["app/**"],
   },
   {
-    // M0 時点では pages/lab のみが consumer だが、M1〜M4 で widgets/
-    // {token,ast,bytecode,vm}-stage が同じ解析結果・選択状態を共有するために
-    // 追加される計画（実装計画: pyeek-expressive-pnueli.md）。再利用計画が
-    // 消えたら pages/lab 配下に戻す。
+    // Pyeek は単一ページアプリ（pages/lab のみ）。entities/analysis は
+    // pages/lab 配下の token-stage/ast-stage/bytecode-stage/vm-stage
+    // （旧 widgets、2026-07 に pages/lab 配下へ統合）が共有する解析結果・
+    // 選択状態・段間リンクの純関数群を持つ。唯一の consumer が pages/lab
+    // であること自体は、この規模のアプリでは想定通り。
     files: ["src/entities/analysis/**"],
     rules: {
       "fsd/insignificant-slice": "off",
-    },
-  },
-  {
-    // Pyeek は単一ページアプリ（pages/lab のみ）なので、widgets 層の
-    // 「複数ページでの再利用」という insignificant-slice の前提が成立しない。
-    // ここでの widget は「マイルストーン単位で独立開発される大型UIブロック」
-    // という意味で採用しており（将来の iframe/スニペット配布も見据える）、
-    // 唯一の consumer が pages/lab であること自体は想定通り。
-    files: ["src/widgets/**"],
-    rules: {
-      "fsd/insignificant-slice": "off",
-      // token-stage/ast-stage/bytecode-stage/vm-stage は「①〜④の4段」という
-      // ドメイン上の並びをそのまま slice 名にしている。"stage" の反復は
-      // 命名の衝突ではなく意図した対称性なので無効化する。
-      "fsd/repetitive-naming": "off",
     },
   },
 ]);

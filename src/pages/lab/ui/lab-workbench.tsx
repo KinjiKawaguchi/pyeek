@@ -1,16 +1,16 @@
 "use client";
 
 import { AnalysisProvider } from "@/entities/analysis";
-import { AstStage } from "@/widgets/ast-stage";
-import { BytecodeStage } from "@/widgets/bytecode-stage";
-import { CallSecretCard, TokenLegend, TokenStage } from "@/widgets/token-stage";
-import { VmStage } from "@/widgets/vm-stage";
+import { AstStage } from "./ast-stage";
+import { BytecodeStage } from "./bytecode-stage";
 import { Editor } from "./editor";
 import { ErrorsBanner } from "./errors-banner";
 import { LoadingOverlay } from "./loading-overlay";
 import { ModeToggle } from "./mode-toggle";
 import { PresetPicker } from "./preset-picker";
 import { PythonVersionBadge } from "./python-version-badge";
+import { CallSecretCard, TokenLegend, TokenStage } from "./token-stage";
+import { VmStage } from "./vm-stage";
 
 export interface LabWorkbenchProps {
   initialSource: string;

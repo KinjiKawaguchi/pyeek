@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { AnalysisProvider } from "@/entities/analysis";
 import { Editor } from "@/pages/lab/ui/editor";
 import { PythonVersionBadge } from "@/pages/lab/ui/python-version-badge";
+import { TokenStage } from "@/pages/lab/ui/token-stage";
 import type { BridgeLoadingState, PyeekBridge, PyeekResult, Token } from "@/shared/api";
-import { TokenStage } from "@/widgets/token-stage";
 
 const FAKE_TOKENS: Token[] = [
   {

@@ -9,8 +9,31 @@ Python の字句解析・構文解析・コンパイル・実行を、本物の 
 ## アーキテクチャ
 
 - Next.js（App Router）+ TypeScript。ディレクトリ構成は Feature-Sliced Design
-  (FSD) v2.1: `src/{app,pages,widgets,entities,shared}`。姉妹プロジェクト
-  `lol-draft-ai/apps/web` と同じ FSD 採用パターンに揃えている。
+  (FSD) v2.1: `src/{app,pages,entities,shared}`。widgets 層は無い（Pyeek は
+  `pages/lab` 一枚だけの単一ページアプリで、4段（token/ast/bytecode/vm-stage）
+  はすべて `pages/lab` 配下に同居している。2026-07 に `widgets/` から統合）。
+- `pages/lab` の内部は FSD のセグメント規約（`ui/model/config` を最上位に置く）
+  に従い、その中に stage 別サブフォルダを切っている:
+  ```
+  pages/lab/
+  ├── ui/{editor,mode-toggle,...}.tsx      # ページ固有の合成UI
+  │   ├── token-stage/  ├── ast-stage/  ├── bytecode-stage/  ├── vm-stage/
+  ├── model/
+  │   ├── token-stage/  ├── ast-stage/  ├── bytecode-stage/  ├── vm-stage/
+  ├── config/{presets.ts, token-stage/, ast-stage/, bytecode-stage/}
+  └── index.ts
+  ```
+  各 stage フォルダの直下にさらに `ui/`/`model/` を作ると steiger の
+  `fsd/no-reserved-folder-names`（予約セグメント名の入れ子）に引っかかるため、
+  segment が先・stage 名が後、という順序を厳守すること。各 stage の
+  `ui/<stage>/index.ts` は内部向けの薄いバレル（`LabWorkbench` からの
+  import を短くするだけで、FSD の public API 境界としての意味は無い）。
+- 4段が単一ページ内に同居する理由は steiger の `insignificant-slice` 警告を
+  無効化している `entities/analysis` 側のコメント、および実装計画ファイルを
+  参照。widgets 層として独立させていた時期もあったが、「複数ページで使う」
+  という widgets の前提が単一ページアプリでは成立しないため、pages/lab に
+  統合した（1ページしか無いのに widgets があるのは実態に合わない、という
+  指摘を受けての変更）。
 - **Next.js の App Router ルートファイル（`page.nx.tsx`/`layout.nx.tsx`）は
   `src/app/` に置き、`.nx.tsx`/`.nx.ts` という非標準の拡張子で命名する**
   （`next.config.ts` の `pageExtensions`）。理由:
