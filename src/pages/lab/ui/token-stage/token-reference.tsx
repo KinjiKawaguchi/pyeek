@@ -15,11 +15,11 @@ export function TokenReference() {
           <strong>注記:</strong>
           この解説文は正確性を期していますが、誤りが含まれる可能性があります。公式ドキュメント（{" "}
           <a
-            href="https://docs.python.org/3/library/tokenize.html"
+            href="https://docs.python.org/3.12/library/token.html"
             target="_blank"
             rel="noopener noreferrer"
           >
-            docs.python.org/3/library/tokenize.html
+            docs.python.org/3.12/library/token.html
           </a>
           ）も参照してください。トークン列・AST・バイトコードの実行結果自体は常に正確です。
         </div>

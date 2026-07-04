@@ -12,43 +12,43 @@ export const TOKEN_REFERENCE_ADVANCED: TokenReference[] = [
   {
     name: "ASYNC",
     detail:
-      "async キーワード。async def などで非同期関数を定義する際に出現します。Python 3.7+ で正式化されましたが、Python 3.5-3.6 では制限的な実装でした。NAME トークンではなく専用の ASYNC トークンで識別されることで、構文解析が効率化されます。",
-    docUrl: "https://docs.python.org/3/library/tokenize.html#token-types",
-    easy: "async キーワード。非同期関数を定義する async def で出現します。",
+      "async キーワード用のトークン定数。Python 3.5-3.6 でのみ tokenize が実際に出力していましたが、3.7 で async/await が正式な予約語になったことで廃止され、以降 async は普通の NAME トークンとして字句解析されます（キーワードかどうかの判定は構文解析側が担う）。ASYNC/AWAIT は 3.8 で一度復活しましたが、これは ast.parse() を古い feature_version（Python 3.6 以下相当）で動かす後方互換パスのためだけに存在し、通常の tokenize.generate_tokens() では出現しません（Pyeek が使う経路もこちらです）。3.13 で再度廃止されています。",
+    docUrl: "https://docs.python.org/3.12/library/token.html#token.ASYNC",
+    easy: "async キーワード専用のトークンでしたが、今は普通の「なまえ」トークン（NAME）として扱われます。このアプリで async def と入力しても ASYNC トークンは出てきません。",
   },
   {
     name: "AWAIT",
     detail:
-      "await キーワード。非同期関数内で await 式として使用されます。async 関数の内部でのみ有効で、その外での使用は SyntaxError になります。NAME トークンではなく専用トークンで識別されます。",
-    docUrl: "https://docs.python.org/3/library/tokenize.html#token-types",
-    easy: "await キーワード。async 関数の中で非同期処理の完了を待つのに使います。",
+      "await キーワード用のトークン定数。ASYNC と同じ経緯をたどり、Python 3.7 以降 await は NAME トークンとして字句解析されます。ASYNC/AWAIT トークン自体は 3.8-3.12 でも定義は残っていますが、古い feature_version 互換の内部処理専用で、通常の tokenize では出現しません。",
+    docUrl: "https://docs.python.org/3.12/library/token.html#token.AWAIT",
+    easy: "await キーワードも同様に、今は普通の「なまえ」トークン（NAME）として字句解析されます。専用トークンとして表示されることはありません。",
   },
   {
     name: "TYPE_COMMENT",
     detail:
-      "型コメント。# type: ... の形式で書かれた型情報の注釈。Python 3.5-3.9 では型ヒントの主流でしたが、Python 3.10+ では型ヒント構文の推奨が変わっています。tokenize では TYPE_COMMENT として識別されます。",
-    docUrl: "https://docs.python.org/3/library/tokenize.html#token-types",
-    easy: "型コメント。# type: int のように型情報をコメントで指定します。",
+      "# type: ... 形式の型コメントを表すトークン定数。ただしこれは ast.parse() などに PyCF_TYPE_COMMENTS フラグを渡した場合にのみ、通常の COMMENT の代わりに生成される特別な出力モードです。Pyeek が使う tokenize.generate_tokens() の素の呼び出しではこのフラグは有効化されないため、実際には型コメントも通常の COMMENT トークンとして表示されます。",
+    docUrl: "https://docs.python.org/3.12/library/token.html#token.TYPE_COMMENT",
+    easy: "# type: int のような型コメント専用のトークンです。ただし特別な設定をしないと使われず、このアプリでは普通の「コメント」トークンとして表示されます。",
   },
   {
     name: "SOFT_KEYWORD",
     detail:
-      "ソフトキーワード。Python 3.10+ で導入された match など、文脈依存的なキーワード。これらは特定の文脈でのみキーワードとして機能し、他の文脈では NAME トークンとして扱える可能性があります。SOFT_KEYWORD トークンは Python 3.10+ の tokenize で出現します。",
-    docUrl: "https://docs.python.org/3/library/tokenize.html#token-types",
-    easy: "ソフトキーワード。Python 3.10+ で追加された match などの文脈依存的なキーワード。",
+      "ソフトキーワード（match, case, _, type など、Python 3.10+ で文脈依存的にキーワードとして働く識別子）を示すためのトークン定数。公式ドキュメントは「tokenizer はこの値を決して生成しない」と明記しています。match/case などは常に NAME トークンとして字句解析され、ソフトキーワードかどうかは keyword.issoftkeyword() で別途判定します。Pyeek の解析結果 JSON にも、各 NAME トークンへ isSoftKeyword フラグとして同じ判定結果を付与しています。",
+    docUrl: "https://docs.python.org/3.12/library/token.html#token.SOFT_KEYWORD",
+    easy: "match や case などのソフトキーワードを表すための定数ですが、実際の字句解析では絶対に使われません。match と書いても、出てくるのは普通の「なまえ」トークン（NAME）です。",
   },
   {
     name: "ERRORTOKEN",
     detail:
-      "エラートークン。字句解析で認識できない文字列が出現したとき生成されます。これはそのまま構文解析エラーにつながります。例: 不正な文字記号、正しくない連続など。",
-    docUrl: "https://docs.python.org/3/library/tokenize.html#token-types",
-    easy: "エラートークン。字句解析で認識できない文字や記号で出現します。プログラムは実行できません。",
+      "誤った入力を示すためのトークン定数。ただし公式ドキュメントによれば、tokenize モジュールは通常エラーを例外（TokenError/SyntaxError 等）を送出することで伝え、このトークンを生成することは稀です。認識できない文字はむしろ OP や NAME として一旦トークン化され、後段の構文解析で拒否される場合もあります。Pyeek でも壊れた入力は基本的にエラーバナー（例外捕捉）として表示され、ERRORTOKEN 自体がトークン列に現れることはほぼありません。",
+    docUrl: "https://docs.python.org/3.12/library/token.html#token.ERRORTOKEN",
+    easy: "「読み取れない入力」を示すための定数ですが、実際には多くの場合エラーそのもの（例外）として扱われ、トークンとして表示されることは稀です。",
   },
   {
     name: "TYPE_IGNORE",
     detail:
-      "型チェック無視コメント。# type: ignore の形式で、特定の行の型チェックを無視するよう mypy などの型チェッカーに指示します。tokenize では TYPE_IGNORE として識別されます。",
-    docUrl: "https://docs.python.org/3/library/tokenize.html#token-types",
-    easy: "型チェック無視コメント。# type: ignore で型チェッカーの警告を無視します。",
+      "# type: ignore 形式のコメントを表すトークン定数。TYPE_COMMENT と同じく PyCF_TYPE_COMMENTS フラグ付きでのみ生成される特別な出力で、Pyeek の素の tokenize 呼び出しでは有効化されないため、実際には通常の COMMENT トークンとして表示されます。",
+    docUrl: "https://docs.python.org/3.12/library/token.html#token.TYPE_IGNORE",
+    easy: "# type: ignore を表すための専用トークンですが、特別な設定をしないと使われず、このアプリでは普通の「コメント」トークンとして表示されます。",
   },
 ];
