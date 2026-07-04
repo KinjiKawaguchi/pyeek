@@ -2,6 +2,7 @@
 
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
+import { easyOpLabel } from "../../config/bytecode-stage/labels";
 import { useAnalysis } from "../../model/analysis-store";
 import { simulateStack } from "../../model/vm-stage/stack-sim";
 import "./vm-stage.css";
@@ -201,7 +202,11 @@ export function VmStage() {
         <div className="vm-stage__current">
           {currentStep ? (
             <>
-              <span className="vm-stage__current-op">{currentStep.instr.opname}</span>
+              <span className="vm-stage__current-op">
+                {state.mode === "easy"
+                  ? easyOpLabel(currentStep.instr.opname)
+                  : currentStep.instr.opname}
+              </span>
               <span className="vm-stage__current-note">{currentStep.note}</span>
               {jumpBadge(currentStep)}
               {currentStep.iteration != null ? (

@@ -184,8 +184,7 @@ function createTestTokensWithStruct(): Token[] {
 }
 
 /**
- * f-stringを含むトークン列を生成（foldFStrings の動作検証用）。
- * easy モードでのトークン数の違いを検証するために使用される。
+ * f-stringを含むトークン列を生成する。
  */
 function createTestTokensWithFString(): Token[] {
   return [
@@ -269,7 +268,7 @@ describe("buildTokenStageView", () => {
   describe("構造トークンのフィルタリング", () => {
     it("mode='strict', showStruct=true のときすべてのトークンが表示される", () => {
       const tokens = createTestTokensWithStruct();
-      const result = buildTokenStageView(tokens, "if True: pass", "strict", true);
+      const result = buildTokenStageView(tokens, "strict", true);
 
       // 構造トークン（INDENT, DEDENT）も含まれていることを確認
       const tokenTypes = result.rows.flatMap((row) => row.items.map((item) => item.token.type));
@@ -279,7 +278,7 @@ describe("buildTokenStageView", () => {
 
     it("mode='strict', showStruct=false のとき構造トークンが除外される", () => {
       const tokens = createTestTokensWithStruct();
-      const result = buildTokenStageView(tokens, "if True: pass", "strict", false);
+      const result = buildTokenStageView(tokens, "strict", false);
 
       // 構造トークンが除外されていることを確認
       const tokenTypes = result.rows.flatMap((row) => row.items.map((item) => item.token.type));
@@ -291,8 +290,8 @@ describe("buildTokenStageView", () => {
     it("mode='easy' のときは showStruct の値に関わらず構造トークンが常に除外される", () => {
       const tokens = createTestTokensWithStruct();
 
-      const resultShowTrue = buildTokenStageView(tokens, "if True: pass", "easy", true);
-      const resultShowFalse = buildTokenStageView(tokens, "if True: pass", "easy", false);
+      const resultShowTrue = buildTokenStageView(tokens, "easy", true);
+      const resultShowFalse = buildTokenStageView(tokens, "easy", false);
 
       const typesShowTrue = resultShowTrue.rows.flatMap((row) =>
         row.items.map((item) => item.token.type),
@@ -313,7 +312,7 @@ describe("buildTokenStageView", () => {
   describe("行グループ化", () => {
     it("複数行にまたがるトークン列が token.start[0] 基準に正しく行ごとにグループ化される", () => {
       const tokens = createTestTokens();
-      const result = buildTokenStageView(tokens, "print(x)\n+ y", "strict", false);
+      const result = buildTokenStageView(tokens, "strict", false);
 
       // rows は token.start[0]（行番号）でグループ化される
       expect(result.rows).toHaveLength(2);
@@ -333,7 +332,7 @@ describe("buildTokenStageView", () => {
 
     it("同じ行に複数のトークンがある場合、すべてが1つの TokenRow に含まれる", () => {
       const tokens = createTestTokens();
-      const result = buildTokenStageView(tokens, "print(x)\n+ y", "strict", false);
+      const result = buildTokenStageView(tokens, "strict", false);
 
       // 1行目の items は複数である（print, (, x, ), NEWLINE）
       expect((result.rows[0]?.items.length ?? 0) > 1).toBe(true);
@@ -343,7 +342,7 @@ describe("buildTokenStageView", () => {
   describe("hint文字列", () => {
     it("strict モードでは「実際の tokenize 出力」という文言とトークン数を含む", () => {
       const tokens = createTestTokens();
-      const result = buildTokenStageView(tokens, "print(x)\n+ y", "strict", false);
+      const result = buildTokenStageView(tokens, "strict", false);
 
       expect(result.hint).toContain("実際の tokenize 出力");
       expect(result.hint).toContain(`${tokens.length}`);
@@ -351,7 +350,7 @@ describe("buildTokenStageView", () => {
 
     it("easy モードでは可視トークン数を含む文言になる", () => {
       const tokens = createTestTokens();
-      const result = buildTokenStageView(tokens, "print(x)\n+ y", "easy", false);
+      const result = buildTokenStageView(tokens, "easy", false);
 
       // easy モードではNEWLINEやENDMARKERが除外されるため、可視トークン数は 9 以下
       const visibleCount = result.rows.flatMap((row) => row.items).length;
@@ -359,31 +358,24 @@ describe("buildTokenStageView", () => {
     });
   });
 
-  describe("fstring折りたたみ", () => {
-    it("mode='easy' のとき foldFStrings が呼ばれトークン数が変わる", () => {
+  describe("f-stringトークンの扱い", () => {
+    it("mode='easy' でも FSTRING_* トークンは畳まれず、strict とトークン数が一致する", () => {
       const tokens = createTestTokensWithFString();
-      const source = 'x = f"hello {name}"';
 
-      const strictResult = buildTokenStageView(tokens, source, "strict", false);
-      const easyResult = buildTokenStageView(tokens, source, "easy", false);
+      const strictResult = buildTokenStageView(tokens, "strict", false);
+      const easyResult = buildTokenStageView(tokens, "easy", false);
 
-      // strict では FSTRING_* トークンがそのまま
-      const strictHasFString = strictResult.tokens.some((t) => t.type.startsWith("FSTRING_"));
-      expect(strictHasFString).toBe(true);
-
-      // easy では foldFStrings により FSTRING_* が 1つの STRING に畳まれている
+      // モードはラベル・表示上の違いのみを生み、実際のトークン構造は変えない
+      expect(easyResult.tokens.length).toBe(strictResult.tokens.length);
       const easyHasFString = easyResult.tokens.some((t) => t.type.startsWith("FSTRING_"));
-      expect(easyHasFString).toBe(false);
-
-      // strict のトークン数 > easy のトークン数
-      expect(strictResult.tokens.length).toBeGreaterThan(easyResult.tokens.length);
+      expect(easyHasFString).toBe(true);
     });
   });
 
   describe("呼び出しハイライト対象", () => {
     it("関数呼び出しの呼び出し名+開き括弧に相当するインデックスが callHighlightIndexes に含まれる", () => {
       const tokens = createTestTokens();
-      const result = buildTokenStageView(tokens, "print(x)\n+ y", "strict", false);
+      const result = buildTokenStageView(tokens, "strict", false);
 
       // print は index 0、( は index 1 なので、0 と 1 が callHighlightIndexes に含まれるはず
       expect(result.callHighlightIndexes.has(0)).toBe(true);
@@ -420,7 +412,7 @@ describe("buildTokenStageView", () => {
           isSoftKeyword: false,
         },
       ];
-      const result = buildTokenStageView(tokensNoCall, "x", "strict", false);
+      const result = buildTokenStageView(tokensNoCall, "strict", false);
 
       expect(result.callHighlightIndexes.size).toBe(0);
     });
@@ -510,7 +502,7 @@ describe("buildTokenStageView", () => {
           isSoftKeyword: false,
         },
       ];
-      const result = buildTokenStageView(tokensMultiCall, "print(len(x))", "strict", false);
+      const result = buildTokenStageView(tokensMultiCall, "strict", false);
 
       // print (index 0) と ( (index 1)
       expect(result.callHighlightIndexes.has(0)).toBe(true);

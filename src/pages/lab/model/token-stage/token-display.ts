@@ -30,6 +30,9 @@ const EASY_TYPE_LABEL: Record<string, string> = {
   NAME: "なまえ",
   NUMBER: "すうじ",
   STRING: "もじれつ",
+  FSTRING_START: "もじれつ",
+  FSTRING_MIDDLE: "もじれつ",
+  FSTRING_END: "もじれつ",
   COMMENT: "コメント",
 };
 

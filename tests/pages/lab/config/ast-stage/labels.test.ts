@@ -19,9 +19,9 @@ function createNode(type: string): AstNode {
 
 describe("astEasyLabel", () => {
   describe("登録済みの型に対して正しい日本語ラベルを返すこと", () => {
-    it("Module → 'プログラム全体'", () => {
+    it("Module → 'プログラムぜんぶ'", () => {
       const node = createNode("Module");
-      expect(astEasyLabel(node)).toBe("プログラム全体");
+      expect(astEasyLabel(node)).toBe("プログラムぜんぶ");
     });
 
     it("If → 'もし〜なら'", () => {
@@ -29,9 +29,9 @@ describe("astEasyLabel", () => {
       expect(astEasyLabel(node)).toBe("もし〜なら");
     });
 
-    it("FunctionDef → '関数の定義'", () => {
+    it("FunctionDef → '関数をつくる'", () => {
       const node = createNode("FunctionDef");
-      expect(astEasyLabel(node)).toBe("関数の定義");
+      expect(astEasyLabel(node)).toBe("関数をつくる");
     });
 
     it("For → 'くり返し(for)'", () => {
@@ -49,14 +49,14 @@ describe("astEasyLabel", () => {
       expect(astEasyLabel(node)).toBe("かえす");
     });
 
-    it("Assign → '代入'", () => {
+    it("Assign → '入れる'", () => {
       const node = createNode("Assign");
-      expect(astEasyLabel(node)).toBe("代入");
+      expect(astEasyLabel(node)).toBe("入れる");
     });
 
-    it("ClassDef → 'クラスの定義'", () => {
+    it("ClassDef → 'クラスをつくる'", () => {
       const node = createNode("ClassDef");
-      expect(astEasyLabel(node)).toBe("クラスの定義");
+      expect(astEasyLabel(node)).toBe("クラスをつくる");
     });
 
     it("BinOp → '計算'", () => {

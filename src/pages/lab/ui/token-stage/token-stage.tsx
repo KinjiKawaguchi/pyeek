@@ -14,10 +14,9 @@ export function TokenStage() {
   const [showStruct, setShowStruct] = useState(true);
 
   const rawTokens = useMemo(() => state.result?.tokens ?? [], [state.result?.tokens]);
-  const source = state.result?.source ?? "";
   const view = useMemo(
-    () => buildTokenStageView(rawTokens, source, state.mode, showStruct),
-    [rawTokens, source, state.mode, showStruct],
+    () => buildTokenStageView(rawTokens, state.mode, showStruct),
+    [rawTokens, state.mode, showStruct],
   );
 
   const linkTiers = useMemo(

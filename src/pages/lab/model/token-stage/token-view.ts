@@ -1,7 +1,6 @@
 import type { Token } from "@/shared/api";
 import type { DisplayMode } from "../analysis-store";
 import { findCallInfo } from "./call-info";
-import { foldFStrings } from "./fstring-fold";
 import { isStructToken } from "./token-display";
 
 export interface TokenRowItem {
@@ -23,20 +22,18 @@ export interface TokenStageView {
 
 export function buildTokenStageView(
   rawTokens: Token[],
-  source: string,
   mode: DisplayMode,
   showStruct: boolean,
 ): TokenStageView {
-  const tokens = mode === "easy" ? foldFStrings(rawTokens, source) : rawTokens;
-  const visible = filterVisible(tokens, mode, showStruct);
+  const visible = filterVisible(rawTokens, mode, showStruct);
 
   return {
-    tokens,
+    tokens: rawTokens,
     rows: groupByRow(visible),
-    callHighlightIndexes: buildCallHighlightIndexes(tokens),
+    callHighlightIndexes: buildCallHighlightIndexes(rawTokens),
     hint:
       mode === "strict"
-        ? `— 実際の tokenize 出力（${tokens.length} トークン）`
+        ? `— 実際の tokenize 出力（${rawTokens.length} トークン）`
         : `— ${visible.length}個のかたまり`,
   };
 }

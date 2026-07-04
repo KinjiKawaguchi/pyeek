@@ -164,32 +164,23 @@ test.describe("やさしい/くわしいモード切り替え", () => {
     expect(errors).toHaveLength(0);
   });
 
-  test("f-string折りたたみ：やさしいモードでは折りたたまれたチップが表示されること", async ({
+  test("f-stringトークン：やさしいモードでも畳まれず、くわしいモードと同数のトークンが表示されること", async ({
     page,
   }) => {
     const errors = collectPageErrors(page);
     await gotoAndWaitForPyodide(page);
 
-    // 通常の文字列（非f-string）
-    await fillEditor(page, 'msg = "hello"');
+    await fillEditor(page, 'name = "world"\nmsg = f"hello {name}"');
 
-    // やさしいモード時の「もじれつ」チップ数をベースライン計測
+    // くわしいモードで FSTRING_START/MIDDLE/END が実際に分割されて出現することを確認
+    const fstringChipsStrict = page.locator(".tok__type", { hasText: /^FSTRING_/ });
+    await expect(fstringChipsStrict).toHaveCount(3, { timeout: 10_000 });
+
+    // やさしいモードに切り替えても、同じトークン列であること（畳まれて消えない）を確認
     await page.locator('button[role="tab"]:has-text("やさしい")').click();
     const stringLabelsEasy = page.locator(".tok__type").filter({ hasText: "もじれつ" });
-    const countEasyBase = await stringLabelsEasy.count();
-
-    // くわしいモードに戻す
-    await page.locator('button[role="tab"]:has-text("くわしい（本物）")').click();
-    const stringLabelsStrict = page.locator(".tok__type").filter({ hasText: "STRING" });
-    const countStrictBase = await stringLabelsStrict.count();
-
-    // 両モードで文字列トークンが表示されていることを確認
-    expect(countEasyBase).toBeGreaterThan(0);
-    expect(countStrictBase).toBeGreaterThan(0);
-
-    // やさしいモードでは日本語ラベルが表示され、
-    // くわしいモードでは英語ラベルが表示されることを確認
-    expect(countEasyBase).toBe(countStrictBase);
+    // FSTRING_START/MIDDLE/END の3個 + 通常の文字列リテラル "world" の1個
+    await expect(stringLabelsEasy).toHaveCount(4);
 
     expect(errors).toHaveLength(0);
   });
@@ -208,9 +199,9 @@ test.describe("やさしい/くわしいモード切り替え", () => {
     // やさしいモードに切り替え
     await page.locator('button[role="tab"]:has-text("やさしい")').click();
 
-    // AST ノードが日本語表記（代入）に変わることを確認
-    assignNodes = page.locator(".ast-node").filter({ hasText: "代入" }).first();
-    await expect(assignNodes).toContainText("代入");
+    // AST ノードが日本語表記（入れる）に変わることを確認
+    assignNodes = page.locator(".ast-node").filter({ hasText: "入れる" }).first();
+    await expect(assignNodes).toContainText("入れる");
 
     expect(errors).toHaveLength(0);
   });
