@@ -1,0 +1,466 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "targets",
+              "node": {
+                "children": [
+                  {
+                    "field": "ctx",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 3,
+                      "label": "Store",
+                      "lineno": null,
+                      "type": "Store"
+                    }
+                  }
+                ],
+                "colOffset": 0,
+                "endColOffset": 3,
+                "endLineno": 1,
+                "fields": {
+                  "id": "'msg'"
+                },
+                "id": 2,
+                "label": "Name(id='msg')",
+                "lineno": 1,
+                "type": "Name"
+              }
+            },
+            {
+              "field": "value",
+              "node": {
+                "children": [
+                  {
+                    "field": "values",
+                    "node": {
+                      "children": [],
+                      "colOffset": 8,
+                      "endColOffset": 18,
+                      "endLineno": 1,
+                      "fields": {
+                        "kind": "None",
+                        "value": "'合計は '"
+                      },
+                      "id": 5,
+                      "label": "Constant(value='合計は ', kind=None)",
+                      "lineno": 1,
+                      "type": "Constant"
+                    }
+                  },
+                  {
+                    "field": "values",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "value",
+                          "node": {
+                            "children": [
+                              {
+                                "field": "ctx",
+                                "node": {
+                                  "children": [],
+                                  "colOffset": null,
+                                  "endColOffset": null,
+                                  "endLineno": null,
+                                  "fields": {},
+                                  "id": 8,
+                                  "label": "Load",
+                                  "lineno": null,
+                                  "type": "Load"
+                                }
+                              }
+                            ],
+                            "colOffset": 19,
+                            "endColOffset": 24,
+                            "endLineno": 1,
+                            "fields": {
+                              "id": "'total'"
+                            },
+                            "id": 7,
+                            "label": "Name(id='total')",
+                            "lineno": 1,
+                            "type": "Name"
+                          }
+                        }
+                      ],
+                      "colOffset": 18,
+                      "endColOffset": 25,
+                      "endLineno": 1,
+                      "fields": {
+                        "conversion": "-1",
+                        "format_spec": "None"
+                      },
+                      "id": 6,
+                      "label": "FormattedValue(conversion=-1, format_spec=None)",
+                      "lineno": 1,
+                      "type": "FormattedValue"
+                    }
+                  },
+                  {
+                    "field": "values",
+                    "node": {
+                      "children": [],
+                      "colOffset": 25,
+                      "endColOffset": 32,
+                      "endLineno": 1,
+                      "fields": {
+                        "kind": "None",
+                        "value": "' です'"
+                      },
+                      "id": 9,
+                      "label": "Constant(value=' です', kind=None)",
+                      "lineno": 1,
+                      "type": "Constant"
+                    }
+                  }
+                ],
+                "colOffset": 6,
+                "endColOffset": 33,
+                "endLineno": 1,
+                "fields": {},
+                "id": 4,
+                "label": "JoinedStr",
+                "lineno": 1,
+                "type": "JoinedStr"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 33,
+          "endLineno": 1,
+          "fields": {},
+          "id": 1,
+          "label": "Assign",
+          "lineno": 1,
+          "type": "Assign"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "'合計は '",
+      "' です'",
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "'合計は '",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 8,
+          "endColOffset": 18,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "total",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 4,
+        "opname": "LOAD_NAME",
+        "positions": {
+          "colOffset": 19,
+          "endColOffset": 24,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 6,
+        "opname": "FORMAT_VALUE",
+        "positions": {
+          "colOffset": 18,
+          "endColOffset": 25,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 1,
+        "argrepr": "' です'",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 8,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 25,
+          "endColOffset": 32,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 3,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 10,
+        "opname": "BUILD_STRING",
+        "positions": {
+          "colOffset": 6,
+          "endColOffset": 33,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -2
+      },
+      {
+        "arg": 1,
+        "argrepr": "msg",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 12,
+        "opname": "STORE_NAME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 3,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 2,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 14,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 3,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [
+      "total",
+      "msg"
+    ],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "msg = f\"合計は {total} です\"",
+  "tokens": [
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "msg",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "=",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        8
+      ],
+      "exactType": "FSTRING_START",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": "f\"",
+      "type": "FSTRING_START"
+    },
+    {
+      "end": [
+        1,
+        12
+      ],
+      "exactType": "FSTRING_MIDDLE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        8
+      ],
+      "string": "合計は ",
+      "type": "FSTRING_MIDDLE"
+    },
+    {
+      "end": [
+        1,
+        13
+      ],
+      "exactType": "LBRACE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        12
+      ],
+      "string": "{",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        18
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        13
+      ],
+      "string": "total",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        19
+      ],
+      "exactType": "RBRACE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        18
+      ],
+      "string": "}",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        22
+      ],
+      "exactType": "FSTRING_MIDDLE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        19
+      ],
+      "string": " です",
+      "type": "FSTRING_MIDDLE"
+    },
+    {
+      "end": [
+        1,
+        23
+      ],
+      "exactType": "FSTRING_END",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        22
+      ],
+      "string": "\"",
+      "type": "FSTRING_END"
+    },
+    {
+      "end": [
+        1,
+        24
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        23
+      ],
+      "string": "",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

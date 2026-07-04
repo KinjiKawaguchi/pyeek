@@ -1,0 +1,52 @@
+{
+  "name": "pyeek",
+  "version": "0.1.0",
+  "description": "Python が動くまでの字句解析・構文解析・コンパイル・実行を、本物の CPython の内部表現で串刺しに可視化する教育用 Web アプリ",
+  "private": true,
+  "packageManager": "pnpm@10.8.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "predev": "node scripts/copy-pyodide.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/copy-pyodide.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "check": "biome check src/ tests/",
+    "check:fix": "biome check src/ tests/ --fix",
+    "typecheck": "tsc --noEmit",
+    "fsd": "steiger ./src",
+    "test": "vitest run --project unit",
+    "test:watch": "vitest --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:python": "uv run pytest tests/python/"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "pyodide": "^0.27.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@feature-sliced/steiger-plugin": "^0.5.8",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.0.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "jsdom": "^25.0.0",
+    "lefthook": "^1.11.0",
+    "steiger": "^0.5.12",
+    "typescript": "^5",
+    "vitest": "^3.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "lefthook"]
+  }
+}

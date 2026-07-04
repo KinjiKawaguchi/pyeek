@@ -1,0 +1,575 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "args",
+              "node": {
+                "children": [
+                  {
+                    "field": "args",
+                    "node": {
+                      "children": [],
+                      "colOffset": 6,
+                      "endColOffset": 7,
+                      "endLineno": 1,
+                      "fields": {
+                        "annotation": "None",
+                        "arg": "'x'"
+                      },
+                      "id": 3,
+                      "label": "arg(arg='x', annotation=None)",
+                      "lineno": 1,
+                      "type": "arg"
+                    }
+                  }
+                ],
+                "colOffset": null,
+                "endColOffset": null,
+                "endLineno": null,
+                "fields": {
+                  "defaults": "[]",
+                  "kw_defaults": "[]",
+                  "kwarg": "None",
+                  "kwonlyargs": "[]",
+                  "posonlyargs": "[]",
+                  "vararg": "None"
+                },
+                "id": 2,
+                "label": "arguments(posonlyargs=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[])",
+                "lineno": null,
+                "type": "arguments"
+              }
+            },
+            {
+              "field": "body",
+              "node": {
+                "children": [
+                  {
+                    "field": "value",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "left",
+                          "node": {
+                            "children": [
+                              {
+                                "field": "ctx",
+                                "node": {
+                                  "children": [],
+                                  "colOffset": null,
+                                  "endColOffset": null,
+                                  "endLineno": null,
+                                  "fields": {},
+                                  "id": 7,
+                                  "label": "Load",
+                                  "lineno": null,
+                                  "type": "Load"
+                                }
+                              }
+                            ],
+                            "colOffset": 11,
+                            "endColOffset": 12,
+                            "endLineno": 2,
+                            "fields": {
+                              "id": "'x'"
+                            },
+                            "id": 6,
+                            "label": "Name(id='x')",
+                            "lineno": 2,
+                            "type": "Name"
+                          }
+                        },
+                        {
+                          "field": "op",
+                          "node": {
+                            "children": [],
+                            "colOffset": null,
+                            "endColOffset": null,
+                            "endLineno": null,
+                            "fields": {},
+                            "id": 8,
+                            "label": "Add",
+                            "lineno": null,
+                            "type": "Add"
+                          }
+                        },
+                        {
+                          "field": "right",
+                          "node": {
+                            "children": [],
+                            "colOffset": 15,
+                            "endColOffset": 16,
+                            "endLineno": 2,
+                            "fields": {
+                              "kind": "None",
+                              "value": "1"
+                            },
+                            "id": 9,
+                            "label": "Constant(value=1, kind=None)",
+                            "lineno": 2,
+                            "type": "Constant"
+                          }
+                        }
+                      ],
+                      "colOffset": 11,
+                      "endColOffset": 16,
+                      "endLineno": 2,
+                      "fields": {},
+                      "id": 5,
+                      "label": "BinOp",
+                      "lineno": 2,
+                      "type": "BinOp"
+                    }
+                  }
+                ],
+                "colOffset": 4,
+                "endColOffset": 16,
+                "endLineno": 2,
+                "fields": {},
+                "id": 4,
+                "label": "Return",
+                "lineno": 2,
+                "type": "Return"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 16,
+          "endLineno": 2,
+          "fields": {
+            "decorator_list": "[]",
+            "name": "'f'",
+            "returns": "None",
+            "type_params": "[]"
+          },
+          "id": 1,
+          "label": "FunctionDef(name='f', decorator_list=[], returns=None, type_params=[])",
+          "lineno": 1,
+          "type": "FunctionDef"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [
+      {
+        "children": [],
+        "consts": [
+          "None",
+          "1"
+        ],
+        "instructions": [
+          {
+            "arg": 0,
+            "argrepr": "",
+            "isJump": false,
+            "isJumpTarget": false,
+            "offset": 0,
+            "opname": "RESUME",
+            "positions": {
+              "colOffset": 0,
+              "endColOffset": 0,
+              "endLineno": 1,
+              "lineno": 1
+            },
+            "stackEffect": 0
+          },
+          {
+            "arg": 0,
+            "argrepr": "x",
+            "isJump": false,
+            "isJumpTarget": false,
+            "offset": 2,
+            "opname": "LOAD_FAST",
+            "positions": {
+              "colOffset": 11,
+              "endColOffset": 12,
+              "endLineno": 2,
+              "lineno": 2
+            },
+            "stackEffect": 1
+          },
+          {
+            "arg": 1,
+            "argrepr": "1",
+            "isJump": false,
+            "isJumpTarget": false,
+            "offset": 4,
+            "opname": "LOAD_CONST",
+            "positions": {
+              "colOffset": 15,
+              "endColOffset": 16,
+              "endLineno": 2,
+              "lineno": 2
+            },
+            "stackEffect": 1
+          },
+          {
+            "arg": 0,
+            "argrepr": "+",
+            "isJump": false,
+            "isJumpTarget": false,
+            "offset": 6,
+            "opname": "BINARY_OP",
+            "positions": {
+              "colOffset": 11,
+              "endColOffset": 16,
+              "endLineno": 2,
+              "lineno": 2
+            },
+            "stackEffect": -1
+          },
+          {
+            "arg": null,
+            "argrepr": "",
+            "isJump": false,
+            "isJumpTarget": false,
+            "offset": 10,
+            "opname": "RETURN_VALUE",
+            "positions": {
+              "colOffset": 4,
+              "endColOffset": 16,
+              "endLineno": 2,
+              "lineno": 2
+            },
+            "stackEffect": -1
+          }
+        ],
+        "name": "f",
+        "names": [],
+        "varnames": [
+          "x"
+        ]
+      }
+    ],
+    "consts": [
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "<code f>",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 16,
+          "endLineno": 2,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 4,
+        "opname": "MAKE_FUNCTION",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 16,
+          "endLineno": 2,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "f",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 6,
+        "opname": "STORE_NAME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 16,
+          "endLineno": 2,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 1,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 8,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 16,
+          "endLineno": 2,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [
+      "f"
+    ],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "def f(x):\n    return x + 1\n",
+  "tokens": [
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "def",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "f",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        6
+      ],
+      "exactType": "LPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        5
+      ],
+      "string": "(",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        7
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": "x",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        8
+      ],
+      "exactType": "RPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        7
+      ],
+      "string": ")",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        9
+      ],
+      "exactType": "COLON",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        8
+      ],
+      "string": ":",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        10
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        9
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        4
+      ],
+      "exactType": "INDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "    ",
+      "type": "INDENT"
+    },
+    {
+      "end": [
+        2,
+        10
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        4
+      ],
+      "string": "return",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        12
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        11
+      ],
+      "string": "x",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        14
+      ],
+      "exactType": "PLUS",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        13
+      ],
+      "string": "+",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        16
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        15
+      ],
+      "string": "1",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        2,
+        17
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        16
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        3,
+        0
+      ],
+      "exactType": "DEDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        0
+      ],
+      "string": "",
+      "type": "DEDENT"
+    },
+    {
+      "end": [
+        3,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

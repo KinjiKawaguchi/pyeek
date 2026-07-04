@@ -1,0 +1,291 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "value",
+              "node": {
+                "children": [
+                  {
+                    "field": "left",
+                    "node": {
+                      "children": [],
+                      "colOffset": 0,
+                      "endColOffset": 1,
+                      "endLineno": 1,
+                      "fields": {
+                        "kind": "None",
+                        "value": "2"
+                      },
+                      "id": 3,
+                      "label": "Constant(value=2, kind=None)",
+                      "lineno": 1,
+                      "type": "Constant"
+                    }
+                  },
+                  {
+                    "field": "op",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 4,
+                      "label": "Add",
+                      "lineno": null,
+                      "type": "Add"
+                    }
+                  },
+                  {
+                    "field": "right",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "left",
+                          "node": {
+                            "children": [],
+                            "colOffset": 4,
+                            "endColOffset": 5,
+                            "endLineno": 1,
+                            "fields": {
+                              "kind": "None",
+                              "value": "3"
+                            },
+                            "id": 6,
+                            "label": "Constant(value=3, kind=None)",
+                            "lineno": 1,
+                            "type": "Constant"
+                          }
+                        },
+                        {
+                          "field": "op",
+                          "node": {
+                            "children": [],
+                            "colOffset": null,
+                            "endColOffset": null,
+                            "endLineno": null,
+                            "fields": {},
+                            "id": 7,
+                            "label": "Mult",
+                            "lineno": null,
+                            "type": "Mult"
+                          }
+                        },
+                        {
+                          "field": "right",
+                          "node": {
+                            "children": [],
+                            "colOffset": 8,
+                            "endColOffset": 9,
+                            "endLineno": 1,
+                            "fields": {
+                              "kind": "None",
+                              "value": "4"
+                            },
+                            "id": 8,
+                            "label": "Constant(value=4, kind=None)",
+                            "lineno": 1,
+                            "type": "Constant"
+                          }
+                        }
+                      ],
+                      "colOffset": 4,
+                      "endColOffset": 9,
+                      "endLineno": 1,
+                      "fields": {},
+                      "id": 5,
+                      "label": "BinOp",
+                      "lineno": 1,
+                      "type": "BinOp"
+                    }
+                  }
+                ],
+                "colOffset": 0,
+                "endColOffset": 9,
+                "endLineno": 1,
+                "fields": {},
+                "id": 2,
+                "label": "BinOp",
+                "lineno": 1,
+                "type": "BinOp"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 9,
+          "endLineno": 1,
+          "fields": {},
+          "id": 1,
+          "label": "Expr",
+          "lineno": 1,
+          "type": "Expr"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 9,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "2 + 3 * 4",
+  "tokens": [
+    {
+      "end": [
+        1,
+        1
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "2",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "PLUS",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        2
+      ],
+      "string": "+",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "3",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        7
+      ],
+      "exactType": "STAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": "*",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        9
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        8
+      ],
+      "string": "4",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        10
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        9
+      ],
+      "string": "",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

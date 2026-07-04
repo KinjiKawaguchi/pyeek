@@ -1,0 +1,136 @@
+{
+  "ast": null,
+  "bytecode": null,
+  "errors": [
+    {
+      "lineno": 2,
+      "msg": "unexpected EOF in multi-line statement",
+      "offset": 0,
+      "stage": 1,
+      "type": "TokenError"
+    },
+    {
+      "lineno": 1,
+      "msg": "invalid syntax",
+      "offset": 7,
+      "stage": 2,
+      "type": "SyntaxError"
+    },
+    {
+      "lineno": 1,
+      "msg": "invalid syntax",
+      "offset": 7,
+      "stage": 3,
+      "type": "SyntaxError"
+    }
+  ],
+  "pythonVersion": "3.12.11",
+  "source": "def f(:\n    pass\n",
+  "tokens": [
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "def",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "f",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        6
+      ],
+      "exactType": "LPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        5
+      ],
+      "string": "(",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        7
+      ],
+      "exactType": "COLON",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": ":",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        8
+      ],
+      "exactType": "NL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        7
+      ],
+      "string": "\n",
+      "type": "NL"
+    },
+    {
+      "end": [
+        2,
+        8
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        4
+      ],
+      "string": "pass",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        9
+      ],
+      "exactType": "NL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        8
+      ],
+      "string": "\n",
+      "type": "NL"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "ast": null,
+  "bytecode": null,
+  "errors": [
+    {
+      "lineno": 1,
+      "msg": "EOF in multi-line string",
+      "offset": 5,
+      "stage": 1,
+      "type": "TokenError"
+    },
+    {
+      "lineno": 1,
+      "msg": "unterminated triple-quoted string literal (detected at line 1)",
+      "offset": 5,
+      "stage": 2,
+      "type": "SyntaxError"
+    },
+    {
+      "lineno": 1,
+      "msg": "unterminated triple-quoted string literal (detected at line 1)",
+      "offset": 5,
+      "stage": 3,
+      "type": "SyntaxError"
+    }
+  ],
+  "pythonVersion": "3.12.11",
+  "source": "x = '''unterminated\n",
+  "tokens": [
+    {
+      "end": [
+        1,
+        1
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "x",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        2
+      ],
+      "string": "=",
+      "type": "OP"
+    }
+  ]
+}

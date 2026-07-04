@@ -1,0 +1,77 @@
+{
+  "ast": {
+    "children": [],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "body": "[]",
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(body=[], type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "",
+  "tokens": [
+    {
+      "end": [
+        1,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

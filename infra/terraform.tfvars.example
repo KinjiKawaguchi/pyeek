@@ -1,0 +1,5 @@
+cloudflare_zone = "example.tv"
+web_subdomain   = "pyeek"
+
+# 個人 Vercel アカウントなら未設定 (null) で OK。
+# vercel_team_id = "team_xxx"

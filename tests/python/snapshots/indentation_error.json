@@ -1,0 +1,166 @@
+{
+  "ast": null,
+  "bytecode": null,
+  "errors": [
+    {
+      "lineno": 3,
+      "msg": "unindent does not match any outer indentation level",
+      "offset": 8,
+      "stage": 1,
+      "type": "IndentationError"
+    },
+    {
+      "lineno": 3,
+      "msg": "unindent does not match any outer indentation level",
+      "offset": 8,
+      "stage": 2,
+      "type": "IndentationError"
+    },
+    {
+      "lineno": 3,
+      "msg": "unindent does not match any outer indentation level",
+      "offset": 8,
+      "stage": 3,
+      "type": "IndentationError"
+    }
+  ],
+  "pythonVersion": "3.12.11",
+  "source": "if True:\n    x = 1\n  y = 2\n",
+  "tokens": [
+    {
+      "end": [
+        1,
+        2
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "if",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        7
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        3
+      ],
+      "string": "True",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        8
+      ],
+      "exactType": "COLON",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        7
+      ],
+      "string": ":",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        9
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        8
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        4
+      ],
+      "exactType": "INDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "    ",
+      "type": "INDENT"
+    },
+    {
+      "end": [
+        2,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        4
+      ],
+      "string": "x",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        7
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        6
+      ],
+      "string": "=",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        9
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        8
+      ],
+      "string": "1",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        2,
+        10
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        9
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    }
+  ]
+}

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python トークン ラボ — 字句解析ビジュアライザ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Zen+Maru+Gothic:wght@700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3f1fb; --paper-2:#ffffff; --grid:rgba(120,110,190,.10);
+    --ink:#2b2450; --ink-soft:#6a6396; --line:#e2ddf5;
+    --c-name:#2f8fe6; --c-number:#e88a2c; --c-string:#25b47c;
+    --c-op:#ef6b6b; --c-bracket:#c99400; --c-comment:#9aa0b8;
+    --c-struct:#7b80a0; --c-keyword:#a959e0;
+    --c-name-bg:#e2f0fd; --c-number-bg:#fdeeda; --c-string-bg:#dcf5eb;
+    --c-op-bg:#fde3e3; --c-bracket-bg:#fff3cc; --c-comment-bg:#eceef4;
+    --c-struct-bg:#eef0f6; --c-keyword-bg:#f3e6fc;
+    --radius:18px; --shadow:0 6px 0 rgba(120,110,190,.14);
+    --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:"M PLUS Rounded 1c",system-ui,sans-serif; color:var(--ink);
+    background-color:var(--paper);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:26px 26px; line-height:1.6; padding:24px 16px 70px;
+  }
+  .wrap{max-width:1000px;margin:0 auto;}
+  header{text-align:center;margin-bottom:22px;}
+  .kicker{display:inline-block;font-weight:700;font-size:.8rem;letter-spacing:.14em;color:#7d55c9;
+    background:#fff;border:2px solid #e6dbfa;padding:5px 14px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:12px;}
+  h1{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(1.8rem,5.5vw,2.8rem);margin:.1em 0 .2em;line-height:1.15;}
+  h1 .zap{display:inline-block;background:var(--c-bracket);color:#5a4200;padding:0 .28em;border-radius:12px;transform:rotate(-3deg);box-shadow:3px 3px 0 rgba(180,140,0,.25);}
+  .lead{color:var(--ink-soft);font-weight:500;max-width:40em;margin:0 auto 10px;}
+  .badge{display:inline-flex;gap:7px;align-items:center;font-size:.8rem;font-weight:700;color:#1c7a4a;background:#e4f7ec;border:2px solid #b9e8cd;border-radius:999px;padding:5px 13px;}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:#25b47c;box-shadow:0 0 0 3px rgba(37,180,124,.2);}
+
+  .card{background:var(--paper-2);border:2px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;}
+  .card + .card{margin-top:16px;}
+  .card-title{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .card-title .em{font-size:1.25rem;}
+
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .modes{display:inline-flex;background:#efe9fb;border:2px solid #ddd0f5;border-radius:999px;padding:3px;}
+  .mode-btn{border:none;background:transparent;color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:.9rem;padding:6px 16px;border-radius:999px;cursor:pointer;transition:.15s;}
+  .mode-btn.active{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(90,60,150,.18);}
+  .mode-btn:focus-visible{outline:3px solid #b79cf0;outline-offset:2px;}
+  .opt{display:inline-flex;gap:6px;align-items:center;font-size:.85rem;font-weight:600;color:var(--ink-soft);cursor:pointer;user-select:none;}
+  .opt input{width:16px;height:16px;accent-color:#8b5cf6;}
+
+  textarea#code{width:100%;min-height:150px;resize:vertical;border:2px dashed #c9c0ef;border-radius:14px;
+    background:repeating-linear-gradient(transparent,transparent 27px,#eee8fb 27px,#eee8fb 28px);
+    padding:10px 12px;font-family:var(--mono);font-size:1rem;line-height:28px;color:var(--ink);outline:none;tab-size:4;}
+  textarea#code:focus{border-color:#9b7ce6;box-shadow:0 0 0 4px #ece2fb;}
+  .presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .preset{font-family:var(--mono);font-size:.82rem;border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;transition:.1s;}
+  .preset:hover{background:#f6f1ff;border-color:#c9b8f2;}
+  .preset:active{transform:translateY(2px);}
+  .preset:focus-visible{outline:3px solid #b79cf0;outline-offset:2px;}
+
+  .errors{margin-top:10px;border:2px solid #ffd3a8;background:#fff4e8;color:#a9540b;border-radius:12px;padding:8px 12px;font-size:.88rem;font-weight:600;}
+  .errors:empty{display:none;}
+
+  .machine-lip{height:14px;margin:2px 10px 0;border-radius:0 0 14px 14px;background:linear-gradient(#d9cef7,#c8b8ee);box-shadow:inset 0 3px 4px rgba(80,50,150,.2);}
+  .stream{padding:14px 6px 4px;display:flex;flex-direction:column;gap:7px;min-height:60px;}
+  .srow{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;}
+  .srow-label{flex:none;width:34px;text-align:right;color:#bfc3d6;font-family:var(--mono);font-size:.72rem;padding-top:8px;user-select:none;}
+  .indent-gap{flex:none;}
+
+  .tok{--tc:#888;--tbg:#eee;font-family:var(--mono);cursor:pointer;border:2px solid var(--tc);background:var(--tbg);
+    border-radius:11px;padding:4px 9px;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0;
+    box-shadow:0 3px 0 color-mix(in srgb,var(--tc) 40%,transparent);transition:transform .1s,box-shadow .1s;
+    animation:pop .26s cubic-bezier(.34,1.56,.64,1) both;}
+  .tok:hover{transform:translateY(-3px);box-shadow:0 6px 0 color-mix(in srgb,var(--tc) 40%,transparent);}
+  .tok:focus-visible{outline:3px solid #b79cf0;outline-offset:3px;}
+  .tok.sel{transform:translateY(-3px) scale(1.03);}
+  .tok .ttype{font-size:.62rem;font-weight:700;letter-spacing:.04em;color:var(--tc);text-transform:uppercase;opacity:.9;line-height:1;}
+  .tok .tval{font-size:1rem;font-weight:700;color:#2b2450;line-height:1.2;white-space:pre;}
+  .tok .tval.empty{color:#b7bcd0;font-style:italic;}
+  .tok .tkw{font-size:.58rem;font-weight:700;color:#a959e0;background:#f3e6fc;border-radius:5px;padding:0 4px;line-height:1.3;}
+
+  .tok--NAME{--tc:var(--c-name);--tbg:var(--c-name-bg);}
+  .tok--NUMBER{--tc:var(--c-number);--tbg:var(--c-number-bg);}
+  .tok--STRING{--tc:var(--c-string);--tbg:var(--c-string-bg);}
+  .tok--OP{--tc:var(--c-op);--tbg:var(--c-op-bg);}
+  .tok--BRACKET{--tc:var(--c-bracket);--tbg:var(--c-bracket-bg);box-shadow:0 3px 0 rgba(201,148,0,.45),0 0 0 4px rgba(242,183,5,.15);}
+  .tok--COMMENT{--tc:var(--c-comment);--tbg:var(--c-comment-bg);}
+  .tok--KEYWORD{--tc:var(--c-keyword);--tbg:var(--c-keyword-bg);}
+  .tok--STRUCT{--tc:var(--c-struct);--tbg:var(--c-struct-bg);opacity:.92;}
+  .tok--STRUCT .tval{color:var(--c-struct);}
+  .tok.callhi{box-shadow:0 3px 0 color-mix(in srgb,var(--tc) 40%,transparent),0 0 0 4px #ffe07a;}
+  @keyframes pop{from{opacity:0;transform:translateY(-8px) scale(.75);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+  .readout{margin-top:8px;background:#faf8ff;border:2px dashed var(--line);border-radius:12px;padding:11px 14px;min-height:52px;font-size:.92rem;}
+  .readout .r-head{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:3px;}
+  .readout .chip{font-family:var(--mono);font-weight:700;padding:2px 8px;border-radius:7px;color:#fff;font-size:.82rem;}
+  .readout .pos{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);}
+  .readout .r-body{color:var(--ink);}
+  .readout .r-hint{color:var(--ink-soft);}
+
+  .secret{background:linear-gradient(180deg,#fffdf3,#fff8e6);border-color:#f4e4a6;}
+  .secret .card-title{color:#a97e00;}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;}
+  @media (max-width:520px){.compare{grid-template-columns:1fr;}}
+  .machine{background:#fff;border:2px solid #f0e2ab;border-radius:14px;padding:14px;text-align:center;}
+  .machine .code{font-family:var(--mono);font-weight:700;font-size:1.02rem;background:#2b2450;color:#fff;border-radius:9px;padding:4px 10px;display:inline-block;margin-bottom:8px;}
+  .machine .scene{font-size:2.3rem;margin:2px 0 4px;}
+  .machine .say{font-weight:700;} .machine .sub{font-size:.82rem;color:var(--ink-soft);}
+  .machine.on{box-shadow:0 0 0 4px #ffe98a;}
+  .punch{margin-top:4px;background:#fff6d6;border:2px solid #f2cd54;border-radius:12px;padding:12px 14px;font-weight:700;color:#7a5a00;text-align:center;}
+  .punch b{color:#c1420a;}
+  .status{margin-top:10px;font-weight:600;font-size:.92rem;padding:10px 14px;border-radius:12px;background:#eef7ff;border:2px solid #cfe6ff;color:#1c5a97;display:flex;gap:8px;align-items:flex-start;}
+  .status.warn{background:#fff1e6;border-color:#ffd3a8;color:#a9540b;}
+  .status .e{font-size:1.15rem;flex:none;}
+  .lexnote{margin-top:10px;font-size:.86rem;color:#5a4a86;background:#f4efff;border:2px solid #e0d4fb;border-radius:12px;padding:10px 13px;}
+  .lexnote code{font-family:var(--mono);background:#ece2fb;padding:1px 5px;border-radius:5px;font-size:.85em;}
+  .lexnote.hidden{display:none;}
+
+  details.legend{margin-top:14px;}
+  details.legend summary{cursor:pointer;font-weight:700;color:var(--ink-soft);font-size:.9rem;}
+  .legend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:12px;}
+  .lg{display:flex;gap:9px;align-items:flex-start;font-size:.85rem;}
+  .lg .sw{width:16px;height:16px;border-radius:5px;flex:none;margin-top:3px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.06);}
+  .lg b{font-family:var(--mono);}
+
+  footer{text-align:center;color:var(--ink-soft);font-size:.8rem;margin-top:24px;line-height:1.7;}
+  @media (prefers-reduced-motion:reduce){.tok{animation:none;} .tok,.preset,.mode-btn{transition:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="kicker">PYTHON 字句解析 LABORATORY</span>
+    <h1>トークン <span class="zap">ラボ</span></h1>
+    <p class="lead">Python があなたのコードを最小の部品「トークン」に切り分ける様子を、実物どおりに見せます。「やさしい」で直感を、「くわしい」で本物の字句解析器の出力を。</p>
+    <span class="badge"><span class="dot"></span>CPython 3.12 の tokenize と一致（標準ライブラリ165ファイル＋38ケースで検証）</span>
+  </header>
+
+  <div class="card">
+    <div class="toolbar">
+      <div class="modes" role="tablist" aria-label="表示モード">
+        <button class="mode-btn active" id="mEasy" role="tab">やさしい</button>
+        <button class="mode-btn" id="mStrict" role="tab">くわしい（本物）</button>
+      </div>
+      <label class="opt" id="optPosWrap"><input type="checkbox" id="optPos"> 位置(row:col)を表示</label>
+      <label class="opt" id="optStructWrap"><input type="checkbox" id="optStruct" checked> 構造トークンを表示</label>
+    </div>
+    <textarea id="code" spellcheck="false" autocomplete="off" aria-label="Pythonコード">print("こんにちは!")</textarea>
+    <div class="presets" id="presets"></div>
+    <div class="errors" id="errors"></div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><span class="em">🔍</span> トークン列<span id="streamHint" style="font-weight:400;font-size:.85rem;color:var(--ink-soft);"></span></p>
+    <div class="machine-lip"></div>
+    <div class="stream" id="stream" aria-live="polite"></div>
+    <div class="readout" id="readout"><div class="r-hint">👆 トークンをタップすると、種類・位置・意味がわかります。</div></div>
+
+    <details class="legend">
+      <summary>いろ と 種類の凡例</summary>
+      <div class="legend-grid" id="legend"></div>
+    </details>
+  </div>
+
+  <div class="card secret">
+    <p class="card-title"><span class="em">💡</span> 「()」の ひみつ</p>
+    <div class="compare">
+      <div class="machine" id="mBefore">
+        <div class="code">print</div><div class="scene">🍬🎁➡️👉</div>
+        <div class="say">なまえを ゆびさすだけ</div><div class="sub">「これ！」と いってるだけ。まだ うごかない。</div>
+      </div>
+      <div class="machine on" id="mAfter">
+        <div class="code">print()</div><div class="scene">🍬🎁➡️✨</div>
+        <div class="say">ボタンを おした！</div><div class="sub">「いま やって！」で、なかみが うごく。</div>
+      </div>
+    </div>
+    <div class="punch">
+      <span style="font-size:1.25rem">🔑</span> なまえ＝「どれ？」／ <b>()＝「いま やって！」の あいず。</b><br>
+      だから、わたす ものが <u>なくても</u>、「やって！」の <b>()</b> は つけるんだ。
+    </div>
+    <div class="status" id="status"><span class="e">🙂</span><span id="statusText">コードを かえると、ここに ヒントが でます。</span></div>
+    <div class="lexnote hidden" id="lexnote">
+      <b>厳密には：</b> 字句解析器（tokenizer）が見ているのは <code>NAME 'print'</code> ・ <code>OP '(' (LPAR)</code> ・ <code>OP ')' (RPAR)</code> という並びだけです。これを「関数呼び出し」＝ <code>Call(func=Name('print'), args=[])</code> と<b>解釈</b>するのは、次の段階の<b>構文解析器（parser）</b>の仕事。<br>
+      同じ理由で、<code>if</code> や <code>for</code> も字句解析の時点では<b>ただの NAME トークン</b>で、キーワードかどうかは後の段階で判定されます。
+    </div>
+  </div>
+
+  <footer>
+    このツールは CPython の <code>tokenize</code> アルゴリズムを移植したもので、位置・<code>NEWLINE</code>/<code>NL</code>・<code>INDENT</code>/<code>DEDENT</code>・<code>OP</code> の exact 型まで再現します。<br>
+    モデル上の約束：f文字列は 1つの <code>STRING</code> として扱います（Python 3.12 は内部で <code>FSTRING_START/MIDDLE/END</code> に分割）。
+  </footer>
+</div>
+
+<script>
+/* pytok.js — a rigorous Python tokenizer reproducing CPython's `tokenize`
+ * token stream (validated against CPython 3.12).
+ *
+ * Modeling choice: f-strings are emitted as a single STRING token (classic
+ * <=3.11 model). CPython 3.12 internally splits them into FSTRING_START /
+ * FSTRING_MIDDLE / FSTRING_END plus embedded tokens; the UI surfaces that
+ * split separately as an annotation.
+ *
+ * Ported from Lib/tokenize.py (the pure-Python reference tokenizer).
+ */
+(function (root) {
+  "use strict";
+
+  var EXACT = {"!":"EXCLAMATION","!=":"NOTEQUAL","%":"PERCENT","%=":"PERCENTEQUAL","&":"AMPER","&=":"AMPEREQUAL","(":"LPAR",")":"RPAR","*":"STAR","**":"DOUBLESTAR","**=":"DOUBLESTAREQUAL","*=":"STAREQUAL","+":"PLUS","+=":"PLUSEQUAL",",":"COMMA","-":"MINUS","-=":"MINEQUAL","->":"RARROW",".":"DOT","...":"ELLIPSIS","/":"SLASH","//":"DOUBLESLASH","//=":"DOUBLESLASHEQUAL","/=":"SLASHEQUAL",":":"COLON",":=":"COLONEQUAL",";":"SEMI","<":"LESS","<<":"LEFTSHIFT","<<=":"LEFTSHIFTEQUAL","<=":"LESSEQUAL","=":"EQUAL","==":"EQEQUAL",">":"GREATER",">=":"GREATEREQUAL",">>":"RIGHTSHIFT",">>=":"RIGHTSHIFTEQUAL","@":"AT","@=":"ATEQUAL","[":"LSQB","]":"RSQB","^":"CIRCUMFLEX","^=":"CIRCUMFLEXEQUAL","{":"LBRACE","|":"VBAR","|=":"VBAREQUAL","}":"RBRACE","~":"TILDE"};
+
+  var KEYWORDS = new Set(["False","None","True","and","as","assert","async","await","break","class","continue","def","del","elif","else","except","finally","for","from","global","if","import","in","is","lambda","nonlocal","not","or","pass","raise","return","try","while","with","yield"]);
+  var SOFT_KEYWORDS = new Set(["_","case","match","type"]);
+
+  var STRING_PREFIXES = ["BR","Br","FR","Fr","RB","RF","Rb","Rf","bR","br","fR","fr","rB","rF","rb","rf","B","F","R","U","b","f","r","u",""];
+  var TABSIZE = 8;
+
+  var prefixAlt = STRING_PREFIXES.join("|"); // includes empty alternative
+  function sticky(src, flags) { return new RegExp(src, "y" + (flags || "")); }
+  function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  function match(re, s, pos) { re.lastIndex = pos; return re.exec(s); }
+
+  var reWhitespace = sticky("[ \\f\\t]*");
+  var reComment    = sticky("#[^\\r\\n]*");
+  var reContNL     = sticky("\\\\\\r?\\n");
+  var reNewline    = sticky("\\r?\\n");
+  var reName       = sticky("[\\p{L}\\p{Nl}_][\\p{L}\\p{Nl}\\p{Nd}\\p{Mn}\\p{Mc}\\p{Pc}_\\u200c\\u200d]*", "u");
+
+  var Hex = "0[xX](?:_?[0-9a-fA-F])+", Bin = "0[bB](?:_?[01])+", Oct = "0[oO](?:_?[0-7])+";
+  var Dec = "(?:0(?:_?0)*|[1-9](?:_?[0-9])*)";
+  var Int = "(?:" + Hex + "|" + Bin + "|" + Oct + "|" + Dec + ")";
+  var Exp = "[eE][-+]?[0-9](?:_?[0-9])*";
+  var Point = "(?:[0-9](?:_?[0-9])*\\.(?:[0-9](?:_?[0-9])*)?|\\.[0-9](?:_?[0-9])*)(?:" + Exp + ")?";
+  var ExpFloat = "[0-9](?:_?[0-9])*" + Exp;
+  var Float = "(?:" + Point + "|" + ExpFloat + ")";
+  var Imag = "(?:[0-9](?:_?[0-9])*[jJ]|" + Float + "[jJ])";
+  var reNumber = sticky("(?:" + Imag + "|" + Float + "|" + Int + ")");
+
+  var reTriple = sticky("(?:" + prefixAlt + ")(?:'''|\"\"\")");
+  var reEnd3S  = sticky("[^']*(?:(?:\\\\.|'(?!''))[^']*)*'''");
+  var reEnd3D  = sticky("[^\"]*(?:(?:\\\\.|\"(?!\"\"))[^\"]*)*\"\"\"");
+
+  // single-line string START (prefix optional): body then close-quote OR backslash-newline
+  var reStrS = sticky("(?:" + prefixAlt + ")'[^\\n'\\\\]*(?:\\\\.[^\\n'\\\\]*)*('|\\\\\\r?\\n)");
+  var reStrD = sticky("(?:" + prefixAlt + ")\"[^\\n\"\\\\]*(?:\\\\.[^\\n\"\\\\]*)*(\"|\\\\\\r?\\n)");
+  // resume a backslash-continued single-line string (no prefix, no opening quote)
+  var reResumeS = sticky("[^\\n'\\\\]*(?:\\\\.[^\\n'\\\\]*)*('|\\\\\\r?\\n)");
+  var reResumeD = sticky("[^\\n\"\\\\]*(?:\\\\.[^\\n\"\\\\]*)*(\"|\\\\\\r?\\n)");
+
+  var OP_STRINGS = Object.keys(EXACT).sort(function (a, b) { return b.length - a.length; });
+  var reOp = sticky("(?:" + OP_STRINGS.map(escapeRe).join("|") + ")");
+
+  // Determine the full extent of a single-line f-string literal, allowing the
+  // outer quote to be reused inside {replacement fields} (Python 3.12+). Returns
+  // {text, end} or null (not an f-string / unterminated on this line).
+  function scanFString(line, pos) {
+    var m = /^[rRbBuUfF]{1,2}/.exec(line.slice(pos, pos + 2));
+    if (!m || !/[fF]/.test(m[0])) return null;
+    if (STRING_PREFIXES.indexOf(m[0]) === -1) return null;
+    var isRaw = /[rR]/.test(m[0]);
+    var i = pos + m[0].length;
+    var quote = line[i];
+    if (quote !== "'" && quote !== '"') return null;
+    if (line.substr(i, 3) === quote + quote + quote) return null; // triple → classic path
+    i += 1;
+    var brace = 0, bracket = 0, n = line.length;
+    while (i < n) {
+      var c = line[i];
+      if (brace === 0) {
+        if (!isRaw && c === "\\") { i += 2; continue; }
+        if (c === "{") { if (line[i + 1] === "{") { i += 2; continue; } brace = 1; bracket = 0; i++; continue; }
+        if (c === "}") { if (line[i + 1] === "}") { i += 2; continue; } i++; continue; }
+        if (c === quote) return { text: line.slice(pos, i + 1), end: i + 1 };
+        i++;
+      } else {
+        if (c === "'" || c === '"') { i = skipNestedString(line, i); continue; }
+        if (c === "(" || c === "[" || c === "{") { bracket++; i++; continue; }
+        if (c === ")" || c === "]") { bracket = Math.max(0, bracket - 1); i++; continue; }
+        if (c === "}") { if (bracket === 0) { brace = 0; i++; continue; } bracket--; i++; continue; }
+        i++;
+      }
+    }
+    return null; // unterminated on this line
+  }
+  function skipNestedString(line, i) {
+    // i points at an opening quote inside an f-string expression
+    var pm = /[rRbBuUfF]{0,2}$/.exec(line.slice(0, i)); // (prefix already consumed as expr chars)
+    var q = line[i];
+    var raw = false;
+    if (line.substr(i, 3) === q + q + q) {
+      var j = i + 3;
+      while (j < line.length) { if (line[j] === q && line[j + 1] === q && line[j + 2] === q) return j + 3; j++; }
+      return line.length;
+    }
+    var k = i + 1;
+    while (k < line.length) {
+      if (!raw && line[k] === "\\") { k += 2; continue; }
+      if (line[k] === q) return k + 1;
+      if (line[k] === "\n") return k;
+      k++;
+    }
+    return line.length;
+  }
+
+  function splitLines(src) {
+    var out = [], i = 0, n = src.length, start = 0;
+    while (i < n) {
+      var c = src[i];
+      if (c === "\n") { out.push(src.slice(start, i + 1)); i++; start = i; }
+      else if (c === "\r") {
+        if (src[i + 1] === "\n") { out.push(src.slice(start, i + 2)); i += 2; }
+        else { out.push(src.slice(start, i + 1)); i++; }
+        start = i;
+      } else i++;
+    }
+    if (start < n) out.push(src.slice(start));
+    return out;
+  }
+
+  function tokenize(src) {
+    var lines = splitLines(src);
+    var tokens = [], errors = [];
+    var lnum = 0, parenlev = 0, continued = false, indents = [0];
+    var contstr = null, contType = null, strstart = null, contline = null;
+    var lastLine = "", li = 0;
+
+    function emit(type, string, start, end) {
+      tokens.push({ type: type, exact: type === "OP" ? (EXACT[string] || "OP") : type, string: string, start: start, end: end });
+    }
+    function resetCont() { contstr = null; contType = null; contline = null; }
+
+    while (true) {
+      lastLine = (li > 0) ? lines[li - 1] : "";
+      var line = (li < lines.length) ? lines[li] : "";
+      li++; lnum++;
+      var pos = 0, max = line.length;
+
+      if (contstr !== null) {
+        if (line === "") { errors.push("EOF in multi-line string (from line " + strstart[0] + ")"); break; }
+        if (contType === "triple-single" || contType === "triple-double") {
+          var endre = contType === "triple-single" ? reEnd3S : reEnd3D;
+          if (match(endre, line, 0)) {
+            var ep = endre.lastIndex;
+            emit("STRING", contstr + line.slice(0, ep), strstart, [lnum, ep]);
+            resetCont(); pos = ep;
+          } else { contstr += line; contline += line; continue; }
+        } else {
+          var rre = contType === "s1" ? reResumeS : reResumeD;
+          var rm = match(rre, line, 0);
+          if (rm && (rm[1] === "'" || rm[1] === '"')) {
+            var ep2 = rre.lastIndex;
+            emit("STRING", contstr + line.slice(0, ep2), strstart, [lnum, ep2]);
+            resetCont(); pos = ep2;
+          } else { contstr += line; contline += line; continue; }
+        }
+      } else if (parenlev === 0 && !continued) {
+        if (line === "") break;
+        var column = 0;
+        while (pos < max) {
+          var ch = line[pos];
+          if (ch === " ") column += 1;
+          else if (ch === "\t") column = Math.floor(column / TABSIZE + 1) * TABSIZE;
+          else if (ch === "\f") column = 0;
+          else break;
+          pos += 1;
+        }
+        if (pos === max) break;
+        if (line[pos] === "#" || line[pos] === "\r" || line[pos] === "\n") {
+          if (line[pos] === "#") {
+            var cmt = line.slice(pos).replace(/[\r\n]+$/, "");
+            emit("COMMENT", cmt, [lnum, pos], [lnum, pos + cmt.length]);
+            pos += cmt.length;
+          }
+          var nlEnd = /[\r\n]$/.test(line) ? line.length : line.length + 1;
+          emit("NL", line.slice(pos), [lnum, pos], [lnum, nlEnd]);
+          continue;
+        }
+        if (column > indents[indents.length - 1]) {
+          indents.push(column);
+          emit("INDENT", line.slice(0, pos), [lnum, 0], [lnum, pos]);
+        }
+        while (column < indents[indents.length - 1]) {
+          if (indents.indexOf(column) === -1) errors.push("inconsistent dedent (line " + lnum + ")");
+          indents.pop();
+          emit("DEDENT", "", [lnum, pos], [lnum, pos]);
+        }
+      } else {
+        if (line === "") { errors.push("EOF in multi-line statement (line " + lnum + ")"); break; }
+        continued = false;
+      }
+
+      while (pos < max) {
+        match(reWhitespace, line, pos); pos = reWhitespace.lastIndex;
+        if (pos >= max) break;
+        var start = pos, c = line[pos];
+
+        if (c === "\\") {
+          if (match(reContNL, line, pos)) { continued = true; pos = reContNL.lastIndex; break; }
+        }
+        if (c === "#") {
+          var cm = match(reComment, line, pos); var ctext = cm[0];
+          emit("COMMENT", ctext, [lnum, start], [lnum, start + ctext.length]);
+          pos = reComment.lastIndex; continue;
+        }
+        var tm = match(reTriple, line, pos);
+        if (tm) {
+          var isSingle = tm[0].slice(-3) === "'''";
+          var endre2 = isSingle ? reEnd3S : reEnd3D;
+          if (match(endre2, line, reTriple.lastIndex)) {
+            emit("STRING", line.slice(start, endre2.lastIndex), [lnum, start], [lnum, endre2.lastIndex]);
+            pos = endre2.lastIndex; continue;
+          } else {
+            contstr = line.slice(start); contType = isSingle ? "triple-single" : "triple-double";
+            strstart = [lnum, start]; contline = line; break;
+          }
+        }
+        var nm = match(reNumber, line, pos);
+        if (nm && (/[0-9]/.test(c) || (c === "." && /[0-9]/.test(line[pos + 1] || "")))) {
+          emit("NUMBER", nm[0], [lnum, start], [lnum, reNumber.lastIndex]);
+          pos = reNumber.lastIndex; continue;
+        }
+        if (c === "\r" || c === "\n") {
+          var nlm = match(reNewline, line, pos); var nlText = nlm[0];
+          emit(parenlev > 0 ? "NL" : "NEWLINE", nlText, [lnum, start], [lnum, start + nlText.length]);
+          pos = reNewline.lastIndex; continue;
+        }
+        var om = match(reOp, line, pos);
+        if (om) {
+          var op = om[0];
+          if (op === "(" || op === "[" || op === "{") parenlev += 1;
+          else if (op === ")" || op === "]" || op === "}") parenlev = Math.max(0, parenlev - 1);
+          emit("OP", op, [lnum, start], [lnum, reOp.lastIndex]);
+          pos = reOp.lastIndex; continue;
+        }
+        // f-string with possible quote reuse inside {…} (Python 3.12+ extent)
+        var fs = scanFString(line, pos);
+        if (fs) { emit("STRING", fs.text, [lnum, start], [lnum, fs.end]); pos = fs.end; continue; }
+
+        // single-line string (optionally prefixed) — try both quote flavors
+        var used = null;
+        reStrD.lastIndex = pos; var mD = reStrD.exec(line);
+        if (mD && mD.index === pos) { used = { text: mD[0], cap: mD[1], end: reStrD.lastIndex }; }
+        if (!used) { reStrS.lastIndex = pos; var mS = reStrS.exec(line); if (mS && mS.index === pos) used = { text: mS[0], cap: mS[1], end: reStrS.lastIndex }; }
+        if (used) {
+          if (used.cap === "'" || used.cap === '"') {
+            emit("STRING", used.text, [lnum, start], [lnum, used.end]);
+            pos = used.end; continue;
+          } else {
+            // backslash-newline: continued single-line string
+            contstr = line.slice(start); strstart = [lnum, start]; contline = line;
+            contType = line[start] === '"' || used.text.indexOf('"') !== -1 && used.text.indexOf('"') < used.text.indexOf("'") ? "d1" : "s1";
+            // determine quote flavor precisely from opening
+            var q = /^(?:[rRbBuUfF]{0,2})(['"])/.exec(line.slice(start)); contType = q && q[1] === '"' ? "d1" : "s1";
+            break;
+          }
+        }
+        var im = match(reName, line, pos);
+        if (im) { emit("NAME", im[0], [lnum, start], [lnum, reName.lastIndex]); pos = reName.lastIndex; continue; }
+
+        emit("ERRORTOKEN", c, [lnum, start], [lnum, start + 1]); pos += 1;
+      }
+    }
+
+    if (lastLine && !/[\r\n]$/.test(lastLine)) {
+      var stripped = lastLine.replace(/^[ \f\t]*/, "");
+      if (stripped !== "" && stripped[0] !== "#")
+        emit("NEWLINE", "", [lnum - 1, lastLine.length], [lnum - 1, lastLine.length + 1]);
+    }
+    for (var k = 1; k < indents.length; k++) emit("DEDENT", "", [lnum, 0], [lnum, 0]);
+    emit("ENDMARKER", "", [lnum, 0], [lnum, 0]);
+    return { tokens: tokens, errors: errors };
+  }
+
+  function isKeyword(w) { return KEYWORDS.has(w); }
+  function isSoftKeyword(w) { return SOFT_KEYWORDS.has(w); }
+
+  var api = { tokenize: tokenize, isKeyword: isKeyword, isSoftKeyword: isSoftKeyword, EXACT: EXACT };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else root.PyTok = api;
+})(typeof self !== "undefined" ? self : this);
+/* ---- Token Lab UI ---- */
+(function () {
+  "use strict";
+  var STRUCT = { NEWLINE: 1, NL: 1, INDENT: 1, DEDENT: 1, ENDMARKER: 1 };
+  var el = function (id) { return document.getElementById(id); };
+  var code = el("code"), stream = el("stream"), readout = el("readout"),
+      errorsBox = el("errors"), legend = el("legend"), streamHint = el("streamHint"),
+      statusEl = el("status"), statusText = el("statusText"), lexnote = el("lexnote"),
+      mBefore = el("mBefore"), mAfter = el("mAfter");
+  var optPos = el("optPos"), optStruct = el("optStruct");
+  var mode = "easy";
+
+  var PRESETS = [
+    'print("こんにちは!")',
+    'print()',
+    'x = 3 + 4 * 2',
+    'for i in range(3):\n    print(i)',
+    'name = input()\nprint("hi", name)',
+    'if x := len(data):\n    print(x)',
+    'total = 0\nfor n in nums:\n    total += n',
+    'msg = f"合計は {total} です"',
+    'data = {"a": [1, 2], "b": (3,)}'
+  ];
+
+  var EXPLAIN = {
+    NAME: "なまえ（変数・関数・キーワードなど）。字句解析の時点では if や for も含めて全部 NAME です。",
+    NUMBER: "数値リテラル。整数・小数・16進(0x)・2進(0b)・虚数(j)・桁区切り(_) を1つのトークンにまとめます。",
+    STRING: "文字列リテラル。前置子(f, r, b, u)や三重引用符も含めて1つのトークン。",
+    OP: "演算子・区切り記号。exact 型（LPAR, EQUAL, PLUS…）で細かく分類されます。",
+    COMMENT: "コメント。# から行末まで。プログラムの動作には影響しません。",
+    NEWLINE: "論理行の終わり。1つの文が完結したことを示す“意味のある”改行です。",
+    NL: "意味を持たない改行。空行・コメントだけの行・カッコ()[]{}の途中の改行で出ます。",
+    INDENT: "字下げの始まり。ブロックが1段深くなったことを表す構造トークン（中身は空白文字）。",
+    DEDENT: "字下げの終わり。ブロックが1段浅くなったことを表す構造トークン（中身は空）。",
+    ENDMARKER: "入力の終端を示す最後のトークン。"
+  };
+
+  var CHIP_COLOR = {
+    NAME: "#2f8fe6", NUMBER: "#e88a2c", STRING: "#25b47c", OP: "#ef6b6b",
+    COMMENT: "#9aa0b8", KEYWORD: "#a959e0", NEWLINE: "#7b80a0", NL: "#7b80a0",
+    INDENT: "#7b80a0", DEDENT: "#7b80a0", ENDMARKER: "#7b80a0", BRACKET: "#c99400"
+  };
+
+  function isBracket(s) { return s === "(" || s === ")" || s === "[" || s === "]" || s === "{" || s === "}"; }
+
+  // visible rendering of a token's string
+  function showVal(t) {
+    if (t.type === "INDENT") return t.string.replace(/\t/g, "→").replace(/ /g, "·") || "·";
+    if (t.type === "NEWLINE") return t.string === "" ? "∅" : "⏎";
+    if (t.type === "NL") return "⏎";
+    if (t.type === "DEDENT" || t.type === "ENDMARKER") return "∅";
+    return t.string.replace(/\t/g, "→").replace(/\r/g, "").replace(/\n/g, "⏎");
+  }
+
+  function visualClass(t) {
+    if (t.type === "OP") return isBracket(t.string) ? "BRACKET" : "OP";
+    if (t.type === "NAME" && mode === "easy" && PyTok.isKeyword(t.string)) return "KEYWORD";
+    if (STRUCT[t.type]) return "STRUCT";
+    return t.type;
+  }
+
+  // top label of a chip
+  function chipType(t) {
+    if (mode === "easy") {
+      if (t.type === "OP") return isBracket(t.string) ? "かっこ" : "きごう";
+      return { NAME: "なまえ", NUMBER: "すうじ", STRING: "もじれつ", COMMENT: "コメント" }[t.type] ||
+             (PyTok.isKeyword(t.string) ? "キーワード" : t.type);
+    }
+    return t.type === "OP" ? t.exact : t.type;
+  }
+
+  function fmtPos(t) { return t.start[0] + ":" + t.start[1] + "–" + t.end[0] + ":" + t.end[1]; }
+
+  function makeChip(t, idx) {
+    var vc = visualClass(t);
+    var b = document.createElement("button");
+    b.className = "tok tok--" + vc;
+    b.setAttribute("data-idx", idx);
+    var kw = (t.type === "NAME" && (PyTok.isKeyword(t.string) || PyTok.isSoftKeyword(t.string)));
+    var typeLabel = chipType(t);
+    var valEmpty = (t.string === "" || STRUCT[t.type] && t.type !== "INDENT");
+    var kwTag = (mode === "strict" && kw) ? '<span class="tkw">' + (PyTok.isKeyword(t.string) ? "keyword" : "soft-kw") + '</span>' : "";
+    var posTag = (mode === "strict" && optPos.checked) ? '<span class="ttype" style="opacity:.6">' + fmtPos(t) + '</span>' : "";
+    b.innerHTML =
+      '<span class="ttype">' + esc(typeLabel) + '</span>' +
+      '<span class="tval' + (valEmpty ? ' empty' : '') + '">' + esc(showVal(t)) + '</span>' +
+      kwTag + posTag;
+    b.addEventListener("click", function () { selectToken(idx, b); });
+    return b;
+  }
+
+  var CURRENT = [];
+  function render() {
+    var src = code.value;
+    var res = PyTok.tokenize(src);
+    CURRENT = res.tokens;
+
+    // errors
+    if (res.errors && res.errors.length) {
+      errorsBox.textContent = "⚠ " + res.errors.join(" / ");
+    } else errorsBox.textContent = "";
+
+    // choose which tokens to show
+    var toks = res.tokens.map(function (t, i) { return { t: t, i: i }; });
+    var shown = toks.filter(function (o) {
+      if (mode === "easy") return !STRUCT[o.t.type]; // easy: hide structural
+      if (!optStruct.checked) return !STRUCT[o.t.type];
+      return true;
+    });
+
+    streamHint.textContent = mode === "strict"
+      ? "　— 実際の tokenize 出力（" + res.tokens.length + " トークン）"
+      : "　— " + shown.length + "個のかたまり";
+
+    // group by start row
+    stream.innerHTML = "";
+    var lastRow = null, rowDiv = null;
+    shown.forEach(function (o) {
+      var r = o.t.start[0];
+      if (r !== lastRow) {
+        rowDiv = document.createElement("div");
+        rowDiv.className = "srow";
+        var lab = document.createElement("div");
+        lab.className = "srow-label";
+        lab.textContent = mode === "strict" ? ("L" + r) : "";
+        rowDiv.appendChild(lab);
+        stream.appendChild(rowDiv);
+        lastRow = r;
+      }
+      rowDiv.appendChild(makeChip(o.t, o.i));
+    });
+    if (!shown.length) {
+      stream.innerHTML = '<div style="color:#b7bcd0;padding:14px;font-weight:600">（コードを入力してください）</div>';
+    }
+
+    highlightCalls();
+    updateSecret();
+    buildLegend();
+    lexnote.classList.toggle("hidden", mode !== "strict");
+    readout.innerHTML = '<div class="r-hint">👆 トークンをタップすると、種類・位置・意味がわかります。</div>';
+  }
+
+  function selectToken(idx, btn) {
+    Array.prototype.forEach.call(stream.querySelectorAll(".tok.sel"), function (n) { n.classList.remove("sel"); });
+    if (btn) btn.classList.add("sel");
+    var t = CURRENT[idx];
+    if (!t) return;
+    var vc = visualClass(t);
+    var col = CHIP_COLOR[vc] || "#888";
+    var typeName = t.type === "OP" ? (t.type + " · " + t.exact) : t.type;
+    var kwLine = "";
+    if (t.type === "NAME" && PyTok.isKeyword(t.string)) kwLine = "　これは Python のキーワードですが、字句解析では NAME 扱いです。";
+    else if (t.type === "NAME" && PyTok.isSoftKeyword(t.string)) kwLine = "　これは soft keyword（match/case/type/_）。文脈により意味が変わるため、やはり NAME です。";
+    var repr = t.string === "" ? "（空）" : JSON.stringify(t.string);
+    readout.innerHTML =
+      '<div class="r-head">' +
+        '<span class="chip" style="background:' + col + '">' + esc(typeName) + '</span>' +
+        '<span class="pos">位置 ' + fmtPos(t) + '　文字列 ' + esc(repr) + '</span>' +
+      '</div>' +
+      '<div class="r-body">' + esc(EXPLAIN[t.type] || "") + esc(kwLine) + '</div>';
+  }
+
+  // find NAME immediately followed by "(" -> a call; bare builtin without "(" -> hint
+  var BUILTINS = ["print", "input", "len", "range", "int", "str", "float", "list",
+    "dict", "set", "tuple", "sum", "max", "min", "abs", "sorted", "type", "open", "map", "filter"];
+  function findCallInfo() {
+    var info = { calls: [], bareBuiltin: null };
+    var ts = CURRENT;
+    for (var i = 0; i < ts.length; i++) {
+      if (ts[i].type === "NAME") {
+        var nxt = ts[i + 1];
+        var isCall = nxt && nxt.type === "OP" && nxt.string === "(";
+        if (isCall) info.calls.push(i);
+        else if (BUILTINS.indexOf(ts[i].string) !== -1 && !PyTok.isKeyword(ts[i].string)) {
+          // only if not part of attribute like obj.print
+          var prev = ts[i - 1];
+          if (!(prev && prev.type === "OP" && prev.string === ".")) info.bareBuiltin = ts[i].string;
+        }
+      }
+    }
+    return info;
+  }
+  function highlightCalls() {
+    var info = findCallInfo();
+    info.calls.forEach(function (i) {
+      var n = stream.querySelector('.tok[data-idx="' + i + '"]');
+      var p = stream.querySelector('.tok[data-idx="' + (i + 1) + '"]');
+      if (n) n.classList.add("callhi");
+      if (p) p.classList.add("callhi");
+    });
+  }
+  function updateSecret() {
+    var info = findCallInfo();
+    if (info.calls.length) {
+      mAfter.classList.add("on"); mBefore.classList.remove("on");
+      statusEl.classList.remove("warn");
+      statusEl.querySelector(".e").textContent = "✅";
+      statusText.innerHTML = "いいね！ <b>()</b> があるので「いま やって！」の合図になっています。名前のすぐ後ろの <b>( )</b> が“実行のボタン”です。";
+    } else if (info.bareBuiltin) {
+      mAfter.classList.remove("on"); mBefore.classList.add("on");
+      statusEl.classList.add("warn");
+      statusEl.querySelector(".e").textContent = "🤔";
+      statusText.innerHTML = "<b>" + esc(info.bareBuiltin) + "</b> は名前を“ゆびさす”だけで、まだ動きません。動かすには <b>" + esc(info.bareBuiltin) + "()</b> のように <b>()</b> をつけて「やって！」と合図します。";
+    } else {
+      mAfter.classList.remove("on"); mBefore.classList.remove("on");
+      statusEl.classList.remove("warn");
+      statusEl.querySelector(".e").textContent = "🙂";
+      statusText.textContent = "コードを かえると、ここに ヒントが でます。";
+    }
+  }
+
+  var LEGEND_EASY = [
+    ["なまえ", "#2f8fe6", "変数・関数・キーワード"],
+    ["キーワード", "#a959e0", "if / for / def など"],
+    ["すうじ", "#e88a2c", "1, 3.14, 0xFF"],
+    ["もじれつ", "#25b47c", '"..." や f"..."'],
+    ["きごう", "#ef6b6b", "+ - = : ."],
+    ["かっこ", "#c99400", "( ) [ ] { } ← 主役"],
+    ["コメント", "#9aa0b8", "# から行末まで"]
+  ];
+  var LEGEND_STRICT = [
+    ["NAME", "#2f8fe6", "識別子・キーワード（全部 NAME）"],
+    ["NUMBER", "#e88a2c", "数値リテラル"],
+    ["STRING", "#25b47c", "文字列リテラル"],
+    ["OP", "#ef6b6b", "演算子・区切り（exact型つき）"],
+    ["( ) [ ] { }", "#c99400", "OP の中の括弧（LPAR等）"],
+    ["COMMENT", "#9aa0b8", "コメント"],
+    ["NEWLINE / NL", "#7b80a0", "論理行末 / 意味なし改行"],
+    ["INDENT / DEDENT", "#7b80a0", "字下げの増減（構造）"],
+    ["ENDMARKER", "#7b80a0", "入力の終端"]
+  ];
+  function buildLegend() {
+    var items = mode === "strict" ? LEGEND_STRICT : LEGEND_EASY;
+    legend.innerHTML = items.map(function (it) {
+      return '<div class="lg"><span class="sw" style="background:' + it[1] + '"></span><div><b>' + esc(it[0]) + '</b><br><span style="color:var(--ink-soft)">' + esc(it[2]) + '</span></div></div>';
+    }).join("");
+  }
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  // presets
+  el("presets").innerHTML = "";
+  PRESETS.forEach(function (p) {
+    var b = document.createElement("button");
+    b.className = "preset";
+    b.textContent = p.split("\n")[0] + (p.indexOf("\n") >= 0 ? " …" : "");
+    b.title = p;
+    b.addEventListener("click", function () { code.value = p; render(); });
+    el("presets").appendChild(b);
+  });
+
+  function setMode(m) {
+    mode = m;
+    el("mEasy").classList.toggle("active", m === "easy");
+    el("mStrict").classList.toggle("active", m === "strict");
+    el("optPosWrap").style.display = m === "strict" ? "" : "none";
+    el("optStructWrap").style.display = m === "strict" ? "" : "none";
+    render();
+  }
+  el("mEasy").addEventListener("click", function () { setMode("easy"); });
+  el("mStrict").addEventListener("click", function () { setMode("strict"); });
+  optPos.addEventListener("change", render);
+  optStruct.addEventListener("change", render);
+  code.addEventListener("input", render);
+
+  // start in strict mode to foreground the rigorous view
+  setMode("strict");
+})();
+</script>
+</body>
+</html>

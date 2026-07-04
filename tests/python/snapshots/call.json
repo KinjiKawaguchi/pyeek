@@ -1,0 +1,310 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "value",
+              "node": {
+                "children": [
+                  {
+                    "field": "func",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "ctx",
+                          "node": {
+                            "children": [],
+                            "colOffset": null,
+                            "endColOffset": null,
+                            "endLineno": null,
+                            "fields": {},
+                            "id": 4,
+                            "label": "Load",
+                            "lineno": null,
+                            "type": "Load"
+                          }
+                        }
+                      ],
+                      "colOffset": 0,
+                      "endColOffset": 5,
+                      "endLineno": 1,
+                      "fields": {
+                        "id": "'print'"
+                      },
+                      "id": 3,
+                      "label": "Name(id='print')",
+                      "lineno": 1,
+                      "type": "Name"
+                    }
+                  },
+                  {
+                    "field": "args",
+                    "node": {
+                      "children": [],
+                      "colOffset": 6,
+                      "endColOffset": 10,
+                      "endLineno": 1,
+                      "fields": {
+                        "kind": "None",
+                        "value": "'hi'"
+                      },
+                      "id": 5,
+                      "label": "Constant(value='hi', kind=None)",
+                      "lineno": 1,
+                      "type": "Constant"
+                    }
+                  }
+                ],
+                "colOffset": 0,
+                "endColOffset": 11,
+                "endLineno": 1,
+                "fields": {
+                  "keywords": "[]"
+                },
+                "id": 2,
+                "label": "Call(keywords=[])",
+                "lineno": 1,
+                "type": "Call"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 11,
+          "endLineno": 1,
+          "fields": {},
+          "id": 1,
+          "label": "Expr",
+          "lineno": 1,
+          "type": "Expr"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "'hi'",
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "PUSH_NULL",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 5,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "print",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 4,
+        "opname": "LOAD_NAME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 5,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "'hi'",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 6,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 6,
+          "endColOffset": 10,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 1,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 8,
+        "opname": "CALL",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 11,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -2
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 16,
+        "opname": "POP_TOP",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 11,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 1,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 18,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 11,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [
+      "print"
+    ],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "print(\"hi\")",
+  "tokens": [
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "print",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        6
+      ],
+      "exactType": "LPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        5
+      ],
+      "string": "(",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        10
+      ],
+      "exactType": "STRING",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": "\"hi\"",
+      "type": "STRING"
+    },
+    {
+      "end": [
+        1,
+        11
+      ],
+      "exactType": "RPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        10
+      ],
+      "string": ")",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        12
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        11
+      ],
+      "string": "",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

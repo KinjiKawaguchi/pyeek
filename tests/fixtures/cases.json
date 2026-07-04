@@ -1,0 +1,14 @@
+{
+  "empty": "",
+  "constant_folding": "2 + 3 * 4",
+  "vm_demo": "n = 4\ntotal = 2 + 3 * n",
+  "call": "print(\"hi\")",
+  "for_loop": "for i in range(3):\n    print(i)",
+  "fstring": "msg = f\"合計は {total} です\"",
+  "fstring_nested": "msg = f\"outer {f'inner {1 + 1}'}\"",
+  "nested_function": "def f(x):\n    return x + 1\n",
+  "walrus": "if x := len(data):\n    print(x)",
+  "syntax_error_paren": "def f(:\n    pass\n",
+  "indentation_error": "if True:\n    x = 1\n  y = 2\n",
+  "unterminated_string": "x = '''unterminated\n"
+}

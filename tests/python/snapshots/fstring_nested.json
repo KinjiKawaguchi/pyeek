@@ -1,0 +1,651 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "targets",
+              "node": {
+                "children": [
+                  {
+                    "field": "ctx",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 3,
+                      "label": "Store",
+                      "lineno": null,
+                      "type": "Store"
+                    }
+                  }
+                ],
+                "colOffset": 0,
+                "endColOffset": 3,
+                "endLineno": 1,
+                "fields": {
+                  "id": "'msg'"
+                },
+                "id": 2,
+                "label": "Name(id='msg')",
+                "lineno": 1,
+                "type": "Name"
+              }
+            },
+            {
+              "field": "value",
+              "node": {
+                "children": [
+                  {
+                    "field": "values",
+                    "node": {
+                      "children": [],
+                      "colOffset": 8,
+                      "endColOffset": 14,
+                      "endLineno": 1,
+                      "fields": {
+                        "kind": "None",
+                        "value": "'outer '"
+                      },
+                      "id": 5,
+                      "label": "Constant(value='outer ', kind=None)",
+                      "lineno": 1,
+                      "type": "Constant"
+                    }
+                  },
+                  {
+                    "field": "values",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "value",
+                          "node": {
+                            "children": [
+                              {
+                                "field": "values",
+                                "node": {
+                                  "children": [],
+                                  "colOffset": 17,
+                                  "endColOffset": 23,
+                                  "endLineno": 1,
+                                  "fields": {
+                                    "kind": "None",
+                                    "value": "'inner '"
+                                  },
+                                  "id": 8,
+                                  "label": "Constant(value='inner ', kind=None)",
+                                  "lineno": 1,
+                                  "type": "Constant"
+                                }
+                              },
+                              {
+                                "field": "values",
+                                "node": {
+                                  "children": [
+                                    {
+                                      "field": "value",
+                                      "node": {
+                                        "children": [
+                                          {
+                                            "field": "left",
+                                            "node": {
+                                              "children": [],
+                                              "colOffset": 24,
+                                              "endColOffset": 25,
+                                              "endLineno": 1,
+                                              "fields": {
+                                                "kind": "None",
+                                                "value": "1"
+                                              },
+                                              "id": 11,
+                                              "label": "Constant(value=1, kind=None)",
+                                              "lineno": 1,
+                                              "type": "Constant"
+                                            }
+                                          },
+                                          {
+                                            "field": "op",
+                                            "node": {
+                                              "children": [],
+                                              "colOffset": null,
+                                              "endColOffset": null,
+                                              "endLineno": null,
+                                              "fields": {},
+                                              "id": 12,
+                                              "label": "Add",
+                                              "lineno": null,
+                                              "type": "Add"
+                                            }
+                                          },
+                                          {
+                                            "field": "right",
+                                            "node": {
+                                              "children": [],
+                                              "colOffset": 28,
+                                              "endColOffset": 29,
+                                              "endLineno": 1,
+                                              "fields": {
+                                                "kind": "None",
+                                                "value": "1"
+                                              },
+                                              "id": 13,
+                                              "label": "Constant(value=1, kind=None)",
+                                              "lineno": 1,
+                                              "type": "Constant"
+                                            }
+                                          }
+                                        ],
+                                        "colOffset": 24,
+                                        "endColOffset": 29,
+                                        "endLineno": 1,
+                                        "fields": {},
+                                        "id": 10,
+                                        "label": "BinOp",
+                                        "lineno": 1,
+                                        "type": "BinOp"
+                                      }
+                                    }
+                                  ],
+                                  "colOffset": 23,
+                                  "endColOffset": 30,
+                                  "endLineno": 1,
+                                  "fields": {
+                                    "conversion": "-1",
+                                    "format_spec": "None"
+                                  },
+                                  "id": 9,
+                                  "label": "FormattedValue(conversion=-1, format_spec=None)",
+                                  "lineno": 1,
+                                  "type": "FormattedValue"
+                                }
+                              }
+                            ],
+                            "colOffset": 15,
+                            "endColOffset": 31,
+                            "endLineno": 1,
+                            "fields": {},
+                            "id": 7,
+                            "label": "JoinedStr",
+                            "lineno": 1,
+                            "type": "JoinedStr"
+                          }
+                        }
+                      ],
+                      "colOffset": 14,
+                      "endColOffset": 32,
+                      "endLineno": 1,
+                      "fields": {
+                        "conversion": "-1",
+                        "format_spec": "None"
+                      },
+                      "id": 6,
+                      "label": "FormattedValue(conversion=-1, format_spec=None)",
+                      "lineno": 1,
+                      "type": "FormattedValue"
+                    }
+                  }
+                ],
+                "colOffset": 6,
+                "endColOffset": 33,
+                "endLineno": 1,
+                "fields": {},
+                "id": 4,
+                "label": "JoinedStr",
+                "lineno": 1,
+                "type": "JoinedStr"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 33,
+          "endLineno": 1,
+          "fields": {},
+          "id": 1,
+          "label": "Assign",
+          "lineno": 1,
+          "type": "Assign"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "'outer '",
+      "'inner '",
+      "2",
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "'outer '",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 8,
+          "endColOffset": 14,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 1,
+        "argrepr": "'inner '",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 4,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 17,
+          "endColOffset": 23,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 2,
+        "argrepr": "2",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 6,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 24,
+          "endColOffset": 29,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 8,
+        "opname": "FORMAT_VALUE",
+        "positions": {
+          "colOffset": 23,
+          "endColOffset": 30,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 2,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 10,
+        "opname": "BUILD_STRING",
+        "positions": {
+          "colOffset": 15,
+          "endColOffset": 31,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 12,
+        "opname": "FORMAT_VALUE",
+        "positions": {
+          "colOffset": 14,
+          "endColOffset": 32,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 2,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 14,
+        "opname": "BUILD_STRING",
+        "positions": {
+          "colOffset": 6,
+          "endColOffset": 33,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 0,
+        "argrepr": "msg",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 16,
+        "opname": "STORE_NAME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 3,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 3,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 18,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 3,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [
+      "msg"
+    ],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "msg = f\"outer {f'inner {1 + 1}'}\"",
+  "tokens": [
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "msg",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "=",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        8
+      ],
+      "exactType": "FSTRING_START",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": "f\"",
+      "type": "FSTRING_START"
+    },
+    {
+      "end": [
+        1,
+        14
+      ],
+      "exactType": "FSTRING_MIDDLE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        8
+      ],
+      "string": "outer ",
+      "type": "FSTRING_MIDDLE"
+    },
+    {
+      "end": [
+        1,
+        15
+      ],
+      "exactType": "LBRACE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        14
+      ],
+      "string": "{",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        17
+      ],
+      "exactType": "FSTRING_START",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        15
+      ],
+      "string": "f'",
+      "type": "FSTRING_START"
+    },
+    {
+      "end": [
+        1,
+        23
+      ],
+      "exactType": "FSTRING_MIDDLE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        17
+      ],
+      "string": "inner ",
+      "type": "FSTRING_MIDDLE"
+    },
+    {
+      "end": [
+        1,
+        24
+      ],
+      "exactType": "LBRACE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        23
+      ],
+      "string": "{",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        25
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        24
+      ],
+      "string": "1",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        27
+      ],
+      "exactType": "PLUS",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        26
+      ],
+      "string": "+",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        29
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        28
+      ],
+      "string": "1",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        30
+      ],
+      "exactType": "RBRACE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        29
+      ],
+      "string": "}",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        31
+      ],
+      "exactType": "FSTRING_END",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        30
+      ],
+      "string": "'",
+      "type": "FSTRING_END"
+    },
+    {
+      "end": [
+        1,
+        32
+      ],
+      "exactType": "RBRACE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        31
+      ],
+      "string": "}",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        33
+      ],
+      "exactType": "FSTRING_END",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        32
+      ],
+      "string": "\"",
+      "type": "FSTRING_END"
+    },
+    {
+      "end": [
+        1,
+        34
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        33
+      ],
+      "string": "",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

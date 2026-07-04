@@ -1,0 +1,615 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "targets",
+              "node": {
+                "children": [
+                  {
+                    "field": "ctx",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 3,
+                      "label": "Store",
+                      "lineno": null,
+                      "type": "Store"
+                    }
+                  }
+                ],
+                "colOffset": 0,
+                "endColOffset": 1,
+                "endLineno": 1,
+                "fields": {
+                  "id": "'n'"
+                },
+                "id": 2,
+                "label": "Name(id='n')",
+                "lineno": 1,
+                "type": "Name"
+              }
+            },
+            {
+              "field": "value",
+              "node": {
+                "children": [],
+                "colOffset": 4,
+                "endColOffset": 5,
+                "endLineno": 1,
+                "fields": {
+                  "kind": "None",
+                  "value": "4"
+                },
+                "id": 4,
+                "label": "Constant(value=4, kind=None)",
+                "lineno": 1,
+                "type": "Constant"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 5,
+          "endLineno": 1,
+          "fields": {},
+          "id": 1,
+          "label": "Assign",
+          "lineno": 1,
+          "type": "Assign"
+        }
+      },
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "targets",
+              "node": {
+                "children": [
+                  {
+                    "field": "ctx",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 7,
+                      "label": "Store",
+                      "lineno": null,
+                      "type": "Store"
+                    }
+                  }
+                ],
+                "colOffset": 0,
+                "endColOffset": 5,
+                "endLineno": 2,
+                "fields": {
+                  "id": "'total'"
+                },
+                "id": 6,
+                "label": "Name(id='total')",
+                "lineno": 2,
+                "type": "Name"
+              }
+            },
+            {
+              "field": "value",
+              "node": {
+                "children": [
+                  {
+                    "field": "left",
+                    "node": {
+                      "children": [],
+                      "colOffset": 8,
+                      "endColOffset": 9,
+                      "endLineno": 2,
+                      "fields": {
+                        "kind": "None",
+                        "value": "2"
+                      },
+                      "id": 9,
+                      "label": "Constant(value=2, kind=None)",
+                      "lineno": 2,
+                      "type": "Constant"
+                    }
+                  },
+                  {
+                    "field": "op",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 10,
+                      "label": "Add",
+                      "lineno": null,
+                      "type": "Add"
+                    }
+                  },
+                  {
+                    "field": "right",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "left",
+                          "node": {
+                            "children": [],
+                            "colOffset": 12,
+                            "endColOffset": 13,
+                            "endLineno": 2,
+                            "fields": {
+                              "kind": "None",
+                              "value": "3"
+                            },
+                            "id": 12,
+                            "label": "Constant(value=3, kind=None)",
+                            "lineno": 2,
+                            "type": "Constant"
+                          }
+                        },
+                        {
+                          "field": "op",
+                          "node": {
+                            "children": [],
+                            "colOffset": null,
+                            "endColOffset": null,
+                            "endLineno": null,
+                            "fields": {},
+                            "id": 13,
+                            "label": "Mult",
+                            "lineno": null,
+                            "type": "Mult"
+                          }
+                        },
+                        {
+                          "field": "right",
+                          "node": {
+                            "children": [
+                              {
+                                "field": "ctx",
+                                "node": {
+                                  "children": [],
+                                  "colOffset": null,
+                                  "endColOffset": null,
+                                  "endLineno": null,
+                                  "fields": {},
+                                  "id": 15,
+                                  "label": "Load",
+                                  "lineno": null,
+                                  "type": "Load"
+                                }
+                              }
+                            ],
+                            "colOffset": 16,
+                            "endColOffset": 17,
+                            "endLineno": 2,
+                            "fields": {
+                              "id": "'n'"
+                            },
+                            "id": 14,
+                            "label": "Name(id='n')",
+                            "lineno": 2,
+                            "type": "Name"
+                          }
+                        }
+                      ],
+                      "colOffset": 12,
+                      "endColOffset": 17,
+                      "endLineno": 2,
+                      "fields": {},
+                      "id": 11,
+                      "label": "BinOp",
+                      "lineno": 2,
+                      "type": "BinOp"
+                    }
+                  }
+                ],
+                "colOffset": 8,
+                "endColOffset": 17,
+                "endLineno": 2,
+                "fields": {},
+                "id": 8,
+                "label": "BinOp",
+                "lineno": 2,
+                "type": "BinOp"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 17,
+          "endLineno": 2,
+          "fields": {},
+          "id": 5,
+          "label": "Assign",
+          "lineno": 2,
+          "type": "Assign"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "4",
+      "2",
+      "3",
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 0,
+        "argrepr": "4",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 5,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "n",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 4,
+        "opname": "STORE_NAME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 1,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 1,
+        "argrepr": "2",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 6,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 8,
+          "endColOffset": 9,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 2,
+        "argrepr": "3",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 8,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 12,
+          "endColOffset": 13,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "n",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 10,
+        "opname": "LOAD_NAME",
+        "positions": {
+          "colOffset": 16,
+          "endColOffset": 17,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 5,
+        "argrepr": "*",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 12,
+        "opname": "BINARY_OP",
+        "positions": {
+          "colOffset": 12,
+          "endColOffset": 17,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 0,
+        "argrepr": "+",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 16,
+        "opname": "BINARY_OP",
+        "positions": {
+          "colOffset": 8,
+          "endColOffset": 17,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 1,
+        "argrepr": "total",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 20,
+        "opname": "STORE_NAME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 5,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 3,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 22,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 5,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [
+      "n",
+      "total"
+    ],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "n = 4\ntotal = 2 + 3 * n",
+  "tokens": [
+    {
+      "end": [
+        1,
+        1
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "n",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        2
+      ],
+      "string": "=",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "4",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        6
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        5
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "total",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        7
+      ],
+      "exactType": "EQUAL",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        6
+      ],
+      "string": "=",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        9
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        8
+      ],
+      "string": "2",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        2,
+        11
+      ],
+      "exactType": "PLUS",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        10
+      ],
+      "string": "+",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        13
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        12
+      ],
+      "string": "3",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        2,
+        15
+      ],
+      "exactType": "STAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        14
+      ],
+      "string": "*",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        17
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        16
+      ],
+      "string": "n",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        18
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        17
+      ],
+      "string": "",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        3,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}

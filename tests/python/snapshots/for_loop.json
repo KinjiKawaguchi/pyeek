@@ -1,0 +1,739 @@
+{
+  "ast": {
+    "children": [
+      {
+        "field": "body",
+        "node": {
+          "children": [
+            {
+              "field": "target",
+              "node": {
+                "children": [
+                  {
+                    "field": "ctx",
+                    "node": {
+                      "children": [],
+                      "colOffset": null,
+                      "endColOffset": null,
+                      "endLineno": null,
+                      "fields": {},
+                      "id": 3,
+                      "label": "Store",
+                      "lineno": null,
+                      "type": "Store"
+                    }
+                  }
+                ],
+                "colOffset": 4,
+                "endColOffset": 5,
+                "endLineno": 1,
+                "fields": {
+                  "id": "'i'"
+                },
+                "id": 2,
+                "label": "Name(id='i')",
+                "lineno": 1,
+                "type": "Name"
+              }
+            },
+            {
+              "field": "iter",
+              "node": {
+                "children": [
+                  {
+                    "field": "func",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "ctx",
+                          "node": {
+                            "children": [],
+                            "colOffset": null,
+                            "endColOffset": null,
+                            "endLineno": null,
+                            "fields": {},
+                            "id": 6,
+                            "label": "Load",
+                            "lineno": null,
+                            "type": "Load"
+                          }
+                        }
+                      ],
+                      "colOffset": 9,
+                      "endColOffset": 14,
+                      "endLineno": 1,
+                      "fields": {
+                        "id": "'range'"
+                      },
+                      "id": 5,
+                      "label": "Name(id='range')",
+                      "lineno": 1,
+                      "type": "Name"
+                    }
+                  },
+                  {
+                    "field": "args",
+                    "node": {
+                      "children": [],
+                      "colOffset": 15,
+                      "endColOffset": 16,
+                      "endLineno": 1,
+                      "fields": {
+                        "kind": "None",
+                        "value": "3"
+                      },
+                      "id": 7,
+                      "label": "Constant(value=3, kind=None)",
+                      "lineno": 1,
+                      "type": "Constant"
+                    }
+                  }
+                ],
+                "colOffset": 9,
+                "endColOffset": 17,
+                "endLineno": 1,
+                "fields": {
+                  "keywords": "[]"
+                },
+                "id": 4,
+                "label": "Call(keywords=[])",
+                "lineno": 1,
+                "type": "Call"
+              }
+            },
+            {
+              "field": "body",
+              "node": {
+                "children": [
+                  {
+                    "field": "value",
+                    "node": {
+                      "children": [
+                        {
+                          "field": "func",
+                          "node": {
+                            "children": [
+                              {
+                                "field": "ctx",
+                                "node": {
+                                  "children": [],
+                                  "colOffset": null,
+                                  "endColOffset": null,
+                                  "endLineno": null,
+                                  "fields": {},
+                                  "id": 11,
+                                  "label": "Load",
+                                  "lineno": null,
+                                  "type": "Load"
+                                }
+                              }
+                            ],
+                            "colOffset": 4,
+                            "endColOffset": 9,
+                            "endLineno": 2,
+                            "fields": {
+                              "id": "'print'"
+                            },
+                            "id": 10,
+                            "label": "Name(id='print')",
+                            "lineno": 2,
+                            "type": "Name"
+                          }
+                        },
+                        {
+                          "field": "args",
+                          "node": {
+                            "children": [
+                              {
+                                "field": "ctx",
+                                "node": {
+                                  "children": [],
+                                  "colOffset": null,
+                                  "endColOffset": null,
+                                  "endLineno": null,
+                                  "fields": {},
+                                  "id": 13,
+                                  "label": "Load",
+                                  "lineno": null,
+                                  "type": "Load"
+                                }
+                              }
+                            ],
+                            "colOffset": 10,
+                            "endColOffset": 11,
+                            "endLineno": 2,
+                            "fields": {
+                              "id": "'i'"
+                            },
+                            "id": 12,
+                            "label": "Name(id='i')",
+                            "lineno": 2,
+                            "type": "Name"
+                          }
+                        }
+                      ],
+                      "colOffset": 4,
+                      "endColOffset": 12,
+                      "endLineno": 2,
+                      "fields": {
+                        "keywords": "[]"
+                      },
+                      "id": 9,
+                      "label": "Call(keywords=[])",
+                      "lineno": 2,
+                      "type": "Call"
+                    }
+                  }
+                ],
+                "colOffset": 4,
+                "endColOffset": 12,
+                "endLineno": 2,
+                "fields": {},
+                "id": 8,
+                "label": "Expr",
+                "lineno": 2,
+                "type": "Expr"
+              }
+            }
+          ],
+          "colOffset": 0,
+          "endColOffset": 12,
+          "endLineno": 2,
+          "fields": {
+            "orelse": "[]"
+          },
+          "id": 1,
+          "label": "For(orelse=[])",
+          "lineno": 1,
+          "type": "For"
+        }
+      }
+    ],
+    "colOffset": null,
+    "endColOffset": null,
+    "endLineno": null,
+    "fields": {
+      "type_ignores": "[]"
+    },
+    "id": 0,
+    "label": "Module(type_ignores=[])",
+    "lineno": null,
+    "type": "Module"
+  },
+  "bytecode": {
+    "children": [],
+    "consts": [
+      "3",
+      "None"
+    ],
+    "instructions": [
+      {
+        "arg": 0,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 0,
+        "opname": "RESUME",
+        "positions": {
+          "colOffset": 0,
+          "endColOffset": 0,
+          "endLineno": 1,
+          "lineno": 0
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 2,
+        "opname": "PUSH_NULL",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 14,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "range",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 4,
+        "opname": "LOAD_NAME",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 14,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 0,
+        "argrepr": "3",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 6,
+        "opname": "LOAD_CONST",
+        "positions": {
+          "colOffset": 15,
+          "endColOffset": 16,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 1,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 8,
+        "opname": "CALL",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 17,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -2
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 16,
+        "opname": "GET_ITER",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 17,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": 10,
+        "argrepr": "to 42",
+        "isJump": true,
+        "isJumpTarget": true,
+        "offset": 18,
+        "opname": "FOR_ITER",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 17,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 1,
+        "argrepr": "i",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 22,
+        "opname": "STORE_NAME",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 5,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 24,
+        "opname": "PUSH_NULL",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 9,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 2,
+        "argrepr": "print",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 26,
+        "opname": "LOAD_NAME",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 9,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 1,
+        "argrepr": "i",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 28,
+        "opname": "LOAD_NAME",
+        "positions": {
+          "colOffset": 10,
+          "endColOffset": 11,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 1
+      },
+      {
+        "arg": 1,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 30,
+        "opname": "CALL",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 12,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": -2
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 38,
+        "opname": "POP_TOP",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 12,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": -1
+      },
+      {
+        "arg": 12,
+        "argrepr": "to 18",
+        "isJump": true,
+        "isJumpTarget": false,
+        "offset": 40,
+        "opname": "JUMP_BACKWARD",
+        "positions": {
+          "colOffset": 4,
+          "endColOffset": 12,
+          "endLineno": 2,
+          "lineno": 2
+        },
+        "stackEffect": 0
+      },
+      {
+        "arg": null,
+        "argrepr": "",
+        "isJump": false,
+        "isJumpTarget": true,
+        "offset": 42,
+        "opname": "END_FOR",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 17,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": -2
+      },
+      {
+        "arg": 1,
+        "argrepr": "None",
+        "isJump": false,
+        "isJumpTarget": false,
+        "offset": 44,
+        "opname": "RETURN_CONST",
+        "positions": {
+          "colOffset": 9,
+          "endColOffset": 17,
+          "endLineno": 1,
+          "lineno": 1
+        },
+        "stackEffect": 0
+      }
+    ],
+    "name": "<module>",
+    "names": [
+      "range",
+      "i",
+      "print"
+    ],
+    "varnames": []
+  },
+  "errors": [],
+  "pythonVersion": "3.12.11",
+  "source": "for i in range(3):\n    print(i)",
+  "tokens": [
+    {
+      "end": [
+        1,
+        3
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        0
+      ],
+      "string": "for",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        5
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        4
+      ],
+      "string": "i",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        8
+      ],
+      "exactType": "NAME",
+      "isKeyword": true,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        6
+      ],
+      "string": "in",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        14
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        9
+      ],
+      "string": "range",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        1,
+        15
+      ],
+      "exactType": "LPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        14
+      ],
+      "string": "(",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        16
+      ],
+      "exactType": "NUMBER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        15
+      ],
+      "string": "3",
+      "type": "NUMBER"
+    },
+    {
+      "end": [
+        1,
+        17
+      ],
+      "exactType": "RPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        16
+      ],
+      "string": ")",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        18
+      ],
+      "exactType": "COLON",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        17
+      ],
+      "string": ":",
+      "type": "OP"
+    },
+    {
+      "end": [
+        1,
+        19
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        1,
+        18
+      ],
+      "string": "\n",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        2,
+        4
+      ],
+      "exactType": "INDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        0
+      ],
+      "string": "    ",
+      "type": "INDENT"
+    },
+    {
+      "end": [
+        2,
+        9
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        4
+      ],
+      "string": "print",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        10
+      ],
+      "exactType": "LPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        9
+      ],
+      "string": "(",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        11
+      ],
+      "exactType": "NAME",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        10
+      ],
+      "string": "i",
+      "type": "NAME"
+    },
+    {
+      "end": [
+        2,
+        12
+      ],
+      "exactType": "RPAR",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        11
+      ],
+      "string": ")",
+      "type": "OP"
+    },
+    {
+      "end": [
+        2,
+        13
+      ],
+      "exactType": "NEWLINE",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        2,
+        12
+      ],
+      "string": "",
+      "type": "NEWLINE"
+    },
+    {
+      "end": [
+        3,
+        0
+      ],
+      "exactType": "DEDENT",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        0
+      ],
+      "string": "",
+      "type": "DEDENT"
+    },
+    {
+      "end": [
+        3,
+        0
+      ],
+      "exactType": "ENDMARKER",
+      "isKeyword": false,
+      "isSoftKeyword": false,
+      "start": [
+        3,
+        0
+      ],
+      "string": "",
+      "type": "ENDMARKER"
+    }
+  ]
+}
