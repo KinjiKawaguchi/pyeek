@@ -50,6 +50,10 @@ __pycache__/
 .pytest_cache/
 .venv/
 
+# playwright
+/playwright-report/
+/test-results/
+
 # terraform (.terraform.lock.hcl は provider 固定のため commit する)
 infra/.terraform/
 infra/terraform.tfstate
