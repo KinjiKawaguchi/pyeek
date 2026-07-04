@@ -17,10 +17,9 @@ describe("findCallInfo", () => {
     const info = findCallInfo(tokens);
     expect(info.callTokenIndexes).toHaveLength(1);
     expect(tokens[info.callTokenIndexes[0] as number]?.string).toBe("print");
-    expect(info.bareBuiltin).toBeNull();
   });
 
-  it("呼び出しの無い builtin 名は bareBuiltin として検出する", () => {
+  it("呼び出しの無い NAME は検出しない", () => {
     const tokens: Token[] = [
       {
         type: "NAME",
@@ -52,40 +51,5 @@ describe("findCallInfo", () => {
     ];
     const info = findCallInfo(tokens);
     expect(info.callTokenIndexes).toHaveLength(0);
-    expect(info.bareBuiltin).toBe("print");
-  });
-
-  it("obj.print のような属性アクセスは bareBuiltin にしない", () => {
-    const tokens: Token[] = [
-      {
-        type: "NAME",
-        exactType: "NAME",
-        string: "obj",
-        start: [1, 0],
-        end: [1, 3],
-        isKeyword: false,
-        isSoftKeyword: false,
-      },
-      {
-        type: "OP",
-        exactType: "DOT",
-        string: ".",
-        start: [1, 3],
-        end: [1, 4],
-        isKeyword: false,
-        isSoftKeyword: false,
-      },
-      {
-        type: "NAME",
-        exactType: "NAME",
-        string: "print",
-        start: [1, 4],
-        end: [1, 9],
-        isKeyword: false,
-        isSoftKeyword: false,
-      },
-    ];
-    const info = findCallInfo(tokens);
-    expect(info.bareBuiltin).toBeNull();
   });
 });

@@ -9,7 +9,7 @@ import { LoadingOverlay } from "./loading-overlay";
 import { ModeToggle } from "./mode-toggle";
 import { PresetPicker } from "./preset-picker";
 import { PythonVersionBadge } from "./python-version-badge";
-import { CallSecretCard, TokenLegend, TokenStage } from "./token-stage";
+import { TokenLegend, TokenStage } from "./token-stage";
 import { VmStage } from "./vm-stage";
 
 export interface LabWorkbenchProps {
@@ -34,7 +34,6 @@ export function LabWorkbench({ initialSource }: LabWorkbenchProps) {
       </div>
       <TokenStage />
       <TokenLegend />
-      <CallSecretCard />
       <AstStage />
       <BytecodeStage />
       <VmStage />
