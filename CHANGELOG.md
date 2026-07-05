@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.0...v1.0.1) (2026-07-05)
+
+
+### Bug Fixes
+
+* release-pleaseのマージにPATを使い後続タグ作成が動くようにする ([#3](https://github.com/KinjiKawaguchi/pyeek/issues/3)) ([c9c0b12](https://github.com/KinjiKawaguchi/pyeek/commit/c9c0b1262e3a1f964152f216755e3bb66b737524))
+
 ## 1.0.0 (2026-07-05)
 
 
