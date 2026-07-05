@@ -12,10 +12,14 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      # GITHUB_TOKEN でのマージはpushイベントを発生させず、次のrelease-please
+      # 実行(タグ/GitHub Release作成)がトリガーされない既知の制限があるため、
+      # 個人アクセストークン(RELEASE_PLEASE_TOKEN)を使う。
       - uses: googleapis/release-please-action@v4
         id: release
         with:
           release-type: node
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
       # Pyeekは常時デプロイされるWebアプリでnpm publish等の公開作業を
       # 挟まないため、Release PRを寝かせず即マージしてタグ+CHANGELOG更新を
@@ -24,6 +28,6 @@ jobs:
       - name: Release PRをauto-mergeする
         if: ${{ steps.release.outputs.prs_created == 'true' }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
         run: |
           gh pr merge --squash --auto "${{ fromJson(steps.release.outputs.pr).number }}" -R ${{ github.repository }}
