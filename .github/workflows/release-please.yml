@@ -1,0 +1,29 @@
+name: release-please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: node
+
+      # Pyeekは常時デプロイされるWebアプリでnpm publish等の公開作業を
+      # 挟まないため、Release PRを寝かせず即マージしてタグ+CHANGELOG更新を
+      # 自動化する。mainはPR必須のブランチ保護がかかっているため、直接pushの
+      # 代わりにauto-mergeで通す（必須ステータスチェックがあれば通過後にマージされる）。
+      - name: Release PRをauto-mergeする
+        if: ${{ steps.release.outputs.prs_created == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge --squash --auto "${{ fromJson(steps.release.outputs.pr).number }}" -R ${{ github.repository }}
