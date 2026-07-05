@@ -1,6 +1,6 @@
 {
   "name": "pyeek",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Python が動くまでの字句解析・構文解析・コンパイル・実行を、本物の CPython の内部表現で串刺しに可視化する教育用 Web アプリ",
   "private": true,
   "packageManager": "pnpm@10.8.1",
@@ -49,6 +49,9 @@
     "vitest": "^3.0.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "lefthook"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lefthook"
+    ]
   }
 }
