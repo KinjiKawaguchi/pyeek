@@ -97,6 +97,42 @@ test.describe("エディタ・プリセット・エラー表示", () => {
     expect(errors).toHaveLength(0);
   });
 
+  // シナリオ5: Tab/Shift+Tab/Enterでのインデント操作
+  test("Tabでインデント挿入、Shift+Tabで解除、Enterでインデントが継続・追加されること", async ({
+    page,
+  }) => {
+    const errors = collectPageErrors(page);
+    await gotoAndWaitForPyodide(page);
+
+    const editor = page.locator("textarea");
+    await editor.click();
+    await editor.fill("");
+
+    // "if True:" と入力して Enter → ':' で終わる行の後は1段深くインデントされる
+    await page.keyboard.type("if True:");
+    await page.keyboard.press("Enter");
+    await page.keyboard.type("x = 1");
+    await expect(editor).toHaveValue("if True:\n    x = 1");
+
+    // Enter → 前の行のインデントがそのまま引き継がれる（':'で終わらない）
+    await page.keyboard.press("Enter");
+    await page.keyboard.type("y = 2");
+    await expect(editor).toHaveValue("if True:\n    x = 1\n    y = 2");
+
+    // 行頭で Tab → 4スペース挿入
+    await editor.fill("z = 3");
+    await page.keyboard.press("Home");
+    await page.keyboard.press("Tab");
+    await expect(editor).toHaveValue("    z = 3");
+
+    // 行頭で Shift+Tab → 4スペース解除
+    await page.keyboard.press("Home");
+    await page.keyboard.press("Shift+Tab");
+    await expect(editor).toHaveValue("z = 3");
+
+    expect(errors).toHaveLength(0);
+  });
+
   // シナリオ4: 空入力
   test("エディタを空にしてもアプリがクラッシュしないこと", async ({ page }) => {
     const errors = collectPageErrors(page);
