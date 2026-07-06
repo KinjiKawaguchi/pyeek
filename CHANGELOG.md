@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.1...v1.0.2) (2026-07-06)
+
+
+### Bug Fixes
+
+* 「串刺し」という言い回しをやめ、既存の平易な表現に統一する ([#5](https://github.com/KinjiKawaguchi/pyeek/issues/5)) ([5c1401b](https://github.com/KinjiKawaguchi/pyeek/commit/5c1401b99f5e6402817bafa14afad6e2a1472914))
+
 ## [1.0.1](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.0...v1.0.1) (2026-07-05)
 
 
