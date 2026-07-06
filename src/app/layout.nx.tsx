@@ -23,7 +23,7 @@ const monoFont = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Pyeek — Python が動くまでを見るラボ",
   description:
-    "Python の字句解析・構文解析・コンパイル・実行を、本物の CPython の内部表現で串刺しに可視化する教育用アプリ",
+    "Python の字句解析・構文解析・コンパイル・実行の4段階で、同じコードがどう姿を変えていくかを本物の CPython の内部表現で可視化する教育用アプリ",
 };
 
 export default function RootLayout({
