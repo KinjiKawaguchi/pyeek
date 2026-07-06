@@ -11,7 +11,7 @@ export function LabPage() {
       <header className="lab-page__header">
         <span className="lab-page__kicker">PYEEK</span>
         <h1 className="lab-page__title">
-          Python が動くまで<span className="lab-page__zap">を見るラボ</span>
+          🐍 Python が動くまで<span className="lab-page__zap">を見てみよう！</span>
         </h1>
         <p className="lab-page__lead">
           Python があなたのコードを実行するまでの4段階（字句解析・構文解析・コンパイル・実行）で、
