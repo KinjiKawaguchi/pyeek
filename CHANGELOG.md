@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.2...v1.0.3) (2026-07-06)
+
+
+### Bug Fixes
+
+* ラボ画面ヘッダーの文言をREADMEの表現に揃える ([#8](https://github.com/KinjiKawaguchi/pyeek/issues/8)) ([8298736](https://github.com/KinjiKawaguchi/pyeek/commit/82987366ac4405e197cd165d47b909a091e11fde))
+
 ## [1.0.2](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.1...v1.0.2) (2026-07-06)
 
 
