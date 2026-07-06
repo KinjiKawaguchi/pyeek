@@ -84,6 +84,28 @@ src/
 Vercel の `build_command` は `pnpm build`（prebuild の Pyodide アセットコピーを
 走らせるため必須）。詳細は [`infra/README.md`](./infra/README.md) を参照してください。
 
+## バージョニング
+
+[Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) に基づく単一の
+SemVer（`vX.Y.Z`）を採用しています。[release-please](https://github.com/googleapis/release-please)
+が [Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/) に従った
+コミットメッセージ（= Squashマージ後のPRタイトル）から Release PR
+（CHANGELOG.md 更新 + `package.json` のバージョンbump）を自動生成し、auto-mergeで
+即マージします。マージ＝リリース（タグ + GitHub Release作成）です。
+
+bumpの判断は、SemVerの伝統的な「API互換性の破壊」ではなく、**利用者から見える
+挙動の変化量**を基準にします。
+
+- **PATCH**（`fix:`）— UXや使い方を変えずに、間違った挙動・表示・文言を正す。
+  例: ボタンの文言・アイコンのrewording、エラー文言修正、表示崩れ修正。
+- **MINOR**（`feat:`）— 既存の使い勝手を崩さずに機能を追加する。
+  例: 既存flowにoption/settingを追加（既存操作で同じ結果が得られる）、
+  既存flowはそのままに新しい画面・機能を追加。
+- **MAJOR**（`feat!:` または `BREAKING CHANGE:` フッター）— 既存の使い方が
+  そのままでは通用しなくなるほどUI/flowを変える。
+  例: 既存flowが消える、手順の順序が変わる、ショートカットの意味が変わる、
+  UIの全面再設計。
+
 ## ロードマップ
 
 優先順位は未確定です。
