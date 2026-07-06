@@ -9,13 +9,13 @@ export function LabPage() {
     <main className="lab-page">
       <GithubLink />
       <header className="lab-page__header">
-        <span className="lab-page__kicker">PYTHON が動くまで LABORATORY</span>
+        <span className="lab-page__kicker">PYEEK</span>
         <h1 className="lab-page__title">
-          実行 <span className="lab-page__zap">ラボ</span>
+          🐍 Python が動くまで<span className="lab-page__zap">を見てみよう！</span>
         </h1>
         <p className="lab-page__lead">
-          Python があなたのコードを実行するまでの4段階（字句解析・構文解析・コンパイル・実行）を、
-          本物の CPython でそのまま見せます。
+          Python があなたのコードを実行するまでの4段階（字句解析・構文解析・コンパイル・実行）で、
+          同じコードが本物の CPython の中でどう姿を変えていくかを見ることができます。
         </p>
       </header>
       <LabWorkbench initialSource={DEFAULT_SOURCE} />
