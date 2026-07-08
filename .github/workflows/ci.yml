@@ -32,6 +32,9 @@ jobs:
       - name: Biome check
         run: pnpm check
 
+      - name: ESLint
+        run: pnpm lint
+
       - name: FSD validation
         run: pnpm fsd
 

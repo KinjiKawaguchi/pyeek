@@ -34,9 +34,10 @@ export function AstReference() {
           などの廃止予定レガシーエイリアスや、
           <code>AugLoad</code>、<code>Param</code> などの未使用コンテキスト型は対象外です。 さらに、
           <code>Interactive</code>、<code>Expression</code>、<code>FunctionType</code> は、
-          <code>mode='single'</code>、<code>mode='eval'</code>、<code>mode='func_type'</code> で
-          <code>ast.parse()</code> を呼んだ場合のみ生成されるため、Pyeek（デフォルト
-          <code>mode='exec'</code>、常に <code>Module</code>{" "}
+          <code>mode=&apos;single&apos;</code>、<code>mode=&apos;eval&apos;</code>、
+          <code>mode=&apos;func_type&apos;</code> で<code>ast.parse()</code>{" "}
+          を呼んだ場合のみ生成されるため、Pyeek（デフォルト
+          <code>mode=&apos;exec&apos;</code>、常に <code>Module</code>{" "}
           をルートにする）のUI上では決して出現しません。
         </div>
 

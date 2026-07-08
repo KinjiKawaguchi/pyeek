@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // public/ は scripts/copy-pyodide.mjs がコピーした Pyodide 本体・生成物
+    // (public/pyodide/*, public/py/*) を含み、静的配信用でソースコードでは
+    // ないため lint 対象から外す。
+    "public/**",
+    "playwright-report/**",
   ]),
 ]);
 

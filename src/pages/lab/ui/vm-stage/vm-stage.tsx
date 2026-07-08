@@ -72,29 +72,32 @@ export function VmStage() {
   const steps = simResult?.ok ? simResult.steps : [];
 
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // ユーザーが「▶ 再生」で表明した意図。実際に再生中かどうか（atEndなら
+  // 自動的に停止済み扱い）は isPlaying として derive する。
+  const [autoPlayRequested, setAutoPlayRequested] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 選択中のcode object(activeKey)が切り替わった時だけ再生位置をリセットしたい意図的な依存
-  useEffect(() => {
+  // activeKeyが切り替わった直前レンダーとの比較でのみリセットする
+  // （Reactの「前回レンダーの情報を保持する」パターン。エフェクトを使わない
+  // ことで、切り替え直後の1フレームだけ古いステップが見える瞬間が発生しない）。
+  const [prevActiveKey, setPrevActiveKey] = useState(activeKey);
+  if (activeKey !== prevActiveKey) {
+    setPrevActiveKey(activeKey);
     setCurrentIndex(-1);
-    setIsPlaying(false);
-  }, [activeKey]);
+    setAutoPlayRequested(false);
+  }
+
+  const isPlaying = autoPlayRequested && currentIndex < steps.length - 1;
 
   useEffect(() => {
     if (!isPlaying) {
       return;
     }
-    if (currentIndex >= steps.length - 1) {
-      setIsPlaying(false);
-      return;
-    }
-    const timer = setTimeout(() => setCurrentIndex((i) => i + 1), PLAY_INTERVAL_MS);
+    const timer = setTimeout(() => setCurrentIndex(currentIndex + 1), PLAY_INTERVAL_MS);
     return () => clearTimeout(timer);
-  }, [isPlaying, currentIndex, steps.length]);
+  }, [isPlaying, currentIndex]);
 
   const currentStep = currentIndex >= 0 ? (steps[currentIndex] ?? null) : null;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: currentStep の命令が変わった時だけ他ステージと同期したい意図的な依存
   useEffect(() => {
     if (!currentStep) {
       return;
@@ -103,7 +106,7 @@ export function VmStage() {
     if (range) {
       setSelectedRange(range);
     }
-  }, [currentStep]);
+  }, [currentStep, setSelectedRange]);
 
   if (!root || !activeEntry) {
     return (
@@ -153,24 +156,27 @@ export function VmStage() {
   const stack = currentStep?.stackAfter ?? [];
 
   const handleTogglePlay = () => {
-    if (!isPlaying && currentIndex >= steps.length - 1) {
+    if (currentIndex >= steps.length - 1) {
+      // 完走後の「▶ 再生」は最初から再生し直す
       setCurrentIndex(-1);
+      setAutoPlayRequested(true);
+      return;
     }
-    setIsPlaying((playing) => !playing);
+    setAutoPlayRequested((requested) => !requested);
   };
 
   const handleStepForward = () => {
-    setIsPlaying(false);
+    setAutoPlayRequested(false);
     setCurrentIndex((i) => Math.min(i + 1, steps.length - 1));
   };
 
   const handleStepBack = () => {
-    setIsPlaying(false);
+    setAutoPlayRequested(false);
     setCurrentIndex((i) => Math.max(i - 1, -1));
   };
 
   const handleRewind = () => {
-    setIsPlaying(false);
+    setAutoPlayRequested(false);
     setCurrentIndex(-1);
   };
 
