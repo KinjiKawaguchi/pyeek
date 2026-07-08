@@ -1,7 +1,9 @@
 "use client";
 
-import { type KeyboardEvent, useLayoutEffect, useRef } from "react";
+import { type KeyboardEvent, type ReactNode, useLayoutEffect, useMemo, useRef } from "react";
+import SimpleCodeEditor from "react-simple-code-editor";
 import { useAnalysis } from "../model/analysis-store";
+import { buildHighlightSegments, type HighlightSegment } from "../model/editor/highlight";
 import {
   type EditorSelection,
   insertNewlineWithIndent,
@@ -9,23 +11,35 @@ import {
   outdentLines,
 } from "../model/editor/indent";
 
+const TEXTAREA_ID = "pyeek-editor";
+
+function renderSegments(segments: HighlightSegment[]): ReactNode {
+  return segments.map((segment, index) => (
+    // biome-ignore lint/suspicious/noArrayIndexKey: セグメントは毎回丸ごと再生成される静的な表示用配列
+    <span key={index} className={segment.category ? `editor-tok--${segment.category}` : undefined}>
+      {segment.text}
+    </span>
+  ));
+}
+
 // 4 ステージ共有の唯一のソースエディタ。前身 token-lab.html の
-// textarea#code に相当する（M1 で CSS を移植する）。
+// textarea#code に相当する。シンタックスハイライトは①ステージと同じ
+// 本物の tokenize 結果を使い回し、Pyeek 独自の Python 文法は持たない。
 export function Editor() {
   const {
-    state: { source, runtimeError },
+    state: { source, result, runtimeError },
     setSource,
   } = useAnalysis();
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const pendingSelection = useRef<EditorSelection | null>(null);
 
   // setSource → 再レンダーの後でないとテキストが確定しないため、
   // カーソル位置の復元はレイアウト確定後の useLayoutEffect で行う。
   useLayoutEffect(() => {
-    if (pendingSelection.current && textareaRef.current) {
+    if (pendingSelection.current) {
       const { start, end } = pendingSelection.current;
-      textareaRef.current.setSelectionRange(start, end);
+      containerRef.current?.querySelector("textarea")?.setSelectionRange(start, end);
       pendingSelection.current = null;
     }
   });
@@ -35,8 +49,12 @@ export function Editor() {
     setSource(edit.value);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    const el = event.currentTarget;
+  // react-simple-code-editor の型定義は onKeyDown を
+  // HTMLAttributes<HTMLDivElement> の同名プロパティと交差させているため、
+  // イベント型は両要素を受け付けられる形にしておく必要がある
+  // （実際に発火するのは常に内部の textarea 側）。
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement | HTMLTextAreaElement>) => {
+    const el = event.currentTarget as HTMLTextAreaElement;
     const selection = { start: el.selectionStart, end: el.selectionEnd };
 
     if (event.key === "Tab") {
@@ -51,17 +69,31 @@ export function Editor() {
     }
   };
 
+  // 解析結果が今のソースに追いついていない間（debounce待ち）はハイライト
+  // せず、素通しのテキストを表示する。古いトークンの位置情報を今のソース
+  // に当てはめると範囲がずれるため。
+  const segments = useMemo(
+    () =>
+      result && result.source === source ? buildHighlightSegments(source, result.tokens) : null,
+    [result, source],
+  );
+
   return (
-    <div className="editor">
-      <textarea
-        ref={textareaRef}
-        className="editor__textarea"
-        spellCheck={false}
-        autoComplete="off"
-        aria-label="Python コード"
+    <div className="editor" ref={containerRef}>
+      <label className="sr-only" htmlFor={TEXTAREA_ID}>
+        Python コード
+      </label>
+      <SimpleCodeEditor
         value={source}
-        onChange={(event) => setSource(event.target.value)}
+        onValueChange={setSource}
         onKeyDown={handleKeyDown}
+        highlight={() => (segments ? renderSegments(segments) : source)}
+        ignoreTabKey
+        padding={{ top: 10, right: 12, bottom: 10, left: 12 }}
+        textareaId={TEXTAREA_ID}
+        textareaClassName="editor__textarea"
+        preClassName="editor__pre"
+        className="editor__surface"
       />
       {runtimeError ? <p className="editor__error">⚠ {runtimeError}</p> : null}
     </div>
