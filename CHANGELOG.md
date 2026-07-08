@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.1...v1.3.2) (2026-07-08)
+
+
+### Bug Fixes
+
+* AST木の横スクロールに気づけるようスクロールシャドウを追加 ([#20](https://github.com/KinjiKawaguchi/pyeek/issues/20)) ([8682088](https://github.com/KinjiKawaguchi/pyeek/commit/868208826af80a7699f49e5489f0b5df0899ad6e))
+
 ## [1.3.1](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.0...v1.3.1) (2026-07-08)
 
 
