@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { JetBrains_Mono, M_PLUS_Rounded_1c, Zen_Maru_Gothic } from "next/font/google";
 import "./styles/globals.css";
@@ -52,7 +53,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
