@@ -23,6 +23,38 @@ const nextConfig: NextConfig = {
   },
 
   headers: async () => [
+    // Pyodide の WASM ビルドは pthread(マルチスレッド)対応でコンパイルされて
+    // おり、内部で `WebAssembly.Memory({ shared: true })` を確保する。
+    // これは実体としては SharedArrayBuffer で、クロスオリジン分離
+    // (COOP+COEP) が無い状態で使うと将来のブラウザで禁止される非推奨
+    // 警告が出る（Lighthouse の "Uses deprecated APIs" で検出）。
+    // COEP: require-corp は他オリジンのリソースにCORP/CORSヘッダーを
+    // 要求するため、GitHub Starsバッジ(img.shields.io)が
+    // `Cross-Origin-Resource-Policy: cross-origin` を返すことを確認
+    // 済み(curlで実測)。
+    //
+    // 本番ビルドでのみ有効化する。開発モードでは @vercel/analytics が
+    // デバッグ用スクリプト(va.vercel-scripts.com/v1/script.debug.js、
+    // クロスオリジン・CORPヘッダー無し)を読み込むため、COEPを有効にすると
+    // このスクリプトがブロックされる。本番ビルドでは同スクリプトは読み込まれず
+    // 同一オリジンの /_vercel/insights/script.js が使われるため影響しない。
+    ...(process.env.NODE_ENV === "production"
+      ? [
+          {
+            source: "/:path*",
+            headers: [
+              {
+                key: "Cross-Origin-Opener-Policy",
+                value: "same-origin",
+              },
+              {
+                key: "Cross-Origin-Embedder-Policy",
+                value: "require-corp",
+              },
+            ],
+          },
+        ]
+      : []),
     {
       // Pyodide ランタイムファイルのキャッシュ設定。
       // immutable キャッシュを採用しない理由：
