@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.4...v1.3.5) (2026-07-08)
+
+
+### Performance Improvements
+
+* Pyodideの初期化・実行をWeb Workerに逃がしメインスレッドのブロッキングを解消 ([#24](https://github.com/KinjiKawaguchi/pyeek/issues/24)) ([8cb4466](https://github.com/KinjiKawaguchi/pyeek/commit/8cb4466381df29c6d4b309971d24a36c7b457e2b))
+
 ## [1.3.4](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.3...v1.3.4) (2026-07-08)
 
 
