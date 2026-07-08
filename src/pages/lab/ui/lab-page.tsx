@@ -2,9 +2,14 @@ import { DEFAULT_SOURCE } from "../config/presets";
 import { GithubLink } from "./github-link";
 import { LabWorkbench } from "./lab-workbench";
 
+export interface LabPageProps {
+  // URL の code パラメータ経由で共有されたソース。無指定なら DEFAULT_SOURCE。
+  initialSource?: string;
+}
+
 // Server Component。静的な教育テキスト・フッタはここに残し、解析結果に依存
 // する部分だけを LabWorkbench（'use client'）へ委譲する。
-export function LabPage() {
+export function LabPage({ initialSource }: LabPageProps) {
   return (
     <main className="lab-page">
       <GithubLink />
@@ -18,7 +23,7 @@ export function LabPage() {
           同じコードが本物の CPython の中でどう姿を変えていくかを見ることができます。
         </p>
       </header>
-      <LabWorkbench initialSource={DEFAULT_SOURCE} />
+      <LabWorkbench initialSource={initialSource || DEFAULT_SOURCE} />
     </main>
   );
 }
