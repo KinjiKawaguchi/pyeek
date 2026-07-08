@@ -6,6 +6,8 @@ pre-commit:
       run: pnpm biome check --no-errors-on-unmatched {staged_files}
     typecheck:
       run: pnpm typecheck
+    eslint:
+      run: pnpm lint
     fsd:
       glob: "src/**/*.{ts,tsx}"
       run: pnpm fsd

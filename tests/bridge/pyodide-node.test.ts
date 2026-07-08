@@ -28,8 +28,9 @@ interface PyeekResultLike {
 }
 
 function omitPythonVersion(result: PyeekResultLike): Omit<PyeekResultLike, "pythonVersion"> {
-  const { pythonVersion, ...rest } = result;
-  return rest;
+  return Object.fromEntries(
+    Object.entries(result).filter(([key]) => key !== "pythonVersion"),
+  ) as Omit<PyeekResultLike, "pythonVersion">;
 }
 
 async function loadCases(): Promise<Record<string, string>> {

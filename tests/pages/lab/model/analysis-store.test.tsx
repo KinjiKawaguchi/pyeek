@@ -55,11 +55,14 @@ function createFakeBridge(
 
 // AnalysisProvider でラップしたまま useAnalysis を呼べるようにするヘルパー
 function createWrapper(bridge?: PyeekBridge, initialSource?: string) {
-  return ({ children }: { children: ReactNode }) => (
-    <AnalysisProvider initialSource={initialSource ?? ""} bridge={bridge}>
-      {children}
-    </AnalysisProvider>
-  );
+  function Wrapper({ children }: { children: ReactNode }) {
+    return (
+      <AnalysisProvider initialSource={initialSource ?? ""} bridge={bridge}>
+        {children}
+      </AnalysisProvider>
+    );
+  }
+  return Wrapper;
 }
 
 describe("AnalysisStore (analysis-store.tsx)", () => {

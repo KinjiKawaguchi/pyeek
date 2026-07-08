@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const REPO = "KinjiKawaguchi/pyeek";
 const REPO_URL = `https://github.com/${REPO}`;
 const STARS_BADGE_SRC = `https://img.shields.io/github/stars/${REPO}?style=social`;
@@ -34,8 +36,14 @@ export function GithubLink() {
         rel="noopener noreferrer"
         aria-label="GitHub で Star をつける（新しいタブで開きます）"
       >
-        {/* biome-ignore lint/performance/noImgElement: shields.io の動的バッジ画像（外部SVG、最適化対象外） */}
-        <img src={STARS_BADGE_SRC} alt="GitHub Stars" loading="lazy" />
+        <Image
+          src={STARS_BADGE_SRC}
+          alt="GitHub Stars"
+          width={76}
+          height={20}
+          unoptimized
+          loading="lazy"
+        />
       </a>
     </div>
   );

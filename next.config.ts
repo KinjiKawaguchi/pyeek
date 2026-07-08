@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
   // dev サーバーが別オリジンからのリクエストとして拒否しないようにする。
   allowedDevOrigins: ["pyeek.localhost"],
 
+  images: {
+    // GitHub Star数バッジ（shields.io の動的SVG）用。SVGはNext.jsの画像最適化
+    // パイプラインに通さず(unoptimized)そのまま配信する（公式ドキュメント推奨:
+    // dangerouslyAllowSVGではなくunoptimizedを使う）。
+    remotePatterns: [{ protocol: "https", hostname: "img.shields.io" }],
+  },
+
   headers: async () => [
     {
       // Pyodide ランタイムファイルのキャッシュ設定。

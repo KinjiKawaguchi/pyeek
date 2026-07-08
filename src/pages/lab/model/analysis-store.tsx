@@ -102,9 +102,12 @@ export function AnalysisProvider({
 
   // ready() 完了時に「今エディタに入っている最新のソース」を解析したいが、
   // 依存配列に state.source を入れると ready effect が再実行されてしまうため
-  // ref 経由で参照する。
+  // ref 経由で参照する。レンダー中の直接代入は React の推奨に反するため、
+  // コミット後に同期するエフェクトとして書く。
   const sourceRef = useRef(initialSource);
-  sourceRef.current = state.source;
+  useEffect(() => {
+    sourceRef.current = state.source;
+  });
 
   const runAnalysis = useCallback(
     async (source: string) => {
@@ -123,10 +126,6 @@ export function AnalysisProvider({
     [runAnalysis],
   );
 
-  // 初回マウント時に一度だけ実行する意図的な依存省略（bridge は不変の前提。
-  // runAnalysis を依存に含めると setSource 経由の再解析のたびに ready() が
-  // 再実行されてしまう）。
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 初回マウント時のみ実行する意図的な依存省略
   useEffect(() => {
     let cancelled = false;
     void bridge
@@ -148,7 +147,9 @@ export function AnalysisProvider({
     return () => {
       cancelled = true;
     };
-  }, [bridge]);
+    // runAnalysis は bridge にのみ依存する安定した参照（useCallback）なので、
+    // 依存配列に含めても bridge 不変時に再実行されることはない。
+  }, [bridge, runAnalysis]);
 
   const setSource = useCallback(
     (source: string) => {

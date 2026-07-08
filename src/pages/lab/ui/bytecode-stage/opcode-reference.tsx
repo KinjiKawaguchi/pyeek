@@ -26,7 +26,7 @@ export function OpcodeReference() {
           の実行時キャッシュスロット）、INSTRUMENTED_*（PEP 669 の sys.monitoring
           計装命令）、RESERVED（将来予約）、INTERPRETER_EXIT（内部トランポリン）、疑似命令（JUMP /
           LOAD_METHOD 等の中間表現専用）、特殊化命令（BINARY_OP_ADD_INT
-          等の適応的最適化変種、実行中の「温め」では反映されない）。バイトコード・AST・実行結果の実装の正確性は常に保証されます。",
+          等の適応的最適化変種、実行中の「温め」では反映されない）。バイトコード・AST・実行結果の実装の正確性は常に保証されます。
         </div>
 
         <div className="bytecode-stage__categories">
