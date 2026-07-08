@@ -5,6 +5,7 @@ import { useEffect, useMemo } from "react";
 import { debounce } from "@/shared/lib/debounce";
 import { DEFAULT_SOURCE } from "../config/presets";
 import { useAnalysis } from "../model/analysis-store";
+import { encodeSharedSource } from "../model/share/code-param";
 
 const URL_SYNC_DEBOUNCE_MS = 500;
 
@@ -27,7 +28,7 @@ export function SourceUrlSync() {
   );
 
   useEffect(() => {
-    debouncedSetCodeParam(source === DEFAULT_SOURCE ? null : source);
+    debouncedSetCodeParam(source === DEFAULT_SOURCE ? null : encodeSharedSource(source));
   }, [source, debouncedSetCodeParam]);
 
   return null;
