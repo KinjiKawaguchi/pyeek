@@ -9,6 +9,8 @@ import { LoadingOverlay } from "./loading-overlay";
 import { ModeToggle } from "./mode-toggle";
 import { PresetPicker } from "./preset-picker";
 import { PythonVersionBadge } from "./python-version-badge";
+import { ShareLinkButton } from "./share-link-button";
+import { SourceUrlSync } from "./source-url-sync";
 import { TokenLegend, TokenReference, TokenStage } from "./token-stage";
 import { VmStage } from "./vm-stage";
 
@@ -22,11 +24,13 @@ export interface LabWorkbenchProps {
 export function LabWorkbench({ initialSource }: LabWorkbenchProps) {
   return (
     <AnalysisProvider initialSource={initialSource}>
+      <SourceUrlSync />
       <LoadingOverlay />
       <div className="card">
         <div className="toolbar">
           <ModeToggle />
           <PythonVersionBadge />
+          <ShareLinkButton />
         </div>
         <Editor />
         <PresetPicker />

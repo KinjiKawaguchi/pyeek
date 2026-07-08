@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { JetBrains_Mono, M_PLUS_Rounded_1c, Zen_Maru_Gothic } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./styles/globals.css";
 
 const bodyFont = M_PLUS_Rounded_1c({
@@ -54,7 +55,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <NuqsAdapter>{children}</NuqsAdapter>
         <Analytics />
       </body>
     </html>

@@ -200,6 +200,30 @@ h3 {
   margin-bottom: 14px;
 }
 
+.share-link {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: 0.1s;
+  margin-left: auto;
+}
+
+.share-link:hover {
+  background: #f6f1ff;
+  border-color: #c9b8f2;
+}
+
+.share-link:focus-visible {
+  outline: 3px solid #b79cf0;
+  outline-offset: 2px;
+}
+
 .modes {
   display: inline-flex;
   background: #efe9fb;
