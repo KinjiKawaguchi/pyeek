@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { JetBrains_Mono, M_PLUS_Rounded_1c, Zen_Maru_Gothic } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { getSiteUrl } from "@/shared/config";
 import "./styles/globals.css";
 
 const bodyFont = M_PLUS_Rounded_1c({
@@ -23,6 +24,8 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  // OGP画像等、page側で組み立てる相対URLの解決基点。
+  metadataBase: new URL(getSiteUrl()),
   title: "Pyeek — Python が動くまでを見るラボ",
   description:
     "Python の字句解析・構文解析・コンパイル・実行の4段階で、同じコードがどう姿を変えていくかを本物の CPython の内部表現で可視化する教育用アプリ",
