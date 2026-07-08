@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.1.0...v1.2.0) (2026-07-08)
+
+
+### Features
+
+* Vercel Web Analyticsを追加する ([#13](https://github.com/KinjiKawaguchi/pyeek/issues/13)) ([e01aeb7](https://github.com/KinjiKawaguchi/pyeek/commit/e01aeb7ba7a246b017e3321e538437d961febd58))
+
 ## [1.1.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.3...v1.1.0) (2026-07-08)
 
 
