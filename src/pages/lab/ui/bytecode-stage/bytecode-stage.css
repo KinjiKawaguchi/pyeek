@@ -5,7 +5,7 @@
 }
 
 .bytecode-stage__empty {
-  color: #b7bcd0;
+  color: #69749d;
   padding: 14px;
   font-weight: 600;
 }
@@ -34,7 +34,7 @@
   padding: 2px 8px;
   border-radius: 7px;
   color: #fff;
-  background: #2f8fe6;
+  background: #176dbb;
   font-size: 0.82rem;
 }
 
@@ -95,7 +95,7 @@
   flex: none;
   width: 34px;
   text-align: right;
-  color: #bfc3d6;
+  color: #6a739f;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.72rem;
   padding-top: 8px;
@@ -139,7 +139,6 @@
 .instr__offset {
   font-size: 0.62rem;
   color: var(--ink-soft);
-  opacity: 0.7;
 }
 
 .instr__opname {
@@ -324,7 +323,7 @@
 .bytecode-stage__opcode-header code {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-weight: 700;
-  color: #2f8fe6;
+  color: #176dbb;
   padding: 2px 6px;
   background: rgba(47, 143, 230, 0.1);
   border-radius: 4px;
@@ -375,7 +374,7 @@
 
 .bytecode-stage__doc-link {
   font-size: 0.8rem;
-  color: #2f8fe6;
+  color: #176dbb;
   text-decoration: none;
   font-weight: 500;
   padding: 4px 6px;

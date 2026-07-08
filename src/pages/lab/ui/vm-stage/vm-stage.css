@@ -5,7 +5,7 @@
 }
 
 .vm-stage__empty {
-  color: #b7bcd0;
+  color: #69749d;
   padding: 14px;
   font-weight: 600;
 }
@@ -93,8 +93,8 @@
 }
 
 .player-controls__btn--main {
-  background: #8b5cf6;
-  border-color: #8b5cf6;
+  background: #8553f6;
+  border-color: #8553f6;
   color: #fff;
 }
 
@@ -200,7 +200,7 @@
 .stack-view__empty {
   flex: none;
   width: 160px;
-  color: #b7bcd0;
+  color: #69749d;
   font-weight: 600;
   text-align: center;
   padding: 14px;

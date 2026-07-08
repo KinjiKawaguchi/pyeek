@@ -301,7 +301,7 @@ h3 {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #25b47c;
+  background: #197a54;
   box-shadow: 0 0 0 3px rgba(37, 180, 124, 0.2);
 }
 
@@ -339,24 +339,24 @@ h3 {
 }
 
 .editor-tok--keyword {
-  color: #a959e0;
+  color: #9635d9;
   font-weight: 700;
 }
 .editor-tok--string {
-  color: #25b47c;
+  color: #197a54;
 }
 .editor-tok--number {
-  color: #e88a2c;
+  color: #a25a12;
 }
 .editor-tok--op {
-  color: #ef6b6b;
+  color: #ce1616;
 }
 .editor-tok--bracket {
-  color: #c99400;
+  color: #8d6800;
   font-weight: 700;
 }
 .editor-tok--comment {
-  color: #9aa0b8;
+  color: #616a8b;
   font-style: italic;
 }
 
