@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.2.0...v1.3.0) (2026-07-08)
+
+
+### Features
+
+* エディタの内容をURLで共有できるようにする ([#12](https://github.com/KinjiKawaguchi/pyeek/issues/12)) ([da50354](https://github.com/KinjiKawaguchi/pyeek/commit/da5035430d2df9dba602a60ed3b27a5d711bfe91))
+
 ## [1.2.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.1.0...v1.2.0) (2026-07-08)
 
 
