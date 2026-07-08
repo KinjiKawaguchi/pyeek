@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.0...v1.3.1) (2026-07-08)
+
+
+### Bug Fixes
+
+* モバイル幅で見出しバッジの重なりとヘッダー行の分断を直す ([#18](https://github.com/KinjiKawaguchi/pyeek/issues/18)) ([6200416](https://github.com/KinjiKawaguchi/pyeek/commit/6200416335f54a6549ef17b1e1c82dfd35eddff8))
+
 ## [1.3.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.2.0...v1.3.0) (2026-07-08)
 
 
