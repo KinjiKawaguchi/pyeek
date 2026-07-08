@@ -52,6 +52,15 @@ h3 {
   margin-bottom: 22px;
 }
 
+.lab-page__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
 .lab-page__kicker {
   display: inline-block;
   font-weight: 700;
@@ -63,14 +72,13 @@ h3 {
   padding: 5px 14px;
   border-radius: 999px;
   box-shadow: var(--shadow);
-  margin-bottom: 12px;
 }
 
 .lab-page__title {
   font-weight: 900;
   font-size: clamp(1.8rem, 5.5vw, 2.8rem);
   margin: 0.1em 0 0.2em;
-  line-height: 1.15;
+  line-height: 1.3;
 }
 
 .lab-page__zap {
@@ -78,6 +86,9 @@ h3 {
   background: #c99400;
   color: #5a4200;
   padding: 0 0.28em;
+  /* rotate(-3deg)で左上が直前の文字側にせり出すため、折り返しで直前の
+     文字とバッジが同じ行に来た場合に重ならないよう左マージンを確保する */
+  margin: 0.15em 0 0.15em 0.3em;
   border-radius: 12px;
   transform: rotate(-3deg);
   box-shadow: 3px 3px 0 rgba(180, 140, 0, 0.25);
@@ -162,10 +173,10 @@ h3 {
 }
 
 @media (max-width: 560px) {
+  /* デスクトップでは position:fixed で右上に固定するが、モバイルでは
+     .lab-page__top-bar 内で PYEEK バッジと横並びの通常フローに戻す */
   .github-actions {
     position: static;
-    width: fit-content;
-    margin: 0 auto 14px;
   }
 }
 
