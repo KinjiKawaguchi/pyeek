@@ -40,7 +40,7 @@
   flex: none;
   width: 34px;
   text-align: right;
-  color: #bfc3d6;
+  color: #6a739f;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.72rem;
   padding-top: 8px;
@@ -48,7 +48,7 @@
 }
 
 .token-stage__empty {
-  color: #b7bcd0;
+  color: #69749d;
   padding: 14px;
   font-weight: 600;
 }
@@ -94,7 +94,6 @@
   letter-spacing: 0.04em;
   color: var(--tc);
   text-transform: uppercase;
-  opacity: 0.9;
   line-height: 1;
 }
 
@@ -107,14 +106,14 @@
 }
 
 .tok__val--empty {
-  color: #b7bcd0;
+  color: #69749d;
   font-style: italic;
 }
 
 .tok__kw {
   font-size: 0.58rem;
   font-weight: 700;
-  color: #a959e0;
+  color: #9635d9;
   background: #f3e6fc;
   border-radius: 5px;
   padding: 0 4px;
@@ -123,45 +122,43 @@
 
 .tok__pos {
   font-size: 0.62rem;
-  opacity: 0.6;
   color: var(--tc);
 }
 
 .tok--NAME {
-  --tc: #2f8fe6;
+  --tc: #176dbb;
   --tbg: #e2f0fd;
 }
 .tok--NUMBER {
-  --tc: #e88a2c;
+  --tc: #a25a12;
   --tbg: #fdeeda;
 }
 .tok--STRING {
-  --tc: #25b47c;
+  --tc: #197a54;
   --tbg: #dcf5eb;
 }
 .tok--OP {
-  --tc: #ef6b6b;
+  --tc: #ce1616;
   --tbg: #fde3e3;
 }
 .tok--BRACKET {
-  --tc: #c99400;
+  --tc: #8d6800;
   --tbg: #fff3cc;
   box-shadow:
-    0 3px 0 rgba(201, 148, 0, 0.45),
+    0 3px 0 rgba(141, 104, 0, 0.45),
     0 0 0 4px rgba(242, 183, 5, 0.15);
 }
 .tok--COMMENT {
-  --tc: #9aa0b8;
+  --tc: #616a8b;
   --tbg: #eceef4;
 }
 .tok--KEYWORD {
-  --tc: #a959e0;
+  --tc: #9635d9;
   --tbg: #f3e6fc;
 }
 .tok--STRUCT {
-  --tc: #7b80a0;
+  --tc: #656a8c;
   --tbg: #eef0f6;
-  opacity: 0.92;
 }
 .tok--STRUCT .tok__val {
   color: var(--tc);
