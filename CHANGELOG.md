@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.2...v1.3.3) (2026-07-08)
+
+
+### Bug Fixes
+
+* SharedArrayBuffer非推奨警告をCOOP/COEPヘッダーで解消 ([#23](https://github.com/KinjiKawaguchi/pyeek/issues/23)) ([36bd8b0](https://github.com/KinjiKawaguchi/pyeek/commit/36bd8b08be6dd819910eae8dac3f87ce0bd4166b))
+
 ## [1.3.2](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.1...v1.3.2) (2026-07-08)
 
 
