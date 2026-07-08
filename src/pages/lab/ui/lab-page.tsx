@@ -12,9 +12,11 @@ export interface LabPageProps {
 export function LabPage({ initialSource }: LabPageProps) {
   return (
     <main className="lab-page">
-      <GithubLink />
       <header className="lab-page__header">
-        <span className="lab-page__kicker">PYEEK</span>
+        <div className="lab-page__top-bar">
+          <span className="lab-page__kicker">PYEEK</span>
+          <GithubLink />
+        </div>
         <h1 className="lab-page__title">
           🐍 Python が動くまで<span className="lab-page__zap">を見てみよう！</span>
         </h1>
