@@ -13,7 +13,7 @@ export function GithubLink() {
         href={REPO_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="GitHub でソースコードを見る（新しいタブで開きます）"
+        aria-label="GitHub で見る（ソースコードを新しいタブで開きます）"
       >
         <svg
           className="github-link__icon"
