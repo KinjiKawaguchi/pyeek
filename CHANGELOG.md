@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.3...v1.1.0) (2026-07-08)
+
+
+### Features
+
+* エディタにシンタックスハイライトを追加する ([#10](https://github.com/KinjiKawaguchi/pyeek/issues/10)) ([53cae59](https://github.com/KinjiKawaguchi/pyeek/commit/53cae592970ed846053201997253e8d21834aeb8))
+
 ## [1.0.3](https://github.com/KinjiKawaguchi/pyeek/compare/v1.0.2...v1.0.3) (2026-07-06)
 
 
