@@ -10,6 +10,7 @@ import { ModeToggle } from "./mode-toggle";
 import { PresetPicker } from "./preset-picker";
 import { PythonVersionBadge } from "./python-version-badge";
 import { ShareLinkButton } from "./share-link-button";
+import { ShareQrButton } from "./share-qr-button";
 import { SourceUrlSync } from "./source-url-sync";
 import { TokenLegend, TokenReference, TokenStage } from "./token-stage";
 import { VmStage } from "./vm-stage";
@@ -31,6 +32,7 @@ export function LabWorkbench({ initialSource }: LabWorkbenchProps) {
           <ModeToggle />
           <PythonVersionBadge />
           <ShareLinkButton />
+          <ShareQrButton />
         </div>
         <Editor />
         <PresetPicker />

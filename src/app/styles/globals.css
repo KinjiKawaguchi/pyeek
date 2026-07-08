@@ -405,6 +405,24 @@ h3 {
   font-weight: 600;
 }
 
+.share-qr {
+  position: relative;
+  display: inline-flex;
+}
+
+.share-qr__popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 10;
+  background: var(--paper-2);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 12px;
+  line-height: 0;
+}
+
 .loading-overlay {
   display: flex;
   align-items: center;
