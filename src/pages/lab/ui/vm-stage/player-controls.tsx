@@ -19,6 +19,9 @@ export function PlayerControls({
 }: PlayerControlsProps) {
   const atStart = currentIndex <= -1;
   const atEnd = currentIndex >= stepCount - 1;
+  // 完走後の「▶ 再生」は最初から再生し直す操作のため、atEndでも無効化しない。
+  // 無効化するのはそもそも再生できるステップが無い場合のみ。
+  const hasNoSteps = stepCount === 0;
 
   return (
     <div className="player-controls">
@@ -37,7 +40,7 @@ export function PlayerControls({
         type="button"
         className="player-controls__btn player-controls__btn--main"
         onClick={onTogglePlay}
-        disabled={atEnd && !isPlaying}
+        disabled={hasNoSteps}
       >
         {isPlaying ? "⏸ 一時停止" : "▶ 再生"}
       </button>
