@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.5.0...v1.6.0) (2026-07-09)
+
+
+### Features
+
+* モバイル向けコード記号キーバーを追加する ([#42](https://github.com/KinjiKawaguchi/pyeek/issues/42)) ([a31471a](https://github.com/KinjiKawaguchi/pyeek/commit/a31471a49d9fefce195783c0618517f38f7f7d05))
+
 ## [1.5.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.4.0...v1.5.0) (2026-07-09)
 
 
