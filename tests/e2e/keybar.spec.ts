@@ -58,7 +58,7 @@ test.describe("モバイル向けコードキーバー", () => {
     await editor.fill("x = 1");
     await editor.evaluate((el: HTMLTextAreaElement) => el.setSelectionRange(0, 0));
 
-    await page.locator(KEYBAR).getByRole("button", { name: "⇥" }).tap();
+    await page.locator(KEYBAR).getByRole("button", { name: "Tab", exact: true }).tap();
 
     await expect(editor).toHaveValue("    x = 1");
     expect(errors).toHaveLength(0);

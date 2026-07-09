@@ -1,7 +1,7 @@
 "use client";
 
 import type { KeybarKey } from "../config/keybar-keys";
-import { KEYBAR_KEYS } from "../config/keybar-keys";
+import { KEYBAR_GROUPS } from "../config/keybar-keys";
 
 export interface KeybarProps {
   onKeyPress: (key: KeybarKey) => void;
@@ -20,16 +20,22 @@ function handlePointerDown(event: React.PointerEvent<HTMLButtonElement>) {
 export function Keybar({ onKeyPress }: KeybarProps) {
   return (
     <div className="keybar" role="toolbar" aria-label="コード入力補助キー">
-      {KEYBAR_KEYS.map((key) => (
-        <button
-          type="button"
-          key={key.label}
-          className="keybar__key"
-          onPointerDown={handlePointerDown}
-          onClick={() => onKeyPress(key)}
-        >
-          {key.label}
-        </button>
+      {KEYBAR_GROUPS.map((group, groupIndex) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: グループ配列は静的な定数で並び替わらない
+        <div className="keybar__group" key={groupIndex}>
+          {groupIndex > 0 ? <span className="keybar__divider" aria-hidden="true" /> : null}
+          {group.map((key) => (
+            <button
+              type="button"
+              key={key.label}
+              className="keybar__key"
+              onPointerDown={handlePointerDown}
+              onClick={() => onKeyPress(key)}
+            >
+              {key.label}
+            </button>
+          ))}
+        </div>
       ))}
     </div>
   );

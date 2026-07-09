@@ -398,10 +398,28 @@ h3 {
   }
 }
 
+.keybar__group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 記号を挿入するキーとカーソルを動かすキーは機能が違うため、
+   境界を仕切り線で見せて別グループだと一目でわかるようにする
+   (矢印キーを「バー自体のスクロール操作」と誤解されないため)。 */
+.keybar__divider {
+  flex: 0 0 auto;
+  width: 2px;
+  height: 28px;
+  background: var(--line);
+  margin: 0 4px;
+}
+
 .keybar__key {
   flex: 0 0 auto;
   min-width: 40px;
   min-height: 40px;
+  padding: 0 10px;
   border: 2px solid #c9c0ef;
   border-radius: 10px;
   background: #fff;
