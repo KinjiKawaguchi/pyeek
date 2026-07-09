@@ -111,15 +111,12 @@ export function VmStage() {
   );
   const steps = useMemo(() => (simResult?.ok ? simResult.steps : []), [simResult]);
 
-  // activeEntryが切り替わった直前レンダーとの比較でのみリセットする
+  // activeKeyが切り替わった直前レンダーとの比較でのみリセットする
   // （Reactの「前回レンダーの情報を保持する」パターン。エフェクトを使わない
   // ことで、切り替え直後の1フレームだけ古いステップが見える瞬間が発生しない）。
-  // タブ切り替え（selectedKey変更）だけでなく、ソース編集による再解析
-  // （root変更でcodeEntriesが作り直される）でもactiveEntryの参照が変わるため、
-  // どちらのケースでも再生位置が確実にリセットされる。
-  const [prevActiveEntry, setPrevActiveEntry] = useState(activeEntry);
-  if (activeEntry !== prevActiveEntry) {
-    setPrevActiveEntry(activeEntry);
+  const [prevActiveKey, setPrevActiveKey] = useState(activeKey);
+  if (activeKey !== prevActiveKey) {
+    setPrevActiveKey(activeKey);
     dispatch({ type: "reset-playback" });
   }
 
