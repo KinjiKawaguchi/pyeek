@@ -17,6 +17,9 @@ const eslintConfig = defineConfig([
     // ないため lint 対象から外す。
     "public/**",
     "playwright-report/**",
+    // .claude/worktrees/ 配下は Claude Code のworktree作業ディレクトリ
+    // (.gitignore済み)。lint実行時のcwd次第で意図せず拾われてしまうため除外する。
+    ".claude/**",
   ]),
 ]);
 
