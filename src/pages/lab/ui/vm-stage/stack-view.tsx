@@ -19,6 +19,7 @@ function useLeavingItems(stack: StackItem[]): StackItem[] {
     if (removed.length === 0) {
       return;
     }
+    // eslint-disable-next-line react-you-might-not-need-an-effect/no-adjust-state-on-prop-change -- POP_FADE_MS経過後にフェードアウトを終える、時間経過という外部要因との同期でありレンダー内では表現できない
     setLeaving(removed);
     const timer = setTimeout(() => setLeaving([]), POP_FADE_MS);
     return () => clearTimeout(timer);
