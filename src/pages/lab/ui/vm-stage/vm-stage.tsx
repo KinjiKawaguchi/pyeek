@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
 import { easyOpLabel } from "../../config/bytecode-stage/labels";
 import { useAnalysis } from "../../model/analysis-store";
@@ -69,7 +69,7 @@ export function VmStage() {
     () => (activeEntry ? simulateStack(activeEntry.code.instructions) : null),
     [activeEntry],
   );
-  const steps = simResult?.ok ? simResult.steps : [];
+  const steps = useMemo(() => (simResult?.ok ? simResult.steps : []), [simResult]);
 
   const [currentIndex, setCurrentIndex] = useState(-1);
   // ユーザーが「▶ 再生」で表明した意図。実際に再生中かどうか（atEndなら
@@ -87,26 +87,30 @@ export function VmStage() {
   }
 
   const isPlaying = autoPlayRequested && currentIndex < steps.length - 1;
+  const currentStep = currentIndex >= 0 ? (steps[currentIndex] ?? null) : null;
+
+  // currentIndexを動かす操作（送り・戻し・巻き戻し・自動再生）をすべてここに
+  // 集約し、表示ステップの切り替えと段間ハイライト(selectedRange)の更新を同じ
+  // タイミングに揃える。Effectで追随させると1フレーム分ハイライトが遅れて見える。
+  const goToIndex = useCallback(
+    (next: number) => {
+      setCurrentIndex(next);
+      const step = next >= 0 ? (steps[next] ?? null) : null;
+      const range = step ? instrRange(step.instr) : null;
+      if (range) {
+        setSelectedRange(range);
+      }
+    },
+    [steps, setSelectedRange],
+  );
 
   useEffect(() => {
     if (!isPlaying) {
       return;
     }
-    const timer = setTimeout(() => setCurrentIndex(currentIndex + 1), PLAY_INTERVAL_MS);
+    const timer = setTimeout(() => goToIndex(currentIndex + 1), PLAY_INTERVAL_MS);
     return () => clearTimeout(timer);
-  }, [isPlaying, currentIndex]);
-
-  const currentStep = currentIndex >= 0 ? (steps[currentIndex] ?? null) : null;
-
-  useEffect(() => {
-    if (!currentStep) {
-      return;
-    }
-    const range = instrRange(currentStep.instr);
-    if (range) {
-      setSelectedRange(range);
-    }
-  }, [currentStep, setSelectedRange]);
+  }, [isPlaying, currentIndex, goToIndex]);
 
   if (!root || !activeEntry) {
     return (
@@ -158,7 +162,7 @@ export function VmStage() {
   const handleTogglePlay = () => {
     if (currentIndex >= steps.length - 1) {
       // 完走後の「▶ 再生」は最初から再生し直す
-      setCurrentIndex(-1);
+      goToIndex(-1);
       setAutoPlayRequested(true);
       return;
     }
@@ -167,17 +171,17 @@ export function VmStage() {
 
   const handleStepForward = () => {
     setAutoPlayRequested(false);
-    setCurrentIndex((i) => Math.min(i + 1, steps.length - 1));
+    goToIndex(Math.min(currentIndex + 1, steps.length - 1));
   };
 
   const handleStepBack = () => {
     setAutoPlayRequested(false);
-    setCurrentIndex((i) => Math.max(i - 1, -1));
+    goToIndex(Math.max(currentIndex - 1, -1));
   };
 
   const handleRewind = () => {
     setAutoPlayRequested(false);
-    setCurrentIndex(-1);
+    goToIndex(-1);
   };
 
   return (
