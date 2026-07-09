@@ -9,7 +9,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // GitHub Actions の ubuntu-latest は標準2 vCPU。Playwright自身の既定値
+  // （論理コア数の半分）に合わせて2に設定する（1ワーカーあたりChromiumを
+  // 1つ丸ごと起動するため、vCPU数を超えて増やしても頭打ちになりやすい）。
+  workers: process.env.CI ? 2 : undefined,
   reporter: "html",
   use: {
     baseURL: "http://localhost:3000",
