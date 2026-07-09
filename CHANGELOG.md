@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.5...v1.4.0) (2026-07-09)
+
+
+### Features
+
+* 共有コードを反映した動的OGP画像を生成する ([#29](https://github.com/KinjiKawaguchi/pyeek/issues/29)) ([156d464](https://github.com/KinjiKawaguchi/pyeek/commit/156d46496b263062dea8807fd4e4b5beffcb9949))
+
+
+### Bug Fixes
+
+* Vercel System Environment VariablesをDeploymentへ自動公開する ([#36](https://github.com/KinjiKawaguchi/pyeek/issues/36)) ([0439b89](https://github.com/KinjiKawaguchi/pyeek/commit/0439b893703772e15656342c5e69fc7ef29d9627))
+
 ## [1.3.5](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.4...v1.3.5) (2026-07-08)
 
 
