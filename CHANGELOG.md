@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.4.0...v1.5.0) (2026-07-09)
+
+
+### Features
+
+* **vm-stage:** 完走後に最初から再生し直せるようにする ([#40](https://github.com/KinjiKawaguchi/pyeek/issues/40)) ([3cf0f9d](https://github.com/KinjiKawaguchi/pyeek/commit/3cf0f9d4eaaff8d711251a7f1698cfc3c3720d41))
+
 ## [1.4.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.3.5...v1.4.0) (2026-07-09)
 
 
