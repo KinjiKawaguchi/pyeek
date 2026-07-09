@@ -31,8 +31,7 @@
 
 .token-stage__row {
   display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 6px;
 }
 
@@ -45,6 +44,35 @@
   font-size: 0.72rem;
   padding-top: 8px;
   user-select: none;
+}
+
+/* 折り返し(wrap)だと長い行が縦に伸びてモバイルで縦スクロールが
+   ストレスフルになるため、行ごとに横スクロールさせる。ast-stage__canvas
+   / keybar と同じCSSのみのスクロールシャドウ技法を再利用する。
+   min-width:0 は flex子がコンテンツ幅で親を押し広げず、代わりに
+   overflow-x:auto が効くようにするための定番の指定。 */
+.token-stage__row-tokens {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  padding: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(to right, var(--paper-2) 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, var(--paper-2) 30%, rgba(255, 255, 255, 0)) right,
+    linear-gradient(to right, rgba(120, 110, 190, 0.28), rgba(255, 255, 255, 0)),
+    linear-gradient(to left, rgba(120, 110, 190, 0.28), rgba(255, 255, 255, 0)) right;
+  background-repeat: no-repeat;
+  background-color: var(--paper-2);
+  background-size:
+    16px 100%,
+    16px 100%,
+    6px 100%,
+    6px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .token-stage__empty {
@@ -66,7 +94,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1px;
-  min-width: 0;
+  flex-shrink: 0;
   box-shadow: 0 3px 0 color-mix(in srgb, var(--tc) 40%, transparent);
   transition:
     transform 0.1s,
