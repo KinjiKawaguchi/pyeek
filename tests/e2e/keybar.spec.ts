@@ -63,4 +63,47 @@ test.describe("モバイル向けコードキーバー", () => {
     await expect(editor).toHaveValue("    x = 1");
     expect(errors).toHaveLength(0);
   });
+
+  test("矢印キーをタップするとテキストを変えずにカーソルだけ移動すること", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "モバイル専用の検証");
+    const errors = collectPageErrors(page);
+    await gotoAndWaitForPyodide(page);
+
+    const editor = page.locator("textarea");
+    await editor.tap();
+    await editor.fill("print()");
+    await editor.evaluate((el: HTMLTextAreaElement) => el.setSelectionRange(3, 3));
+
+    await page.locator(KEYBAR).getByRole("button", { name: "→", exact: true }).tap();
+    await expect(editor).toHaveValue("print()");
+    expect(await editor.evaluate((el: HTMLTextAreaElement) => el.selectionStart)).toBe(4);
+
+    await page.locator(KEYBAR).getByRole("button", { name: "←", exact: true }).tap();
+    await page.locator(KEYBAR).getByRole("button", { name: "←", exact: true }).tap();
+    expect(await editor.evaluate((el: HTMLTextAreaElement) => el.selectionStart)).toBe(2);
+
+    expect(errors).toHaveLength(0);
+  });
+
+  test("選択範囲がある状態で記号キーをタップすると選択範囲が置き換わること", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "モバイル専用の検証");
+    const errors = collectPageErrors(page);
+    await gotoAndWaitForPyodide(page);
+
+    const editor = page.locator("textarea");
+    await editor.tap();
+    await editor.fill("foobar");
+    await editor.evaluate((el: HTMLTextAreaElement) => el.setSelectionRange(0, 3));
+
+    await page.locator(KEYBAR).getByRole("button", { name: "_", exact: true }).tap();
+
+    await expect(editor).toHaveValue("_bar");
+    expect(errors).toHaveLength(0);
+  });
 });
