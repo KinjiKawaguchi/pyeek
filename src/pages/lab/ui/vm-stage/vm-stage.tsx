@@ -1,15 +1,18 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
 import { easyOpLabel } from "../../config/bytecode-stage/labels";
 import { useAnalysis } from "../../model/analysis-store";
+import { captureStepsAsGif, shareOrDownloadGif } from "../../model/vm-stage/gif-export";
 import { simulateStack } from "../../model/vm-stage/stack-sim";
 import "./vm-stage.css";
 import { PlayerControls } from "./player-controls";
 import { StackView } from "./stack-view";
 
 const PLAY_INTERVAL_MS = 900;
+
+type GifStatus = "idle" | "exporting" | "error";
 
 const GUARD_MESSAGES: Record<string, ReactNode> = {
   "unsupported-jump": (
@@ -75,6 +78,8 @@ export function VmStage() {
   // ユーザーが「▶ 再生」で表明した意図。実際に再生中かどうか（atEndなら
   // 自動的に停止済み扱い）は isPlaying として derive する。
   const [autoPlayRequested, setAutoPlayRequested] = useState(false);
+  const captureRef = useRef<HTMLElement>(null);
+  const [gifStatus, setGifStatus] = useState<GifStatus>("idle");
 
   // activeKeyが切り替わった直前レンダーとの比較でのみリセットする
   // （Reactの「前回レンダーの情報を保持する」パターン。エフェクトを使わない
@@ -180,8 +185,31 @@ export function VmStage() {
     setCurrentIndex(-1);
   };
 
+  const handleExportGif = async () => {
+    const element = captureRef.current;
+    if (!element || steps.length === 0 || gifStatus === "exporting") {
+      return;
+    }
+    setAutoPlayRequested(false);
+    const restoreIndex = currentIndex;
+    setGifStatus("exporting");
+    try {
+      const blob = await captureStepsAsGif({
+        element,
+        stepCount: steps.length,
+        seek: setCurrentIndex,
+      });
+      setCurrentIndex(restoreIndex);
+      await shareOrDownloadGif(blob);
+      setGifStatus("idle");
+    } catch {
+      setCurrentIndex(restoreIndex);
+      setGifStatus("error");
+    }
+  };
+
   return (
-    <section className="card" aria-label="スタックマシン">
+    <section className="card" aria-label="スタックマシン" ref={captureRef}>
       <p className="card__title">
         <span className="card__emoji">🧮</span> スタックマシン
         <span className="vm-stage__hint">
@@ -199,11 +227,24 @@ export function VmStage() {
         currentIndex={currentIndex}
         stepCount={steps.length}
         isPlaying={isPlaying}
+        disabled={gifStatus === "exporting"}
         onTogglePlay={handleTogglePlay}
         onStepBack={handleStepBack}
         onStepForward={handleStepForward}
         onRewind={handleRewind}
       />
+      <button
+        type="button"
+        className="player-controls__btn vm-stage__gif-export-btn"
+        onClick={handleExportGif}
+        disabled={steps.length === 0 || gifStatus === "exporting"}
+      >
+        {gifStatus === "exporting"
+          ? "🎞 GIF生成中…"
+          : gifStatus === "error"
+            ? "⚠️ 生成失敗・もう一度"
+            : "🎞 動きをGIFで共有"}
+      </button>
       <div className="vm-stage__body">
         <div className="vm-stage__current">
           {currentStep ? (

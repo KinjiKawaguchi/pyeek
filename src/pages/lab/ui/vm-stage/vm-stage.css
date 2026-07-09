@@ -109,6 +109,11 @@
   margin-left: auto;
 }
 
+.vm-stage__gif-export-btn {
+  display: inline-flex;
+  margin-bottom: 14px;
+}
+
 .vm-stage__body {
   display: flex;
   gap: 20px;
