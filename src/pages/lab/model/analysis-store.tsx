@@ -6,9 +6,9 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useEffectEvent,
   useMemo,
   useReducer,
-  useRef,
 } from "react";
 import type { SrcRange } from "@/entities/source-link";
 import {
@@ -101,13 +101,9 @@ export function AnalysisProvider({
   const [state, dispatch] = useReducer(analysisReducer, initialSource, createInitialState);
 
   // ready() 完了時に「今エディタに入っている最新のソース」を解析したいが、
-  // 依存配列に state.source を入れると ready effect が再実行されてしまうため
-  // ref 経由で参照する。レンダー中の直接代入は React の推奨に反するため、
-  // コミット後に同期するエフェクトとして書く。
-  const sourceRef = useRef(initialSource);
-  useEffect(() => {
-    sourceRef.current = state.source;
-  });
+  // 依存配列に state.source を入れると ready effect が再実行されてしまう。
+  // useEffectEvent は依存配列を必要とせず常に最新の state.source を参照できる。
+  const getLatestSource = useEffectEvent(() => state.source);
 
   const runAnalysis = useCallback(
     async (source: string) => {
@@ -136,7 +132,7 @@ export function AnalysisProvider({
       })
       .then(() => {
         if (!cancelled) {
-          void runAnalysis(sourceRef.current);
+          void runAnalysis(getLatestSource());
         }
       })
       .catch((error: unknown) => {
