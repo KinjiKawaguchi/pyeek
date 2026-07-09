@@ -365,6 +365,81 @@ h3 {
   font-weight: 600;
 }
 
+/* タッチ端末(主入力がタッチでホバー不可)でのみ表示するコード記号キーバー。
+   幅の狭いデスクトップウィンドウには物理キーボードがあるため、
+   max-width ではなく入力方式で判定する。 */
+.keybar {
+  display: none;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 4px 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* ast-stage__canvas と同じ手法。横に収まりきらないキーがある狭い画面向けに、
+     CSSのみで左右の「まだスクロールできる」影を出す(スクロール端では自動的に消える)。 */
+  background:
+    linear-gradient(to right, var(--paper-2) 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, var(--paper-2) 30%, rgba(255, 255, 255, 0)) right,
+    linear-gradient(to right, rgba(120, 110, 190, 0.28), rgba(255, 255, 255, 0)),
+    linear-gradient(to left, rgba(120, 110, 190, 0.28), rgba(255, 255, 255, 0)) right;
+  background-repeat: no-repeat;
+  background-color: var(--paper-2);
+  background-size:
+    24px 100%,
+    24px 100%,
+    8px 100%,
+    8px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .keybar {
+    display: flex;
+  }
+}
+
+.keybar__group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 記号を挿入するキーとカーソルを動かすキーは機能が違うため、
+   境界を仕切り線で見せて別グループだと一目でわかるようにする
+   (矢印キーを「バー自体のスクロール操作」と誤解されないため)。 */
+.keybar__divider {
+  flex: 0 0 auto;
+  width: 2px;
+  height: 28px;
+  background: var(--line);
+  margin: 0 4px;
+}
+
+.keybar__key {
+  flex: 0 0 auto;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 2px solid #c9c0ef;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.05rem;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  /* user-select:none だけでは iOS Safari の長押しコールアウト
+     (コピー/検索メニュー)ジェスチャー認識が働き、連打時に判定が
+     詰まって見える。callout自体を無効化して素直なtapにする。 */
+  -webkit-touch-callout: none;
+}
+
+.keybar__key:active {
+  background: #ece2fb;
+  border-color: #9b7ce6;
+}
+
 .presets {
   display: flex;
   flex-wrap: wrap;

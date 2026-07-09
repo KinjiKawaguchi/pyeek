@@ -26,6 +26,15 @@ export default defineConfig({
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
+    // タッチ端末でのみ表示するコード記号キーバー(keybar.tsx)は
+    // pointer:coarse / hover:none のCSSメディアクエリで判定しているため、
+    // それをエミュレートするモバイルプロジェクトが無いと検証できない。
+    // CI時間増を抑えるため keybar.spec.ts のみに限定する。
+    {
+      name: "mobile-chromium",
+      use: { ...devices["Pixel 7"] },
+      testMatch: /keybar\.spec\.ts/,
+    },
   ],
   webServer: {
     command: "pnpm dev",
