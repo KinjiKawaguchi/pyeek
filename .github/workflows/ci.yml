@@ -6,53 +6,155 @@ on:
   pull_request:
     branches: [main, develop]
 
+# GitHub Actions はジョブごとに別VMなので、node_modules を1ジョブから他へ
+# 直接引き継ぐことはできない。setup-node の pnpm キャッシュ（pnpm-lock.yaml
+# のハッシュキー）に任せることで、各ジョブの pnpm install を実質「キャッシュ
+# 済みの共通セットアップを使い回す」のに近い速さにしている。
+# なお先行の install 専用ジョブは意図的に置いていない：cache の保存はジョブ
+# 完了時（post-job）に行われ、同時実行中の他ジョブには反映されないため、
+# 先行ジョブを needs で待たせても後続ジョブの高速化には寄与せず、
+# 起動・完了待ちの分だけ合計時間が伸びるだけになる。
+
 jobs:
-  test:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm typecheck
+
+  biome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm check
+
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm lint
+
+  fsd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm fsd
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm build
+
+  e2e:
+    name: e2e (${{ matrix.shardIndex }}/${{ strategy.job-total }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [22.x]
+        shardIndex: [1, 2, 3, 4]
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
         with:
-          version: 10.8.1
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
           cache: "pnpm"
-
       - run: pnpm install
 
-      - name: Type check
-        run: pnpm typecheck
+      # playwright.config.ts の webServer は `pnpm dev` を自前起動するため、
+      # build ジョブの成果物には依存しない（build とは完全に独立）。
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
-      - name: Biome check
-        run: pnpm check
-
-      - name: ESLint
-        run: pnpm lint
-
-      - name: FSD validation
-        run: pnpm fsd
-
-      - name: Unit tests
-        run: pnpm test
-
-      - name: Build
-        run: pnpm build
-
+      # projects は chromium のみ使用しているため、他ブラウザは入れない。
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: E2E tests
-        run: pnpm test:e2e
+        run: pnpm test:e2e --shard=${{ matrix.shardIndex }}/${{ strategy.job-total }}
 
-      - name: Upload E2E reports
+      # reporter: "blob"（playwright.config.ts）で出力したshard単位の結果を
+      # merge-reports ジョブに渡す。shardごとに名前を分けないと上書きされる。
+      - name: Upload blob report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report/
+          retention-days: 1
+
+  merge-reports:
+    needs: e2e
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+
+      - name: Download blob reports
+        uses: actions/download-artifact@v8
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+
+      - name: Merge into a single HTML report
+        run: pnpm exec playwright merge-reports --reporter=html ./all-blob-reports
+
+      - name: Upload merged report
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: playwright-report/
