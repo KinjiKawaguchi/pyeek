@@ -94,6 +94,42 @@ test.describe("スタックマシンVMの再生 E2E", () => {
     expect(errors).toHaveLength(0);
   });
 
+  test("完走後の「▶ 再生」で最初から再生し直せる（回帰テスト）", async ({ page }) => {
+    const errors = collectPageErrors(page);
+    await gotoAndWaitForPyodide(page);
+
+    // プリセット「for i in range(3):\n    print(i)」を選択
+    await page
+      .locator("button.preset", { hasText: /^for i in range\(3\)/ })
+      .first()
+      .click();
+    await expect(page.locator(".vm-stage__current")).toBeVisible({ timeout: 5_000 });
+
+    // 「1つ進む ▶」を完走(ボタンがdisabledになる)まで押し続ける
+    const stepForwardBtn = page.locator("button:has-text('1つ進む ▶')");
+    for (let i = 0; i < 100; i++) {
+      if (await stepForwardBtn.isDisabled()) {
+        break;
+      }
+      await stepForwardBtn.click();
+    }
+    await expect(stepForwardBtn).toBeDisabled();
+
+    // 完走後、「▶ 再生」ボタンが無効化されていないこと
+    // （atEndで disabled になり、最初から再生し直せなくなる回帰の検出）
+    const playBtn = page.locator("button.player-controls__btn--main");
+    await expect(playBtn).toBeEnabled();
+    await expect(playBtn).toHaveText("▶ 再生");
+
+    // クリックすると最初から再生し直され、プログレスが 0 から再び進む
+    await playBtn.click();
+    await expect(page.locator(".player-controls__progress")).toContainText(/^[2-9]\d* \/ \d+$/, {
+      timeout: 15_000,
+    });
+
+    expect(errors).toHaveLength(0);
+  });
+
   test("whileループの完走: 「▶ 再生」で複数ステップ再生される", async ({ page }) => {
     const errors = collectPageErrors(page);
     await gotoAndWaitForPyodide(page);
