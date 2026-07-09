@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
 import { easyOpLabel } from "../../config/bytecode-stage/labels";
 import { useAnalysis } from "../../model/analysis-store";
@@ -10,6 +10,45 @@ import { PlayerControls } from "./player-controls";
 import { StackView } from "./stack-view";
 
 const PLAY_INTERVAL_MS = 900;
+
+interface PlaybackState {
+  selectedKey: string | null;
+  currentIndex: number;
+  autoPlayRequested: boolean;
+}
+
+type PlaybackAction =
+  | { type: "select-key"; key: string }
+  | { type: "reset-playback" }
+  | { type: "move-to"; index: number }
+  | { type: "step-to"; index: number }
+  | { type: "toggle-play" }
+  | { type: "replay" };
+
+const initialPlaybackState: PlaybackState = {
+  selectedKey: null,
+  currentIndex: -1,
+  autoPlayRequested: false,
+};
+
+function playbackReducer(state: PlaybackState, action: PlaybackAction): PlaybackState {
+  switch (action.type) {
+    case "select-key":
+      return { ...state, selectedKey: action.key };
+    case "reset-playback":
+      return { ...state, currentIndex: -1, autoPlayRequested: false };
+    case "move-to":
+      return { ...state, currentIndex: action.index };
+    case "step-to":
+      return { ...state, currentIndex: action.index, autoPlayRequested: false };
+    case "toggle-play":
+      return { ...state, autoPlayRequested: !state.autoPlayRequested };
+    case "replay":
+      return { ...state, currentIndex: -1, autoPlayRequested: true };
+    default:
+      return state;
+  }
+}
 
 const GUARD_MESSAGES: Record<string, ReactNode> = {
   "unsupported-jump": (
@@ -59,7 +98,8 @@ export function VmStage() {
   const { state, setSelectedRange } = useAnalysis();
   const root = state.result?.bytecode ?? null;
   const codeEntries = useMemo(() => (root ? flattenCodeObjs(root) : []), [root]);
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [playback, dispatch] = useReducer(playbackReducer, initialPlaybackState);
+  const { selectedKey, currentIndex, autoPlayRequested } = playback;
 
   const activeEntry =
     codeEntries.find((entry) => codePathKey(entry.path) === selectedKey) ?? codeEntries[0] ?? null;
@@ -71,30 +111,26 @@ export function VmStage() {
   );
   const steps = useMemo(() => (simResult?.ok ? simResult.steps : []), [simResult]);
 
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  // ユーザーが「▶ 再生」で表明した意図。実際に再生中かどうか（atEndなら
-  // 自動的に停止済み扱い）は isPlaying として derive する。
-  const [autoPlayRequested, setAutoPlayRequested] = useState(false);
-
   // activeKeyが切り替わった直前レンダーとの比較でのみリセットする
   // （Reactの「前回レンダーの情報を保持する」パターン。エフェクトを使わない
   // ことで、切り替え直後の1フレームだけ古いステップが見える瞬間が発生しない）。
   const [prevActiveKey, setPrevActiveKey] = useState(activeKey);
   if (activeKey !== prevActiveKey) {
     setPrevActiveKey(activeKey);
-    setCurrentIndex(-1);
-    setAutoPlayRequested(false);
+    dispatch({ type: "reset-playback" });
   }
 
   const isPlaying = autoPlayRequested && currentIndex < steps.length - 1;
   const currentStep = currentIndex >= 0 ? (steps[currentIndex] ?? null) : null;
 
-  // currentIndexを動かす操作（送り・戻し・巻き戻し・自動再生）をすべてここに
-  // 集約し、表示ステップの切り替えと段間ハイライト(selectedRange)の更新を同じ
+  // currentIndexを動かす操作（送り・戻し・自動再生）をすべてここに集約し、
+  // 表示ステップの切り替えと段間ハイライト(selectedRange)の更新を同じ
   // タイミングに揃える。Effectで追随させると1フレーム分ハイライトが遅れて見える。
-  const goToIndex = useCallback(
-    (next: number) => {
-      setCurrentIndex(next);
+  // stopAutoPlay: 手動操作(送り・戻し)では自動再生を止め、タイマーによる
+  // 自動進行では autoPlayRequested を維持する。
+  const advanceTo = useCallback(
+    (next: number, { stopAutoPlay }: { stopAutoPlay: boolean }) => {
+      dispatch(stopAutoPlay ? { type: "step-to", index: next } : { type: "move-to", index: next });
       const step = next >= 0 ? (steps[next] ?? null) : null;
       const range = step ? instrRange(step.instr) : null;
       if (range) {
@@ -108,9 +144,12 @@ export function VmStage() {
     if (!isPlaying) {
       return;
     }
-    const timer = setTimeout(() => goToIndex(currentIndex + 1), PLAY_INTERVAL_MS);
+    const timer = setTimeout(
+      () => advanceTo(currentIndex + 1, { stopAutoPlay: false }),
+      PLAY_INTERVAL_MS,
+    );
     return () => clearTimeout(timer);
-  }, [isPlaying, currentIndex, goToIndex]);
+  }, [isPlaying, currentIndex, advanceTo]);
 
   if (!root || !activeEntry) {
     return (
@@ -135,7 +174,7 @@ export function VmStage() {
               role="tab"
               aria-selected={key === activeKey}
               className={`vm-stage__code-tab${key === activeKey ? " vm-stage__code-tab--active" : ""}`}
-              onClick={() => setSelectedKey(key)}
+              onClick={() => dispatch({ type: "select-key", key })}
             >
               {entry.path.join(" › ")}
             </button>
@@ -162,26 +201,22 @@ export function VmStage() {
   const handleTogglePlay = () => {
     if (currentIndex >= steps.length - 1) {
       // 完走後の「▶ 再生」は最初から再生し直す
-      goToIndex(-1);
-      setAutoPlayRequested(true);
+      dispatch({ type: "replay" });
       return;
     }
-    setAutoPlayRequested((requested) => !requested);
+    dispatch({ type: "toggle-play" });
   };
 
   const handleStepForward = () => {
-    setAutoPlayRequested(false);
-    goToIndex(Math.min(currentIndex + 1, steps.length - 1));
+    advanceTo(Math.min(currentIndex + 1, steps.length - 1), { stopAutoPlay: true });
   };
 
   const handleStepBack = () => {
-    setAutoPlayRequested(false);
-    goToIndex(Math.max(currentIndex - 1, -1));
+    advanceTo(Math.max(currentIndex - 1, -1), { stopAutoPlay: true });
   };
 
   const handleRewind = () => {
-    setAutoPlayRequested(false);
-    goToIndex(-1);
+    dispatch({ type: "reset-playback" });
   };
 
   return (
