@@ -365,6 +365,44 @@ h3 {
   font-weight: 600;
 }
 
+/* タッチ端末(主入力がタッチでホバー不可)でのみ表示するコード記号キーバー。
+   幅の狭いデスクトップウィンドウには物理キーボードがあるため、
+   max-width ではなく入力方式で判定する。 */
+.keybar {
+  display: none;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 4px 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .keybar {
+    display: flex;
+  }
+}
+
+.keybar__key {
+  flex: 0 0 auto;
+  min-width: 40px;
+  min-height: 40px;
+  border: 2px solid #c9c0ef;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.05rem;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.keybar__key:active {
+  background: #ece2fb;
+  border-color: #9b7ce6;
+}
+
 .presets {
   display: flex;
   flex-wrap: wrap;

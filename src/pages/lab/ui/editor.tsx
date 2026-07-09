@@ -2,6 +2,7 @@
 
 import { type KeyboardEvent, type ReactNode, useLayoutEffect, useMemo, useRef } from "react";
 import SimpleCodeEditor from "react-simple-code-editor";
+import type { KeybarKey } from "../config/keybar-keys";
 import { useAnalysis } from "../model/analysis-store";
 import { buildHighlightSegments, type HighlightSegment } from "../model/editor/highlight";
 import {
@@ -10,6 +11,9 @@ import {
   insertTab,
   outdentLines,
 } from "../model/editor/indent";
+import { insertSnippet } from "../model/editor/insert-snippet";
+import { moveCaret } from "../model/editor/move-caret";
+import { Keybar } from "./keybar";
 
 const TEXTAREA_ID = "pyeek-editor";
 
@@ -69,6 +73,30 @@ export function Editor() {
     }
   };
 
+  // モバイル向けキーバーのタップは textarea の DOM を直接参照する
+  // (react-simple-code-editor はカーソル位置を取得する公開APIを持たないため、
+  // handleKeyDown と同じアドホックな参照方法に合わせている)。
+  const handleKeybarPress = (key: KeybarKey) => {
+    const textarea = containerRef.current?.querySelector("textarea");
+    if (!textarea) return;
+    if (document.activeElement !== textarea) {
+      textarea.focus();
+    }
+    const selection = { start: textarea.selectionStart, end: textarea.selectionEnd };
+
+    if (key.kind === "move") {
+      const next = moveCaret(source, selection, key.direction);
+      textarea.setSelectionRange(next.start, next.end);
+      return;
+    }
+
+    applyEdit(
+      key.kind === "tab"
+        ? insertTab(source, selection)
+        : insertSnippet(source, selection, key.text),
+    );
+  };
+
   // 解析結果が今のソースに追いついていない間（debounce待ち）はハイライト
   // せず、素通しのテキストを表示する。古いトークンの位置情報を今のソース
   // に当てはめると範囲がずれるため。
@@ -95,6 +123,7 @@ export function Editor() {
         preClassName="editor__pre"
         className="editor__surface"
       />
+      <Keybar onKeyPress={handleKeybarPress} />
       {runtimeError ? <p className="editor__error">⚠ {runtimeError}</p> : null}
     </div>
   );
