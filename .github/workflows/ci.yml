@@ -89,7 +89,12 @@ jobs:
       - run: pnpm build
 
   e2e:
+    name: e2e (${{ matrix.shardIndex }}/${{ strategy.job-total }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -112,9 +117,42 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: E2E tests
-        run: pnpm test:e2e
+        run: pnpm test:e2e --shard=${{ matrix.shardIndex }}/${{ strategy.job-total }}
 
-      - name: Upload E2E reports
+      # reporter: "blob"（playwright.config.ts）で出力したshard単位の結果を
+      # merge-reports ジョブに渡す。shardごとに名前を分けないと上書きされる。
+      - name: Upload blob report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report/
+          retention-days: 1
+
+  merge-reports:
+    needs: e2e
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: "pnpm"
+      - run: pnpm install
+
+      - name: Download blob reports
+        uses: actions/download-artifact@v8
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+
+      - name: Merge into a single HTML report
+        run: pnpm exec playwright merge-reports --reporter=html ./all-blob-reports
+
+      - name: Upload merged report
         if: always()
         uses: actions/upload-artifact@v7
         with:
