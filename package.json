@@ -46,6 +46,7 @@
     "@vitejs/plugin-react": "^4.3.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.1",
     "jsdom": "^25.0.0",
     "lefthook": "^1.11.0",
     "steiger": "^0.5.12",
