@@ -375,6 +375,21 @@ h3 {
   padding: 4px 2px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  /* ast-stage__canvas と同じ手法。横に収まりきらないキーがある狭い画面向けに、
+     CSSのみで左右の「まだスクロールできる」影を出す(スクロール端では自動的に消える)。 */
+  background:
+    linear-gradient(to right, var(--paper-2) 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, var(--paper-2) 30%, rgba(255, 255, 255, 0)) right,
+    linear-gradient(to right, rgba(120, 110, 190, 0.28), rgba(255, 255, 255, 0)),
+    linear-gradient(to left, rgba(120, 110, 190, 0.28), rgba(255, 255, 255, 0)) right;
+  background-repeat: no-repeat;
+  background-color: var(--paper-2);
+  background-size:
+    24px 100%,
+    24px 100%,
+    8px 100%,
+    8px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -396,6 +411,10 @@ h3 {
   touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
+  /* user-select:none だけでは iOS Safari の長押しコールアウト
+     (コピー/検索メニュー)ジェスチャー認識が働き、連打時に判定が
+     詰まって見える。callout自体を無効化して素直なtapにする。 */
+  -webkit-touch-callout: none;
 }
 
 .keybar__key:active {
