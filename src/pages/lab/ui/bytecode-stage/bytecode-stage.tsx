@@ -22,9 +22,9 @@ export function BytecodeStage() {
   const [selectedOffset, setSelectedOffset] = useState<number | null>(null);
   const streamRef = useRef<HTMLDivElement>(null);
 
-  // 行を横スクロールにしたため、他ステージのクリックでこのステージの
-  // 命令が選択状態になっても、その行が横に隠れている可能性がある。
-  // 選択が変わるたびに、対象命令をその行内に自動でスクロールインさせる。
+  // ストリーム全体を横スクロールにしたため、他ステージのクリックでこの
+  // ステージの命令が選択状態になっても、横に隠れている可能性がある。
+  // 選択が変わるたびに、対象命令をストリーム内に自動でスクロールインさせる。
   // selectedOffset ではなく state.selectedRange を見るのは、他ステージの
   // クリックは selectedOffset を更新せず selectedRange だけを更新するため。
   // 厳密一致(active/selected)が無ければ related の先頭を使う(例: For文
@@ -35,10 +35,13 @@ export function BytecodeStage() {
     const target =
       streamRef.current?.querySelector(".instr--active, .instr--selected") ??
       streamRef.current?.querySelector(".instr--related");
-    const row = target?.closest(".bytecode-stage__row-instrs");
-    if (target && row) {
-      scrollIntoViewHorizontally(target, row);
-    }
+    if (!target || !streamRef.current) return;
+    // 行ラベル(L1等)は position:sticky で左端に固定表示されるため、
+    // その下に隠れないようラベル幅を左境界として渡す。
+    const label = target
+      .closest(".bytecode-stage__row")
+      ?.querySelector(".bytecode-stage__row-label");
+    scrollIntoViewHorizontally(target, streamRef.current, label?.getBoundingClientRect().width);
   }, [state.selectedRange]);
 
   if (!root || codeEntries.length === 0) {

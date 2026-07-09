@@ -21,43 +21,19 @@
   box-shadow: inset 0 3px 4px rgba(80, 50, 150, 0.2);
 }
 
+/* 折り返し(wrap)だと長い行が縦に伸びてモバイルで縦スクロールが
+   ストレスフルになるため、行ごとではなくストリーム全体を1つの横スクロール
+   にする(ast-stage__canvas と同じ「1画面1スクロール」の考え方。行ごとに
+   別々のスクロールバーが並ぶと、どの行が右に続きを持つか毎行気づく必要
+   があり発見しにくい)。ast-stage__canvas / keybar と同じCSSのみの
+   スクロールシャドウ技法を再利用する。 */
 .token-stage__stream {
   padding: 14px 6px 4px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 7px;
   min-height: 60px;
-}
-
-.token-stage__row {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.token-stage__row-label {
-  flex: none;
-  width: 34px;
-  text-align: right;
-  color: #6a739f;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  padding-top: 8px;
-  user-select: none;
-}
-
-/* 折り返し(wrap)だと長い行が縦に伸びてモバイルで縦スクロールが
-   ストレスフルになるため、行ごとに横スクロールさせる。ast-stage__canvas
-   / keybar と同じCSSのみのスクロールシャドウ技法を再利用する。
-   min-width:0 は flex子がコンテンツ幅で親を押し広げず、代わりに
-   overflow-x:auto が効くようにするための定番の指定。 */
-.token-stage__row-tokens {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-  padding: 2px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background:
@@ -73,6 +49,38 @@
     6px 100%,
     6px 100%;
   background-attachment: local, local, scroll, scroll;
+}
+
+.token-stage__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* left:0 で画面端に固定し、ストリームが横スクロールしても行番号が
+   常に見えるようにする(表計算ソフトの「先頭列固定」と同じ考え方)。
+   下を通過するトークンを隠すため背景色を不透明にする。 */
+.token-stage__row-label {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex: none;
+  width: 34px;
+  text-align: right;
+  color: #6a739f;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  padding-top: 8px;
+  background: var(--paper-2);
+  user-select: none;
+}
+
+.token-stage__row-tokens {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
 }
 
 .token-stage__empty {

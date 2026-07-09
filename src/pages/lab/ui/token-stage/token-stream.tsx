@@ -16,9 +16,9 @@ export interface TokenStreamProps {
 export function TokenStream({ view, mode, showPos, linkTiers, onSelect }: TokenStreamProps) {
   const streamRef = useRef<HTMLDivElement>(null);
 
-  // 行を横スクロールにしたため、他ステージのクリックでこのステージの
-  // トークンが active/related になっても、その行が横に隠れている
-  // 可能性がある。選択が変わるたびに、対象トークンをその行内に自動で
+  // ストリーム全体を横スクロールにしたため、他ステージのクリックでこの
+  // ステージのトークンが active/related になっても、横に隠れている可能性
+  // がある。選択が変わるたびに、対象トークンをストリーム内に自動で
   // スクロールインさせる。厳密一致(active)が無ければ related の先頭を
   // 使う(例: For文全体のようなAST側の広い範囲選択では、範囲が完全一致
   // する単一トークンが存在せず related のみが付く)。
@@ -27,10 +27,12 @@ export function TokenStream({ view, mode, showPos, linkTiers, onSelect }: TokenS
     const target =
       streamRef.current?.querySelector(".tok--sel") ??
       streamRef.current?.querySelector(".tok--related");
-    const row = target?.closest(".token-stage__row-tokens");
-    if (target && row) {
-      scrollIntoViewHorizontally(target, row);
-    }
+    if (!target || !streamRef.current) return;
+    // 行ラベル(L1等)は position:sticky で左端に固定表示されるため、
+    // その下に隠れないようラベル幅を左境界として渡す(やさしいモードは
+    // ラベル自体が無いため undefined になり、通常の左端が使われる)。
+    const label = target.closest(".token-stage__row")?.querySelector(".token-stage__row-label");
+    scrollIntoViewHorizontally(target, streamRef.current, label?.getBoundingClientRect().width);
   }, [linkTiers]);
 
   if (view.rows.length === 0) {

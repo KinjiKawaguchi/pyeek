@@ -79,41 +79,17 @@
   outline-offset: 2px;
 }
 
+/* 折り返し(wrap)だと長い行が縦に伸びてモバイルで縦スクロールが
+   ストレスフルになるため、行ごとではなくストリーム全体を1つの横スクロール
+   にする(ast-stage__canvas と同じ「1画面1スクロール」の考え方。行ごとに
+   別々のスクロールバーが並ぶと、どの行が右に続きを持つか毎行気づく必要
+   があり発見しにくい)。ast-stage__canvas / keybar と同じCSSのみの
+   スクロールシャドウ技法を再利用する。 */
 .bytecode-stage__stream {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.bytecode-stage__row {
-  display: flex;
-  gap: 8px;
   align-items: flex-start;
-}
-
-.bytecode-stage__row-label {
-  flex: none;
-  width: 34px;
-  text-align: right;
-  color: #6a739f;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  padding-top: 8px;
-  user-select: none;
-}
-
-/* 折り返し(wrap)だと長い行が縦に伸びてモバイルで縦スクロールが
-   ストレスフルになるため、行ごとに横スクロールさせる。ast-stage__canvas
-   / keybar / token-stage__row-tokens と同じCSSのみのスクロールシャドウ
-   技法を再利用する。min-width:0 は flex子がコンテンツ幅で親を押し広げず、
-   代わりに overflow-x:auto が効くようにするための定番の指定。 */
-.bytecode-stage__row-instrs {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-  padding: 2px;
+  gap: 4px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background:
@@ -129,6 +105,38 @@
     6px 100%,
     6px 100%;
   background-attachment: local, local, scroll, scroll;
+}
+
+.bytecode-stage__row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* left:0 で画面端に固定し、ストリームが横スクロールしても行番号が
+   常に見えるようにする(表計算ソフトの「先頭列固定」と同じ考え方)。
+   下を通過する命令を隠すため背景色を不透明にする。 */
+.bytecode-stage__row-label {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex: none;
+  width: 34px;
+  text-align: right;
+  color: #6a739f;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  padding-top: 8px;
+  background: var(--paper-2);
+  user-select: none;
+}
+
+.bytecode-stage__row-instrs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
 }
 
 .instr {
