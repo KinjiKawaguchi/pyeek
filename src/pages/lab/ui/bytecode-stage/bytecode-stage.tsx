@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { classifyRange, codePathKey, flattenCodeObjs, instrRange } from "@/entities/source-link";
 import type { Instr } from "@/shared/api";
-import { scrollIntoViewHorizontally } from "../../lib/scroll-into-view-horizontally";
 import { useAnalysis } from "../../model/analysis-store";
 import { groupInstructionsByLine } from "../../model/bytecode-stage/instr-view";
 import "./bytecode-stage.css";
@@ -20,29 +19,6 @@ export function BytecodeStage() {
   // 持たない命令や、同じ行内で複数命令が同一範囲を共有する場合（例:
   // CALL/POP_TOP/RETURN_CONST が同じ式全体の範囲を指す）に選択がずれるため。
   const [selectedOffset, setSelectedOffset] = useState<number | null>(null);
-  const streamRef = useRef<HTMLDivElement>(null);
-
-  // ストリーム全体を横スクロールにしたため、他ステージのクリックでこの
-  // ステージの命令が選択状態になっても、横に隠れている可能性がある。
-  // 選択が変わるたびに、対象命令をストリーム内に自動でスクロールインさせる。
-  // selectedOffset ではなく state.selectedRange を見るのは、他ステージの
-  // クリックは selectedOffset を更新せず selectedRange だけを更新するため。
-  // 厳密一致(active/selected)が無ければ related の先頭を使う(例: For文
-  // 全体のような広い範囲選択では、範囲が完全一致する単一命令が存在せず
-  // related のみが付く)。
-  useEffect(() => {
-    if (state.selectedRange === null) return;
-    const target =
-      streamRef.current?.querySelector(".instr--active, .instr--selected") ??
-      streamRef.current?.querySelector(".instr--related");
-    if (!target || !streamRef.current) return;
-    // 行ラベル(L1等)は position:sticky で左端に固定表示されるため、
-    // その下に隠れないようラベル幅を左境界として渡す。
-    const label = target
-      .closest(".bytecode-stage__row")
-      ?.querySelector(".bytecode-stage__row-label");
-    scrollIntoViewHorizontally(target, streamRef.current, label?.getBoundingClientRect().width);
-  }, [state.selectedRange]);
 
   if (!root || codeEntries.length === 0) {
     return (
@@ -104,7 +80,7 @@ export function BytecodeStage() {
           })}
         </div>
       ) : null}
-      <div className="bytecode-stage__stream" ref={streamRef}>
+      <div className="bytecode-stage__stream">
         {groups.map((group) => {
           const firstOffset = group.items[0]?.instr.offset;
           return (
