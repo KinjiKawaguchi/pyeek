@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.6.0...v1.7.0) (2026-07-10)
+
+
+### Features
+
+* トークン列・バイトコード列を折り返しから横スクロールにする ([#44](https://github.com/KinjiKawaguchi/pyeek/issues/44)) ([d7f12f4](https://github.com/KinjiKawaguchi/pyeek/commit/d7f12f49a60697eda0c87f11a69439c4207583b9))
+
 ## [1.6.0](https://github.com/KinjiKawaguchi/pyeek/compare/v1.5.0...v1.6.0) (2026-07-09)
 
 
