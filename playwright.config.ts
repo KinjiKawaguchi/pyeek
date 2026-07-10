@@ -26,14 +26,14 @@ export default defineConfig({
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    // タッチ端末でのみ表示するコード記号キーバー(keybar.tsx)は
-    // pointer:coarse / hover:none のCSSメディアクエリで判定しているため、
-    // それをエミュレートするモバイルプロジェクトが無いと検証できない。
-    // CI時間増を抑えるため keybar.spec.ts のみに限定する。
+    // タッチ端末でのみ表示するコード記号キーバー(keybar.tsx)、および
+    // 横幅が狭いほど発生しやすいトークン列/バイトコード列の行スクロールは、
+    // 狭いビューポートをエミュレートするモバイルプロジェクトが無いと
+    // 確実に検証できない。CI時間増を抑えるため対象specを限定する。
     {
       name: "mobile-chromium",
       use: { ...devices["Pixel 7"] },
-      testMatch: /keybar\.spec\.ts/,
+      testMatch: /keybar\.spec\.ts|scrollable-rows\.spec\.ts/,
     },
   ],
   webServer: {

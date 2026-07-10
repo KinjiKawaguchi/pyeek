@@ -23,17 +23,19 @@ export function TokenStream({ view, mode, showPos, linkTiers, onSelect }: TokenS
           {mode === "strict" ? (
             <span className="token-stage__row-label">L{rowGroup.row}</span>
           ) : null}
-          {rowGroup.items.map(({ token, index }) => (
-            <TokenChip
-              key={index}
-              token={token}
-              mode={mode}
-              linkTier={linkTiers[index] ?? null}
-              callHighlighted={view.callHighlightIndexes.has(index)}
-              showPos={showPos}
-              onSelect={() => onSelect(index)}
-            />
-          ))}
+          <div className="token-stage__row-tokens">
+            {rowGroup.items.map(({ token, index }) => (
+              <TokenChip
+                key={index}
+                token={token}
+                mode={mode}
+                linkTier={linkTiers[index] ?? null}
+                callHighlighted={view.callHighlightIndexes.has(index)}
+                showPos={showPos}
+                onSelect={() => onSelect(index)}
+              />
+            ))}
+          </div>
         </div>
       ))}
     </div>
